@@ -25,6 +25,10 @@
      --color-gray-light: #B6B7C0;
      --color-gray-soft: #D1D2D7;
      --color-gray-pale: #EDEDEF;
+
+
+     /* fonts */
+     --text-base: 15px; 
 }
 
 
