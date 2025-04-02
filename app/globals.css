@@ -1,7 +1,42 @@
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui" {
+     include: carousel;
+     themes: false;
+}
+
+
+@theme {
+     --color-primary: #CB6CE6;       /* Main brand color */
+     --color-primary-light: #D589EB; /* Lighter shade */
+     --color-primary-soft: #E5B5F2;  /* Softer shade */
+     --color-primary-pale: #F4E1FA;  /* Lightest shade */
+
+     --color-secondary: #131326;
+     --color-secondary-light: #2c2c3f;
+     --color-secondary-soft: #444455; 
+     --color-secondary-pale: #a1a1aa; 
+
+     --color-black: #0B0C17;
+     --color-black-light: #32354E;
+     --color-black-soft: #494C61;
+     --color-black-pale: #767989;
+
+     --color-gray: #A4A5B0;
+     --color-gray-light: #B6B7C0;
+     --color-gray-soft: #D1D2D7;
+     --color-gray-pale: #EDEDEF;
+}
+
+
+
+@layer components {
+     .btn {
+          @apply px-4 py-2 rounded bg-primary text-gray-pale font-semibold hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-primary-soft;
+     }
+}
 
 
 body {
-     /* background-color: #FFB347; */
+     /* ~webkit-tap-highlight-color: transparent; */
 }
+
