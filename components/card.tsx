@@ -1,4 +1,3 @@
-import { Timer } from "lucide-react"
 import { CardDetails } from "@/global"
 import Image from "next/image"
 import { IoTimer } from "react-icons/io5"
