@@ -13,12 +13,12 @@ const BottomNav = () => {
      const pathname = usePathname(); // Get current URL path
 
      return (
-          <section className="fixed left-1/2 transform -translate-x-1/2 bottom-3 w-[93%] glass h-[4.5em] flex items-center justify-center shadow-2xl  rounded-[20px]">
+          <section className="fixed left-1/2 transform -translate-x-1/2 bottom-3 w-[93%] glass h-[4.5em] flex items-center justify-center shadow-2xl rounded-[20px]">
                <div className="w-full flex justify-between items-center px-4 py-2">
                     <Link
                          href="/"
                          className={`text-base flex flex-col items-center hover:text-primary-light ${
-                              pathname === "/" ? "text-primary" : "text-black-light"
+                              pathname === "/" ? "text-primary-main" : "text-black-light"
                          }`}
                     >
                          <FaCompass className='size-6' />
@@ -28,7 +28,7 @@ const BottomNav = () => {
                     <Link
                          href="/restaurants"
                          className={`text-base w-[18%] flex flex-col items-center hover:text-primary-light ${
-                              pathname === "/restaurants" ? "text-primary" : "text-black-light"
+                              pathname === "/restaurants" ? "text-primary-main" : "text-black-light"
                          }`}
                     >
                          {/* <IoFastFood className='w-6 h-6' /> */}
@@ -39,7 +39,7 @@ const BottomNav = () => {
                     <Link
                          href="/cart"
                          className={`text-base flex flex-col items-center hover:text-primary-light ${
-                              pathname === "/cart" ? "text-primary" : "text-black-light"
+                              pathname === "/cart" ? "text-primary-main" : "text-black-light"
                          }`}
                     >
                          <FaCartShopping className="size-5" />
@@ -49,7 +49,7 @@ const BottomNav = () => {
                     <Link
                          href="/profile"
                          className={`text-base flex flex-col items-center hover:text-primary-light ${
-                              pathname === "/profile" ? "text-[#a12fda]" : "text-black-light"
+                              pathname === "/profile" ? "text-primary-main" : "text-black-light"
                          }`}
                     >
                          <FaUserCircle className="size-5" />
