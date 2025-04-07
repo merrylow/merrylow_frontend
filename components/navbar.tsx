@@ -7,9 +7,9 @@ const Navbar = () => {
           <header className="mx-auto w-[93%] h-16 flex items-center">
                <div className="flex space-x-2">
                     <section>
-                         <div className="p-[7px] rounded-full bg-primary">
+                         <div className="p-[8px] rounded-full bg-[#CB6CE6]">
                               {/* <House className="size-5 stroke-primary-pale" /> */}
-                              <FaHouse className="size-[18px]" />
+                              <FaHouse className='size-[18px] fill-primary-pale' />
                          </div>
                     </section>
 

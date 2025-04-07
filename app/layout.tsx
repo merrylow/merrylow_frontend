@@ -1,23 +1,18 @@
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
-// import { Rubik } from "next/font/google";
+import { Rubik } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import BottomNav from "@/components/bottomNav";
 
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
+const rubik = Rubik({
+  subsets: ['latin'],
+  display: 'swap'
+});
 
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
 
 export const metadata: Metadata = {
-  title: "Merrylow - UG based food delivery platform",
+  title: "Merrylow - UG-based food delivery platform",
   description: "We deliver meals from your favourite restaurants on campus right to your doorstep",
 };
 
@@ -36,12 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      {/* <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Navbar />
-          {children}
-        <BottomNav />
-      </body> */}
+    <html lang="en" className={rubik.className}>
       <body>
         <Navbar />
           {children}

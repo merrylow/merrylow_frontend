@@ -2,13 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { IoFastFood } from "react-icons/io5";
+// import { IoFastFood } from "react-icons/io5";
 // import { AiFillHome } from "react-icons/ai";
 import { FaCartShopping } from "react-icons/fa6";
-import { FaUserCircle } from "react-icons/fa";
-import { CompassIcon } from "lucide-react";
+import { FaCompass, FaUserCircle } from "react-icons/fa";
 import { GiChefToque } from "react-icons/gi";
-// import { LuChefHat } from "react-icons/lu";
 
 
 const BottomNav = () => {
@@ -19,18 +17,17 @@ const BottomNav = () => {
                <div className="w-full flex justify-between items-center px-4 py-2">
                     <Link
                          href="/"
-                         className={`text-base flex flex-col items-center ${
+                         className={`text-base flex flex-col items-center hover:text-primary-light ${
                               pathname === "/" ? "text-primary" : "text-black"
                          }`}
                     >
-                         {/* <AiFillHome className="w-6 h-6" /> */}
-                         <CompassIcon />
+                         <FaCompass className='size-6' />
                          <span>Discover</span>
                     </Link>
 
                     <Link
                          href="/restaurants"
-                         className={`text-base w-[18%] flex flex-col items-center ${
+                         className={`text-base w-[18%] flex flex-col items-center hover:text-primary-light ${
                               pathname === "/restaurants" ? "text-primary" : "text-black"
                          }`}
                     >
@@ -41,7 +38,7 @@ const BottomNav = () => {
 
                     <Link
                          href="/cart"
-                         className={`text-base flex flex-col items-center ${
+                         className={`text-base flex flex-col items-center hover:text-primary-light ${
                               pathname === "/cart" ? "text-primary" : "text-black"
                          }`}
                     >
@@ -51,7 +48,7 @@ const BottomNav = () => {
 
                     <Link
                          href="/profile"
-                         className={`text-base flex flex-col items-center ${
+                         className={`text-base flex flex-col items-center hover:text-primary-light ${
                               pathname === "/profile" ? "text-[#a12fda]" : "text-black"
                          }`}
                     >

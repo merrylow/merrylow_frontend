@@ -1,40 +1,76 @@
-import {
-  Carousel,
-  CarouselContent,
-  // CarouselItem,
-  // CarouselNext,
-  // CarouselPrevious,
-} from "@/components/ui/carousel"
+import AdCarousel from "@/components/adCarousel"
+import Link from "next/link"
+import Image from "next/image"
+import Card from "@/components/card"
 
 
 
 const Home = () => {
-  const sliderImages = [
-    { src: '/slider-images/5-cedis-per-delivery.png', alt: 'image 1' },
-    { src: '/slider-images/Free-Delivery.png', alt: 'image 2' },
-    { src: '/slider-images/How-to-order.png', alt: 'image 3' }
-  ]
+
 
 
   return (
-    <main className='w-[93%] mx-auto min-h-screen'> {/* min-h-screen */}
-
-
-        
+    <main className='w-full mx-auto min-h-screen space-y-10'>
         {/* ad carousel */}
-        <section className="h-[40%]">
-          <Carousel images={sliderImages} opts={{
-            align: 'start',
-            loop: true,
-          }}> 
-            <CarouselContent />
-          </Carousel>
+        <section className="w-[92%] h-[40%] mx-auto mb-20">
+          <AdCarousel />
         </section>
 
 
-        <section>
-        
+        {/* what people are ordering */}
+        <section className='card-section'>
+          <div className='w-[92%] h-[14%] mx-auto flex justify-between items-center'>
+            <h1 className='font-bold text-secondary-main text-[19px]'>What others are ordering🔥</h1>
+
+            <Link href='/' className='see-all-btn px-5'>See all</Link>
+          </div>
+
+          <div className="slider-container">
+            <div className="shrink-0 w-[0.5px] ml-[-10px] snap-start" />
+
+            {Array(6).fill(0).map((_, i) => (
+              <Card key={i} cardClass={'w-[271px] h-full shrink-0'} cardDetails={{ imgSrc: '/jollof-rice-marg-tee-1094739000-612x612.jpg', mealName: 'Meal name', mealDescription: 'Meal Description...' }}  />
+            ))}
+          </div>
         </section>
+
+
+        {/* top vendors */}
+        <section className='card-section'>
+          <div className='w-[92%] h-[14%] mx-auto flex justify-between items-center'>
+            <h1 className='section-heading'>Top vendors👏</h1>
+
+            <Link href='/' className='see-all-btn'>See all</Link>
+          </div>
+
+          <div className="slider-container">
+            <div className="shrink-0 w-[0.5px] ml-[-10px] snap-start" />
+
+            {Array(6).fill(0).map((_, i) => (
+              <Card key={i} cardClass={'w-[200px] h-full shrink-0'} cardDetails={{ imgSrc: '/Yam and palava sauce-marg-tee.jpg', mealName: 'Vendor name', mealDescription: 'Meal Description...' }} />
+            ))}
+          </div>
+        </section>
+
+
+        {/* recently viewed */}
+        <section className="card-section">
+          <div className='w-[92%] h-[14%] mx-auto flex justify-between items-center'>
+            <h1 className='section-heading'>Recently viewed</h1>
+
+            <Link href='/' className='see-all-btn'>See all</Link>
+          </div>
+
+          <div className="slider-container">
+            <div className="shrink-0 w-[0.5px] ml-[-10px] snap-start" />
+
+            {Array(6).fill(0).map((_, i) => (
+              <Card key={i} cardClass={'w-[340px] h-full shrink-0'} cardDetails={{ imgSrc: '/jollof-rice-marg-tee-1094739000-612x612.jpg', mealName: 'Meal nameeee', mealDescription: 'Meal Descriptionn...' }} />
+            ))}
+          </div>
+        </section>
+
+        <section className='mb-20'></section>
 
       
 
