@@ -18,7 +18,7 @@ const BottomNav = () => {
                     <Link
                          href="/"
                          className={`text-base flex flex-col items-center hover:text-primary-light ${
-                              pathname === "/" ? "text-primary" : "text-black"
+                              pathname === "/" ? "text-primary" : "text-black-light"
                          }`}
                     >
                          <FaCompass className='size-6' />
@@ -28,7 +28,7 @@ const BottomNav = () => {
                     <Link
                          href="/restaurants"
                          className={`text-base w-[18%] flex flex-col items-center hover:text-primary-light ${
-                              pathname === "/restaurants" ? "text-primary" : "text-black"
+                              pathname === "/restaurants" ? "text-primary" : "text-black-light"
                          }`}
                     >
                          {/* <IoFastFood className='w-6 h-6' /> */}
@@ -39,20 +39,20 @@ const BottomNav = () => {
                     <Link
                          href="/cart"
                          className={`text-base flex flex-col items-center hover:text-primary-light ${
-                              pathname === "/cart" ? "text-primary" : "text-black"
+                              pathname === "/cart" ? "text-primary" : "text-black-light"
                          }`}
                     >
-                         <FaCartShopping className="w-5 h-5" />
+                         <FaCartShopping className="size-5" />
                          <span>Cart</span>
                     </Link>
 
                     <Link
                          href="/profile"
                          className={`text-base flex flex-col items-center hover:text-primary-light ${
-                              pathname === "/profile" ? "text-[#a12fda]" : "text-black"
+                              pathname === "/profile" ? "text-[#a12fda]" : "text-black-light"
                          }`}
                     >
-                         <FaUserCircle className="w-5 h-5" />
+                         <FaUserCircle className="size-5" />
                          <span>Profile</span>
                     </Link>
                </div>

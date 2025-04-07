@@ -19,7 +19,7 @@ const Home = () => {
         {/* what people are ordering */}
         <section className='card-section'>
           <div className='w-[92%] h-[14%] mx-auto flex justify-between items-center'>
-            <h1 className='font-bold text-secondary-main text-[19px]'>What others are ordering🔥</h1>
+            <h1 className='font-bold text-secondary-main text-[18px]'>What others are ordering🔥</h1>
 
             <Link href='/' className='see-all-btn px-5'>See all</Link>
           </div>
@@ -64,7 +64,7 @@ const Home = () => {
             <div className="shrink-0 w-[0.5px] ml-[-10px] snap-start" />
 
             {Array(6).fill(0).map((_, i) => (
-              <Card key={i} cardClass={'w-[340px] h-full shrink-0'} cardDetails={{ imgSrc: '/jollof-rice-marg-tee-1094739000-612x612.jpg', mealName: 'Meal nameeee', mealDescription: 'Meal Descriptionn...' }} />
+              <Card key={i} cardClass={'w-[280px] h-full shrink-0'} cardDetails={{ imgSrc: '/jollof-rice-marg-tee-1094739000-612x612.jpg', mealName: 'Meal namee', mealDescription: 'Meal Descriptionn...' }} />
             ))}
           </div>
         </section>

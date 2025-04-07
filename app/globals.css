@@ -54,7 +54,7 @@
      }
 
      .section-heading {
-          @apply text-md font-[900] text-secondary-main;
+          @apply text-md font-bold text-secondary-main;
      }
 
      .card-title {
@@ -62,7 +62,7 @@
      }
 
      .card-description {
-          @apply text-[12px] font-light;
+          @apply text-[13px] font-light;
      }
 
      .slider-container {
