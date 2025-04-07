@@ -24,6 +24,7 @@ type CarouselProps = {
   autoplay?: boolean
 }
 
+
 type CarouselContextProps = {
   carouselRef: ReturnType<typeof useEmblaCarousel>[0]
   api: ReturnType<typeof useEmblaCarousel>[1]
@@ -31,6 +32,7 @@ type CarouselContextProps = {
   scrollNext: () => void
   canScrollPrev: boolean
   canScrollNext: boolean
+  selectedIndex: number  // NEW: expose selected index
 } & CarouselProps
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null)
@@ -44,6 +46,7 @@ function useCarousel() {
 
   return context
 }
+
 
 const Carousel = React.forwardRef<
   HTMLDivElement,
@@ -79,6 +82,8 @@ const Carousel = React.forwardRef<
     )
     const [canScrollPrev, setCanScrollPrev] = React.useState(false)
     const [canScrollNext, setCanScrollNext] = React.useState(false)
+    const [selectedIndex, setSelectedIndex] = React.useState(0) // NEW state
+
 
     const onSelect = React.useCallback((api: CarouselApi) => {
       if (!api) {
@@ -87,6 +92,7 @@ const Carousel = React.forwardRef<
 
       setCanScrollPrev(api.canScrollPrev())
       setCanScrollNext(api.canScrollNext())
+      setSelectedIndex(api.selectedScrollSnap()) // Update active index
     }, [])
 
     const scrollPrev = React.useCallback(() => {
@@ -145,6 +151,7 @@ const Carousel = React.forwardRef<
           canScrollPrev,
           canScrollNext,
           images,
+          selectedIndex, // NEW: provide active index to context
         }}
       >
         <div
@@ -156,6 +163,21 @@ const Carousel = React.forwardRef<
           {...props}
         >
           {children}
+
+           {/* Indicator container */}
+          <div className="absolute top-[21.5rem] left-1/2 flex -translate-x-1/2  space-x-2.5">
+            {images.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => api?.scrollTo(index)}
+                className={cn(
+                  "h-2.5 w-2.5 rounded-full transition-colors duration-300",
+                  index === selectedIndex ? "bg-primary-main" : "bg-gray-light"
+                )}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </CarouselContext.Provider>
     )
