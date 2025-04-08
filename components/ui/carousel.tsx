@@ -165,13 +165,13 @@ const Carousel = React.forwardRef<
           {children}
 
            {/* Indicator container */}
-          <div className="absolute top-[21.5rem] left-1/2 flex -translate-x-1/2  space-x-2.5">
+          <div className="absolute top-[21rem] left-1/2 flex -translate-x-1/2  space-x-2.5">
             {images.map((_, index) => (
               <button
                 key={index}
                 onClick={() => api?.scrollTo(index)}
                 className={cn(
-                  "size-3 rounded-full transition-colors duration-300",
+                  "size-2 rounded-full transition-colors duration-300",
                   index === selectedIndex ? "bg-primary-main" : "bg-gray-light"
                 )}
                 aria-label={`Go to slide ${index + 1}`}
