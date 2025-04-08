@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <main className='w-full mx-auto min-h-screen space-y-10'>
         {/* ad carousel */}
-        <section className="w-[92%] h-[35%] mx-auto mb-20">
+        <section className="w-[92%] h-[14.375rem] min-h-[14.375rem] mx-auto mb-14">
           <AdCarousel />
         </section>
 

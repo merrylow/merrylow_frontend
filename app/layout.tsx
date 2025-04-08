@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Rubik, Inter } from "next/font/google";
+import { Rubik, Inter,  } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import BottomNav from "@/components/bottomNav";

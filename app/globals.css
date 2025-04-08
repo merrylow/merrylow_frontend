@@ -54,11 +54,11 @@
      }
 
      .section-heading {
-          @apply text-md font-bold text-secondary-light;
+          @apply text-md font-bold text-secondary-light tracking-tight;
      }
 
      .card-title {
-          @apply text-base font-bold text-secondary-light tracking-wide;
+          @apply text-base font-bold text-secondary-light;
      }
 
      .card-description {
