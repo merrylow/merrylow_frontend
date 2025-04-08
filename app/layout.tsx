@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Rubik } from "next/font/google";
+import { Rubik, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import BottomNav from "@/components/bottomNav";
@@ -9,6 +9,12 @@ const rubik = Rubik({
   subsets: ['latin'],
   display: 'swap'
 });
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
+
 
 
 export const metadata: Metadata = {
@@ -31,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={rubik.className}>
+    <html lang="en" className={inter.className}>
       <body>
         <Navbar />
           {children}

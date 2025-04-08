@@ -171,7 +171,7 @@ const Carousel = React.forwardRef<
                 key={index}
                 onClick={() => api?.scrollTo(index)}
                 className={cn(
-                  "h-2.5 w-2.5 rounded-full transition-colors duration-300",
+                  "size-3 rounded-full transition-colors duration-300",
                   index === selectedIndex ? "bg-primary-main" : "bg-gray-light"
                 )}
                 aria-label={`Go to slide ${index + 1}`}

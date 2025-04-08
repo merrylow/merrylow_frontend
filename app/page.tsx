@@ -19,7 +19,7 @@ const Home = () => {
         {/* what people are ordering */}
         <section className='card-section'>
           <div className='w-[92%] h-[14%] mx-auto flex justify-between items-center'>
-            <h1 className='font-bold text-secondary-light text-[18px]'>What others are ordering🔥</h1>
+            <h1 className='font-bold text-secondary-light text-[17px]'>What others are ordering🔥</h1>
 
             <Link href='/' className='see-all-btn px-5'>See all</Link>
           </div>
