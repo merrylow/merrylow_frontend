@@ -207,8 +207,8 @@ const CarouselContent = React.forwardRef<
             <Image
               src={image.src}
               alt={image.alt}
-              width={256}
-              height={256}
+              width={156}
+              height={156}
               className={`object-cover h-full w-full rounded-[18px]`}
             />
           </CarouselItem>

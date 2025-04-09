@@ -69,7 +69,7 @@
      }
 
      .card-description {
-          @apply text-[13px] font-light text-black-soft;
+          @apply text-[13px] text-black-soft;
      }
 
      .slider-container {
@@ -84,14 +84,23 @@
 
 
 html {
-     scroll-behavior: smooth;
+     touch-action: manipulation;
+     -webkit-tap-highlight-color: transparent;
+     -webkit-touch-callout: none;
      -webkit-overflow-scrolling: touch; 
 }
 
 
-
 body {
-     /* ~webkit-tap-highlight-color: transparent; */
+     scroll-behavior: smooth;
      overflow-x: hidden;
+     overscroll-behavior: none;
+}
 
+
+
+img, svg {
+     user-select: none;
+     -webkit-user-drag: none;
+     -webkit-user-select: none;
 }
