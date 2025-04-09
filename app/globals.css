@@ -9,7 +9,7 @@
 
 
 @theme {
-     --color-primary-main: #CB6CE6;       /* Main brand color */
+     --color-primary-main: #CB6CE6;  /* Main brand color */
      --color-primary-light: #D589EB; /* Lighter shade */
      --color-primary-soft: #E5B5F2;  /* Softer shade */
      --color-primary-pale: #F4E1FA;  /* Lightest shade */
@@ -30,9 +30,12 @@
      --color-gray-pale: #EDEDEF;
 
      /* fonts */
-     --text-base: 14px; 
-     --text-sm: 15px; 
-     --text-md: 19px; 
+     --text-xs: 0.875rem; /* 14px */
+     --text-sm: 0.938rem; /* 15px */
+     --text-base: 1.063rem; /* 17px */
+     --text-md: 1.25rem; /* 20px */
+     --text-lg: 2rem; /* 32px */
+
 }
 
 
@@ -42,13 +45,17 @@
      }
 
      .see-all-btn {
-          @apply px-5 py-[0.26rem] rounded-full bg-primary-pale text-primary-main text-[14px] font-semibold shadow-md hover:bg-primary-soft hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-primary-soft;
+          @apply px-5 py-[0.26rem] rounded-full bg-primary-pale text-primary-main text-[13.8px] font-semibold shadow-md hover:bg-primary-soft hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-primary-soft;
      }
 }
 
 
 
 @layer utilities {
+     .page-heading {
+          @apply text-lg text-secondary-light font-bold;
+     }
+
      .card-section {
           @apply h-[17.5em] flex flex-col justify-between overflow-hidden;
      }
@@ -58,11 +65,11 @@
      }
 
      .card-title {
-          @apply text-base font-bold text-secondary-light;
+          @apply text-base font-bold text-secondary-soft;
      }
 
      .card-description {
-          @apply text-[13px] font-light text-secondary-soft;
+          @apply text-[13px] font-light text-black-soft;
      }
 
      .slider-container {
@@ -76,6 +83,15 @@
 }
 
 
+html {
+     scroll-behavior: smooth;
+     -webkit-overflow-scrolling: touch; 
+}
+
+
+
 body {
      /* ~webkit-tap-highlight-color: transparent; */
+     overflow-x: hidden;
+
 }

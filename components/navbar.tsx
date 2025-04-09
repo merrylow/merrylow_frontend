@@ -8,13 +8,12 @@ const Navbar = () => {
                <div className="flex space-x-2">
                     <section>
                          <div className="p-[8px] rounded-full bg-[#CB6CE6]">
-                              {/* <House className="size-5 stroke-primary-pale" /> */}
                               <FaHouse className='size-[18px] fill-primary-pale' />
                          </div>
                     </section>
 
                     {/* location */}
-                    <section className="flex items-center space-x-0.5 text-base">
+                    <section className="flex items-center space-x-0.5 text-xs">
                          <span className="font-semibold">Home,</span>
                          <span className="pl-0.5">University of Ghana</span>
                     </section>

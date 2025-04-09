@@ -3,42 +3,41 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 // import { IoFastFood } from "react-icons/io5";
-// import { AiFillHome } from "react-icons/ai";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaCompass, FaUserCircle } from "react-icons/fa";
 import { GiChefToque } from "react-icons/gi";
 
 
 const BottomNav = () => {
-     const pathname = usePathname(); // Get current URL path
+     const pathname = usePathname();
 
      return (
-          <section className="fixed left-1/2 transform -translate-x-1/2 bottom-3 w-[92%] glass h-[4.5em] flex items-center justify-center shadow-2xl rounded-[20px]">
+          <section className="fixed left-1/2 transform -translate-x-1/2 bottom-3 w-[94%] glass h-[4.5em] flex items-center justify-center text-xs shadow-2xl rounded-[20px]">
                <div className="w-full flex justify-between items-center px-4 py-2">
                     <Link
                          href="/"
-                         className={`text-base flex flex-col items-center hover:text-primary-light ${
+                         className={`flex flex-col items-center hover:text-primary-light ${
                               pathname === "/" ? "text-primary-main" : "text-black-light"
                          }`}
                     >
-                         <FaCompass className='size-6' />
+                         <FaCompass className='size-5' />
                          <span>Discover</span>
                     </Link>
 
                     <Link
                          href="/restaurants"
-                         className={`text-base w-[18%] flex flex-col items-center hover:text-primary-light ${
+                         className={`w-[16%] flex flex-col items-center hover:text-primary-light ${
                               pathname === "/restaurants" ? "text-primary-main" : "text-black-light"
                          }`}
                     >
                          {/* <IoFastFood className='w-6 h-6' /> */}
-                         <GiChefToque className="size-6" />
-                         <span>Restaurants</span>
+                         <GiChefToque className="size-5" />
+                         <span className="tracking-tight">Restaurants</span>
                     </Link>
 
                     <Link
                          href="/cart"
-                         className={`text-base flex flex-col items-center hover:text-primary-light ${
+                         className={`flex flex-col items-center hover:text-primary-light ${
                               pathname === "/cart" ? "text-primary-main" : "text-black-light"
                          }`}
                     >
@@ -48,7 +47,7 @@ const BottomNav = () => {
 
                     <Link
                          href="/profile"
-                         className={`text-base flex flex-col items-center hover:text-primary-light ${
+                         className={`flex flex-col items-center hover:text-primary-light ${
                               pathname === "/profile" ? "text-primary-main" : "text-black-light"
                          }`}
                     >

@@ -165,7 +165,7 @@ const Carousel = React.forwardRef<
           {children}
 
            {/* Indicator container */}
-          <div className="absolute top-[19.4rem] left-1/2 flex -translate-x-1/2  space-x-2.5">
+          <div className="absolute top-[19.2rem] left-1/2 flex -translate-x-1/2  space-x-2.5">
             {images.map((_, index) => (
               <button
                 key={index}
@@ -193,7 +193,7 @@ const CarouselContent = React.forwardRef<
   const { carouselRef, orientation, images } = useCarousel()
 
   return (
-    <div ref={carouselRef} className="overflow-hidden h-64">
+    <div ref={carouselRef} className="h-[14.3rem]">
       <div
         ref={ref}
         className={cn(

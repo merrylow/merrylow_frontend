@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <main className='w-full mx-auto min-h-screen space-y-10'>
         {/* ad carousel */}
-        <section className="w-[92%] h-[14.375rem] min-h-[14.375rem] mx-auto mb-14">
+        <section className="w-[92%] h-[14rem] min-h-[14.375rem] mx-auto mb-14 rounded-[18px]">
           <AdCarousel />
         </section>
 
@@ -28,7 +28,10 @@ const Home = () => {
             <div className="shrink-0 w-[0.5px] ml-[-10px] snap-start" />
 
             {Array(6).fill(0).map((_, i) => (
-              <Card key={i} cardClass={'w-[271px] h-full shrink-0'} cardDetails={{ imgSrc: '/jollof-rice-marg-tee-1094739000-612x612.jpg', mealName: 'Meal name', mealDescription: 'Meal Description...' }}  />
+              <Card 
+                key={i} 
+                cardClass={'w-[271px] h-full shrink-0'} 
+                cardDetails={{ imgSrc: '/jollof-rice-marg-tee-1094739000-612x612.jpg', mealName: 'Meal name', mealDescription: 'Meal Description...' }}  />
             ))}
           </div>
         </section>
@@ -46,7 +49,10 @@ const Home = () => {
             <div className="shrink-0 w-[0.5px] ml-[-10px] snap-start" />
 
             {Array(6).fill(0).map((_, i) => (
-              <Card key={i} cardClass={'w-[200px] h-full shrink-0'} cardDetails={{ imgSrc: '/Yam and palava sauce-marg-tee.jpg', mealName: 'Vendor name', mealDescription: 'Vendor slogan...' }} />
+              <Card 
+                key={i} 
+                cardClass={'w-[200px] h-full shrink-0'} 
+                cardDetails={{ imgSrc: '/Yam and palava sauce-marg-tee.jpg', mealName: 'Vendor name', mealDescription: 'Vendor slogan...' }} />
             ))}
           </div>
         </section>
@@ -64,7 +70,10 @@ const Home = () => {
             <div className="shrink-0 w-[0.5px] ml-[-10px] snap-start" />
 
             {Array(6).fill(0).map((_, i) => (
-              <Card key={i} cardClass={'w-[280px] h-full shrink-0'} cardDetails={{ imgSrc: '/jollof-rice-marg-tee-1094739000-612x612.jpg', mealName: 'Meal namee', mealDescription: 'Meal Descriptionn...' }} />
+              <Card 
+                key={i} 
+                cardClass={'w-[280px] h-full shrink-0'} 
+                cardDetails={{ imgSrc: '/jollof-rice-marg-tee-1094739000-612x612.jpg', mealName: 'Meal namee', mealDescription: 'Meal Descriptionn...' }} />
             ))}
           </div>
         </section>
