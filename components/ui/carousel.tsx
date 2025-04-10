@@ -151,7 +151,7 @@ const Carousel = React.forwardRef<
           canScrollPrev,
           canScrollNext,
           images,
-          selectedIndex, // NEW: provide active index to context
+          selectedIndex,
         }}
       >
         <div

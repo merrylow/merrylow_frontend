@@ -13,7 +13,7 @@ const Navbar = () => {
                     </section>
 
                     {/* location */}
-                    <section className="flex items-center space-x-0.5 text-xs">
+                    <section className="flex items-center space-x-0.5 text-[13.5px]">
                          <span className="font-semibold">Home,</span>
                          <span className="pl-0.5">University of Ghana</span>
                     </section>

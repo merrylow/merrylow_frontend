@@ -63,7 +63,7 @@
      }
 
      .section-heading {
-          @apply text-base font-bold text-secondary-light tracking-tight;
+          @apply text-md font-bold text-secondary-light tracking-tight;
      }
 
      .card-title {
