@@ -29,12 +29,14 @@
      --color-gray-soft: #D1D2D7;
      --color-gray-pale: #EDEDEF;
 
-     /* fonts */
-     --text-xs: 0.875rem; /* 14px */
-     --text-sm: 0.938rem; /* 15px */
-     --text-base: 1.063rem; /* 17px */
-     --text-md: 1.25rem; /* 20px */
-     --text-lg: 2rem; /* 32px */
+     /* font sizes */
+     --text-xs: 0.813rem; /* 13px */
+     --text-sm: 0.875rem; /* 14px */
+     --text-base: 0.938rem; /* 15px */
+     --text-md: 1.063rem; /* 17px */
+     --text-lg: 1.25rem; /* 20px */
+     --text-xl: 1.7rem; /* 27.2px */
+     --text-2xl: 2rem; /* 32px */
 
 }
 
@@ -53,7 +55,7 @@
 
 @layer utilities {
      .page-heading {
-          @apply text-lg text-secondary-light font-bold;
+          @apply text-2xl text-secondary-light font-bold;
      }
 
      .card-section {
@@ -61,19 +63,23 @@
      }
 
      .section-heading {
-          @apply text-md font-bold text-secondary-light tracking-tight;
+          @apply text-base font-bold text-secondary-light tracking-tight;
      }
 
      .card-title {
-          @apply text-base font-bold text-secondary-soft;
+          @apply text-sm font-bold text-secondary-soft;
      }
 
      .card-description {
-          @apply text-[13px] text-black-soft;
+          @apply text-xs text-black-pale;
      }
 
      .slider-container {
           @apply h-[80%] flex items-center bg-transparent overflow-x-auto space-x-4 pb-5 px-2 scroll-smooth snap-x snap-mandatory shadow-2xl;
+     }
+
+     .icon{ 
+          @apply size-5 fill-primary-light;
      }
 }
 
@@ -95,6 +101,7 @@ body {
      scroll-behavior: smooth;
      overflow-x: hidden;
      overscroll-behavior: none;
+     /* background-color: #222222; */
 }
 
 

@@ -4,12 +4,12 @@ import Card from "@/components/card"
 const RestaurantsPage = () => {
      return (
           <main className="min-h-screen flex flex-col items-center space-y-7">
-               <section className="w-[92%]">
+               <section className="w-[90%]">
                     <h1 className="page-heading text-xl font-bold text-black -mt-2">Restaurants</h1>
 
                </section>
 
-               <section className="w-[92%] h-[80%]">
+               <section className="w-[90%] h-[80%]">
                     <h2 className="section-heading text-base font-semibold text-gray-700 mb-2">All restaurants</h2>
 
                     <div className="h-[160rem] flex flex-col gap-9">

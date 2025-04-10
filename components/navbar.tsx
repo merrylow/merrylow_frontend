@@ -4,7 +4,7 @@ import { FaHouse } from 'react-icons/fa6'
 
 const Navbar = () => {
      return (
-          <header className="mx-auto w-[92%] h-16 flex items-center">
+          <header className="mx-auto w-[90%] h-16 flex items-center">
                <div className="flex space-x-2">
                     <section>
                          <div className="p-[8px] rounded-full bg-[#CB6CE6]">
