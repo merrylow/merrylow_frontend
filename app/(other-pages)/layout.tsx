@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Metadata } from "next";
 import { Rubik, Inter,  } from "next/font/google";
-import "../../../globals.css";
+import "../globals.css";
 
 
 
@@ -31,18 +31,21 @@ export const viewport = {
 
 
 
-const Layout = ({
+const RestaurantLayout = ({
      children,
+     productModal,
 }: {
-     children: React.ReactNode
+     children: React.ReactNode;
+     productModal: React.ReactNode
 }) => {
      return (
           <html lang='en' className={inter.className}>
                <body>
                     {children}
+                    {productModal}
                </body>
           </html>
      )
 }
 
-export default Layout
+export default RestaurantLayout

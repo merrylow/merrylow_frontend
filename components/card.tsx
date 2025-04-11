@@ -30,10 +30,18 @@ const Card = ({ cardClass, cardDetails }: {
                <div className={
                     pathname === '/' 
                     ? 'h-[35%] card-body flex flex-1 flex-col justify-center gap-[0.01rem] rounded-b-[15px] px-6'
-                    : 'h-[30%] card-body flex flex-1 flex-col justify-center gap-0.5 rounded-b-[15px] px-6' 
+                    : 'h-[30%] card-body flex flex-1 flex-col justify-center gap-[0.1rem] rounded-b-[15px] px-6' 
                }>
-                    <h3 className="card-title">{mealName}</h3>
-                    <p className="card-description">{mealDescription}</p>
+                    <h3 className={
+                         pathname === '/'
+                         ? 'card-title'
+                         : 'text-md font-bold text-secondary-soft'
+                    }>{mealName}</h3>
+                    <p className={
+                         pathname === '/'
+                         ? 'card-description'
+                         : 'text-sm text-black-pale' 
+                    }>{mealDescription}</p>
 
                     <span>
                          <IoTimer className="size-5 fill-primary-light" />

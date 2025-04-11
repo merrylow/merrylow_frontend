@@ -10,11 +10,11 @@ const RestaurantsPage = () => {
                </section>
 
                <section className="w-[90%] h-[80%]">
-                    <h2 className="section-heading text-base font-semibold text-gray-700 mb-2">All restaurants</h2>
+                    <h2 className="tracking-wide section-heading mb-2">All restaurants</h2>
 
                     <div className="h-[160rem] flex flex-col gap-9">
                          {Array(8).fill(0).map((_, i) => (
-                              <Link href={'/restaurants/:id'} className="w-full h-full" key={i}>
+                              <Link href='/restaurants/:restaurantId' className="w-full h-full" key={i}>
                                    <Card
                                         cardClass="w-full"
                                         cardDetails={{
