@@ -5,7 +5,6 @@ import { IoHeartOutline } from "react-icons/io5"
 import ProductModal from "@/components/modal"
 
 const ProductPage = () => {
-
      return (
           <ProductModal>
                <div className="w-full h-full flex flex-col justify-start">
