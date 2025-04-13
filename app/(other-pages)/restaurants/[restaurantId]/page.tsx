@@ -62,13 +62,13 @@ const RestaurantPage = ({ params }: { params: { restaurantId: string, productId:
                <section className='absolute flex justify-between items-center w-[88%] h-10 top-5 left-1/2 -translate-x-1/2'>
                     <Link
                          href='/restaurants'
-                         className='w-10 h-10 flex items-center justify-center rounded-full backdrop-blur-md bg-black/20 shadow-[2px_5px_11px_rgba(0,1,0,0.45)]  transition-all'>
+                         className='w-9 h-9 flex items-center justify-center rounded-full backdrop-blur-md bg-black/20 shadow-[2px_5px_11px_rgba(0,1,0,0.45)] transition-all'>
                          <FaChevronLeft className='size-5 fill-gray-pale' />
                     </Link>
 
                     <button 
                          title='more options' 
-                         className='w-10 h-10 flex items-center justify-center rounded-full backdrop-blur-md bg-black/20 shadow-[2px_5px_11px_rgba(0,1,0,0.45)] transition-all'
+                         className='w-9 h-9 flex items-center justify-center rounded-full backdrop-blur-md bg-black/20 shadow-[2px_5px_11px_rgba(0,1,0,0.45)] transition-all'
                          aria-label='more options button'>
                          <IoEllipsisHorizontal className='size-6 fill-gray-pale' />
                     </button>
