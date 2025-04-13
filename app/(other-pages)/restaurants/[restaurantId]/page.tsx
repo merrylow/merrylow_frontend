@@ -43,7 +43,9 @@ const menu = [
 ];
 
 
-const RestaurantPage = ({ params }: { params: Promise<{ id: string }> }) => {
+const RestaurantPage = ({ params }: { params: { restaurantId: string, productId: string } }) => {
+     const { restaurantId, productId } = params
+
      return (
           <main className='w-full h-full min-h-screen relative space-y-5'>
                {/* Restaurant Banner */}
@@ -60,13 +62,13 @@ const RestaurantPage = ({ params }: { params: Promise<{ id: string }> }) => {
                <section className='absolute flex justify-between items-center w-[88%] h-10 top-5 left-1/2 -translate-x-1/2'>
                     <Link
                          href='/restaurants'
-                         className='w-11 h-11 flex items-center justify-center rounded-full backdrop-blur-md bg-black/20 shadow-[2px_5px_11px_rgba(0,1,0,0.45)]  transition-all'>
+                         className='w-10 h-10 flex items-center justify-center rounded-full backdrop-blur-md bg-black/20 shadow-[2px_5px_11px_rgba(0,1,0,0.45)]  transition-all'>
                          <FaChevronLeft className='size-5 fill-gray-pale' />
                     </Link>
 
                     <button 
                          title='more options' 
-                         className='w-11 h-11 flex items-center justify-center rounded-full backdrop-blur-md bg-black/20 shadow-[2px_5px_11px_rgba(0,1,0,0.45)] transition-all'
+                         className='w-10 h-10 flex items-center justify-center rounded-full backdrop-blur-md bg-black/20 shadow-[2px_5px_11px_rgba(0,1,0,0.45)] transition-all'
                          aria-label='more options button'>
                          <IoEllipsisHorizontal className='size-6 fill-gray-pale' />
                     </button>
@@ -110,7 +112,7 @@ const RestaurantPage = ({ params }: { params: Promise<{ id: string }> }) => {
                                         <p className='text-[13.5px] text-black-pale'>
                                              {item.description}
                                         </p>
-                                        <Link href='/restaurants/:restaurantId/' className="text-[12px] py-1.5 bg-primary-main text-white see-all-btn">
+                                        <Link href={`/restaurants/${restaurantId}/product/${productId}`} className="text-[12px] py-1.5 bg-primary-main text-white see-all-btn">
                                              Add
                                         </Link>
                                         <span className="text-base text-secondary-soft font-semibold ml-2.5 self-end">

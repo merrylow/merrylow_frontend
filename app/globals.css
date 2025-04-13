@@ -111,3 +111,32 @@ img, svg {
      -webkit-user-drag: none;
      -webkit-user-select: none;
 }
+
+
+
+/* animations for product modal */
+@keyframes slideUp {
+     from {
+          transform: translateY(100%);
+     }
+     to {
+          transform: translateY(0);
+     }
+}
+
+@keyframes slideDown {
+     from {
+          transform: translateY(0);
+     }
+     to {
+          transform: translateY(100%);
+     }
+}
+
+data-[state=open] {
+     animation: slideUp 0.3s ease-out forwards;
+}
+
+data-[state=closed] {
+     animation: slideDown 0.3s ease-in forwards;
+}

@@ -16,10 +16,9 @@ const inter = Inter({
 })
 
 
-
 export const metadata: Metadata = {
      title: "Merrylow - UG-based food delivery platform",
-     description: "We deliver meals from your favourite restaurants on campus right to your doorstep",
+     description: "We deliver meals from your favourite restaurants on campus right to your doorstep, for free!",
 };
 
 
@@ -30,22 +29,21 @@ export const viewport = {
 
 
 
-
-const RestaurantLayout = ({
+const OtherLayout = ({
      children,
-     productModal,
+     modal,
 }: {
      children: React.ReactNode;
-     productModal: React.ReactNode
+     modal: React.ReactNode
 }) => {
      return (
           <html lang='en' className={inter.className}>
                <body>
                     {children}
-                    {productModal}
+                    {modal}
                </body>
           </html>
      )
 }
 
-export default RestaurantLayout
+export default OtherLayout
