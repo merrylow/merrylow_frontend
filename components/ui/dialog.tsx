@@ -57,16 +57,21 @@ function DialogContent({
       <DialogPrimitive.Content
         data-slot="dialog-content"
         className={cn(
-          "fixed bottom-0 left-0 z-50 grid w-full rounded-t-2xl border p-6 shadow-lg bg-background data-[state=open]:animate-slide-up data-[state=closed]:animate-slide-down",
+          "fixed bottom-0 left-0 z-50 grid w-full rounded-t-4xl shadow-lg bg-white data-[state=open]:animate-slide-up data-[state=closed]:animate-slide-down",
           className
         )}
         {...props}
       >
         {children}
-        <DialogPrimitive.Close className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
+        {/* <DialogPrimitive.Close className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
           <XIcon />
           <span className="sr-only">Close</span>
+        </DialogPrimitive.Close> */}
+        <DialogPrimitive.Close className='absolute -left-full -top-full h-1 w-1 opacity-0 overflow-hidden'>
+          <XIcon />
+          <span className='sr-only'>Close</span>
         </DialogPrimitive.Close>
+
       </DialogPrimitive.Content>
     </DialogPortal>
   )
