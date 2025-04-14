@@ -1,7 +1,8 @@
+import { PageProps } from "@/.next/types/app/(other-pages)/layout";
 import Image from "next/image";
 import Link from 'next/link'
 import { FaChevronLeft } from "react-icons/fa";
-import { IoAlarm, IoEllipsisHorizontal, IoEllipsisHorizontalOutline, IoHeartOutline, IoStar, IoTimer } from "react-icons/io5";
+import { IoAlarm, IoEllipsisHorizontal, IoHeartOutline, IoStar, IoTimer } from "react-icons/io5";
 
 
 const menu = [
@@ -43,8 +44,12 @@ const menu = [
 ];
 
 
-const RestaurantPage = ({ params }: { params: { restaurantId: string, productId: string } }) => {
-     const { restaurantId, productId } = params
+
+
+const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: string, productId: string }> }) => {
+     const { restaurantId, productId } = await params
+     // const restaurantId = (await params).restaurantId
+     // const productId = (await params).productId
 
      return (
           <main className='w-full h-full min-h-screen relative space-y-5'>
