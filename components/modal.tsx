@@ -4,7 +4,7 @@ import { Dialog, DialogOverlay, DialogContent, DialogTitle } from "@/components/
 import { useRouter } from "next/navigation"
 
 
-const ProductModal = ({ children }: { children: React.ReactNode }) => {
+const Modal = ({ children }: { children: React.ReactNode }) => {
      const router = useRouter()
 
      const handleOpenChange = () => {
@@ -21,4 +21,4 @@ const ProductModal = ({ children }: { children: React.ReactNode }) => {
      )
 }
 
-export default ProductModal
+export default Modal

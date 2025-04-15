@@ -1,8 +1,11 @@
+import ProductModal from "@/components/productModal"
 
-const ProductPage2 = () => {
+const ProductPage = async ({ params }: { params: Promise<{ restaurantId: string, productId: string }> }) => {
      return (
-          <div>Actual ProductPage2</div>
+          <>
+               <ProductModal params={params} />
+          </>
      )
 }
 
-export default ProductPage2
+export default ProductPage
