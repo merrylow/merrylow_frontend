@@ -11,7 +11,7 @@ const FavouriteIcon = () => {
                title='favourite button'
                type='button'
                onClick={() => setIsFavorited(prev => !prev)}
-               className='flex items-center justify-center rounded-full transition-colors duration-300'
+               className='flex items-center justify-center rounded-full transition-colors duration-300 border-none outline-none'
           >
                {isFavorited ? (
                     <IoHeart className='size-9 fill-primary-main' />

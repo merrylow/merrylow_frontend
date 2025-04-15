@@ -63,10 +63,10 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                </section>
 
                {/* navigation */}
-               <section className='absolute flex justify-between items-center w-[88%] h-10 top-5 left-1/2 -translate-x-1/2'>
+               <section className='absolute flex justify-between items-center w-[88%] h-10 top-5 left-1/2 -translate-x-1/2 z-50'>
                     <Link
                          href='/restaurants'
-                         className='w-[2.35rem] h-[2.35rem] flex items-center justify-center rounded-full backdrop-blur-md bg-black/60 shadow-[2px_5px_11px_rgba(0,1,0,0.45)] transition-all z-50'>
+                         className='w-[2.35rem] h-[2.35rem] flex items-center justify-center rounded-full backdrop-blur-md bg-black/60 shadow-[2px_5px_11px_rgba(0,1,0,0.45)] transition-all'>
                          <FaChevronLeft className='size-5 fill-gray-pale' />
                     </Link>
 
