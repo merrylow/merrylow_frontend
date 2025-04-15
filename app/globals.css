@@ -81,6 +81,10 @@
      .icon{ 
           @apply size-5 fill-primary-light;
      }
+
+     .bg-overlay {
+          @apply absolute inset-0 bg-gradient-to-t from-black/60 to-black/10 z-10;
+     }
 }
 
 
@@ -133,10 +137,10 @@ img, svg {
      }
 }
 
-data-[state=open] {
+.data-[state=open] {
      animation: slideUp 0.3s ease-out forwards;
 }
 
-data-[state=closed] {
+.data-[state=closed] {
      animation: slideDown 0.3s ease-in forwards;
 }

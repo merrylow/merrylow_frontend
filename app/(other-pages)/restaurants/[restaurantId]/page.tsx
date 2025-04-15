@@ -1,8 +1,8 @@
-import { PageProps } from "@/.next/types/app/(other-pages)/layout";
-import Image from "next/image";
+import FavouriteIcon from "@/components/favouriteIcon"
+import Image from "next/image"
 import Link from 'next/link'
-import { FaChevronLeft } from "react-icons/fa";
-import { IoAlarm, IoEllipsisHorizontal, IoHeartOutline, IoStar, IoTimer } from "react-icons/io5";
+import { FaChevronLeft } from "react-icons/fa"
+import { IoAlarm, IoEllipsisHorizontal, IoHeartOutline, IoStar, IoTimer } from "react-icons/io5"
 
 
 const menu = [
@@ -41,20 +41,19 @@ const menu = [
           price: "₵29.00",
           imgSrc: "/jollof-rice-marg-tee-1094739000-612x612.jpg",
      },
-];
+]
 
 
 
 
 const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: string, productId: string }> }) => {
      const { restaurantId, productId } = await params
-     // const restaurantId = (await params).restaurantId
-     // const productId = (await params).productId
 
      return (
           <main className='w-full h-full min-h-screen relative space-y-5'>
                {/* Restaurant Banner */}
                <section className='w-full h-64 relative rounded-b-3xl overflow-hidden'>
+                    <div className="bg-overlay"></div>
                     <Image
                          src='/Yam and palava sauce-marg-tee.jpg'
                          alt="restaurant banner"
@@ -67,7 +66,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                <section className='absolute flex justify-between items-center w-[88%] h-10 top-5 left-1/2 -translate-x-1/2'>
                     <Link
                          href='/restaurants'
-                         className='w-9 h-9 flex items-center justify-center rounded-full backdrop-blur-md bg-black/20 shadow-[2px_5px_11px_rgba(0,1,0,0.45)] transition-all'>
+                         className='w-9 h-9 flex items-center justify-center rounded-full backdrop-blur-md bg-white/10 shadow-[2px_5px_11px_rgba(0,1,0,0.45)] transition-all'>
                          <FaChevronLeft className='size-5 fill-gray-pale' />
                     </Link>
 
@@ -83,14 +82,14 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                <section className='w-[88%] mx-auto flex flex-col justify-between items-start'>
                     <div className='w-full flex justify-between items-center'>
                          <h1 className='text-xl text-secondary-light font-extrabold'>Restaurant name</h1>
-                         <IoHeartOutline className='size-8' />
+                         <FavouriteIcon />
                     </div>
                     <p className='text-md text-secondary-soft'>Restaurant slogan...</p>
                </section>
 
 
                {/* Quick Info */}
-               <section className='w-[88%] mx-auto flex flex-col text-base font-semibold gap-2.5 text-black-soft'>
+               <section className='w-[88%] mx-auto flex flex-col text-sm font-semibold gap-2.5 text-black-soft'>
                     <div className='flex items-center gap-1'>
                          <IoStar className='icon' /> Excellent 4.5
                     </div>
@@ -117,7 +116,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                                         <p className='text-[13.5px] text-black-pale'>
                                              {item.description}
                                         </p>
-                                        <Link href={`/restaurants/${restaurantId}/product/${productId}`} className="text-[12px] py-1.5 bg-primary-main text-white see-all-btn">
+                                        <Link href={`/restaurants/${restaurantId}/product/${productId}`} className="text-xs py-1.5 bg-primary-main text-white see-all-btn">
                                              Add
                                         </Link>
                                         <span className="text-base text-secondary-soft font-semibold ml-2.5 self-end">
