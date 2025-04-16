@@ -86,21 +86,18 @@ const CartPage = () => {
                                         </div>
                                         <p className='text-xs text-black-soft mt-1'>Snack</p>
                                    </div>
-                                   
-
                               ))}
 
-                         </div>
-                         
+                         </div>       
                     </section>
                </div>
 
                {/* Checkout section */}
                <section className='fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[90%] bg-transparent py-4 flex justify-between items-center'>
-                    <button className='w-full h-11 flex justify-between items-center bg-primary-main text-white font-bold rounded-full text-[15px] shadow-[0_5px_25px_rgba(0,1,0,0.2)] px-7'>
+                    <Link href='/checkout' className='w-full h-11 px-7 flex items-center justify-between font-bold text-[15px] btn'>
                          <span>Go to checkout</span>
                          <span>c25.50</span>
-                    </button>
+                    </Link>
                </section>
      </div>
      )

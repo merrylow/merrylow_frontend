@@ -104,9 +104,9 @@ const ProductModal = async ({ params }: { params: Promise<{ restaurantId: string
                          <section className="fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[88%] bg-transparent py-4 flex justify-between items-center">
                               <QuantitySelector />
 
-                              <button className="w-[55%] h-11 bg-primary-main text-white rounded-full font-bold text-[15px] shadow-[0_5px_25px_rgba(0,1,0,0.2)]">
+                              <Link href='/cart' className="w-[55%] h-11 flex items-center justify-center font-bold text-[15px] btn">
                                    Add to order
-                              </button>
+                              </Link>
                          </section>
                     </div>
                </Modal>

@@ -23,7 +23,7 @@ const QuantitySelector = () => {
           >
                <button 
                     className={pathname === '/cart' 
-                         ? 'w-4.5 h-4.5 flex items-center justify-center bg-primary-main text-white text-md rounded-lg'
+                         ? 'w-4.5 h-4.5 flex items-center justify-center bg-primary-main text-white text-md rounded-md'
                          :'w-6 h-6 flex items-center justify-center bg-primary-main text-white text-md rounded-lg'}
                     onClick={subtractValue}
                     disabled={quantity === 1}
@@ -35,7 +35,7 @@ const QuantitySelector = () => {
                </span>
                <button 
                     className={pathname === '/cart' 
-                         ? 'w-4.5 h-4.5 flex items-center justify-center bg-primary-main text-white text-md rounded-lg' 
+                         ? 'w-4.5 h-4.5 flex items-center justify-center bg-primary-main text-white text-md rounded-md' 
                          :'w-6 h-6 flex items-center justify-center bg-primary-main text-white text-lg rounded-lg'}
                     onClick={addValue}
                >
