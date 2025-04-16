@@ -28,7 +28,7 @@ const ProductModal = async ({ params }: { params: Promise<{ restaurantId: string
                               <section className="fixed flex justify-start items-center w-[88%] h-10 top-36 left-1/2 -translate-x-1/2 z-50">
                                    <Link
                                         href={`/restaurants/${restaurantId}`}
-                                        className='w-[2.35rem] h-[2.35rem] flex items-center justify-center rounded-full backdrop-blur-md bg-black/60 shadow-[2px_5px_11px_rgba(0,1,0,0.45)] transition-all'
+                                        className='navigation-btn'
                                         aria-label='Go back'
                                    >
                                         <FaChevronLeft className='size-5 fill-gray-pale' />

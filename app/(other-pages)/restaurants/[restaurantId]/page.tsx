@@ -72,8 +72,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
 
                     <button 
                          title='more options' 
-                         className='w-[2.35rem] h-[2.35rem] flex items-center justify-center rounded-full backdrop-blur-md bg-black/60 shadow-[2px_5px_11px_rgba(0,1,0,0.45)] transition-all'
-                         aria-label='more options button z-50'>
+                         className='navigation-btn'>
                          <IoEllipsisHorizontal className='size-6 fill-gray-pale' />
                     </button>
                </section>
