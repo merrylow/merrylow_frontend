@@ -29,7 +29,7 @@ const ProductModal = async ({ params }: { params: Promise<{ restaurantId: string
                                    <Link
                                         href={`/restaurants/${restaurantId}`}
                                         className='navigation-btn'
-                                        aria-label='Go back'
+                                        aria-label='back button'
                                    >
                                         <FaChevronLeft className='size-5 fill-gray-pale' />
                                    </Link>

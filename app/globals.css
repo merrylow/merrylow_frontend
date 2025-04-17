@@ -36,7 +36,7 @@
      --text-md: 1.063rem; /* 17px */
      --text-lg: 1.25rem; /* 20px */
      --text-xl: 1.7rem; /* 27.2px */
-     --text-2xl: 1.9rem;
+     --text-2xl: 1.95rem;
 }
 
 
@@ -50,7 +50,7 @@
      }
 
      .navigation-btn {
-          @apply w-[2.35rem] h-[2.35rem] flex items-center justify-center rounded-full backdrop-blur-md bg-black/60 shadow-[2px_5px_11px_rgba(0,1,0,0.45)] transition-all;
+          @apply w-[2.39rem] h-[2.39rem] flex items-center justify-center rounded-full backdrop-blur-md bg-black/10 shadow-[2px_5px_11px_rgba(0,1,0,0.45)] transition-all;
      }
 }
 

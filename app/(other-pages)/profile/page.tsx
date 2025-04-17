@@ -6,9 +6,9 @@ import { FaUser, FaShoppingBag, FaHourglassHalf, FaMapMarkerAlt, FaCreditCard, F
 const ProfilePage = () => {
      return (
           <div className='min-h-screen w-full flex flex-col justify-around items-center'>
-               <div className='w-[88%] flex flex-col gap-12 mt-5'>
+               <div className='w-[88%] flex flex-col gap-10'>
                     <section className='flex flex-col items-center space-y-3 text-center'>
-                         <FaUserCircle className='text-secondary-pale size-12' />
+                         <FaUserCircle className='text-secondary-pale size-24' />
                          <div>
                               <h2 className='text-md font-bold text-black'>Username</h2>
                               <p className='text-sm text-gray-500'>email</p>
@@ -59,7 +59,7 @@ const ProfilePage = () => {
                     </section>
 
                     <section>
-                         <button className='w-full h-11 flex items-center justify-center space-x-3 btn'>
+                         <button className='w-full h-11 flex items-center justify-center space-x-2.5 btn'>
                               <FaSignOutAlt />
                               <span>Log out</span>
                          </button>
