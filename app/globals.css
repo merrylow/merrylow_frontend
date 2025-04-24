@@ -86,7 +86,7 @@
      }
 
      .bg-overlay {
-          @apply absolute inset-0 bg-gradient-to-t from-secondary-main/90 to-secondary-main/20 z-10;
+          @apply absolute inset-0 bg-gradient-to-t from-secondary-main/80 to-secondary-main/10 z-10;
      }
 }
 

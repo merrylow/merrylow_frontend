@@ -95,8 +95,8 @@ const ProfilePage = () => {
          <div className='min-h-screen flex flex-col items-center bg-white'>
               {/* Top Section */}
               <section
-                  className='relative h-[30vh] w-full bg-no-repeat bg-cover bg-center rounded-b-3xl flex flex-col justify-end pb-14 text-white'
-                  style={{ backgroundImage: `linear-gradient( rgba(19, 19, 38, 0.75), rgba(19, 19, 38, 0.95) ), url('/jollof-rice-marg-tee-1094739000-612x612.jpg')` }}>
+                  className='relative h-[30vh] w-full bg-no-repeat bg-cover bg-center rounded-b-3xl flex flex-col justify-end pb-13 text-white'
+                  style={{ backgroundImage: `linear-gradient( rgba(19, 19, 38, 0.65), rgba(19, 19, 38, 0.95) ), url('/360_F_351024684_qRJBZa0XlvKs5bKDHVqlcbVF2ux4tDga.jpg')` }}>
                    <div className='w-[88%] mx-auto'>
                         <h1 className='text-3xl font-bold  mb-2'>Welcome back</h1>
                         <p className='text-sm'>
@@ -106,7 +106,7 @@ const ProfilePage = () => {
               </section>
 
               {/* Bottom Section */}
-              <section className='h-[50vh] w-[88%] max-w-md mt-3 flex flex-col justify-evenly'>
+              <section className='h-[50vh] w-[88%] max-w-md mt-1.5S flex flex-col justify-evenly'>
                    <div className='space-y-5'>
                         <form>
                              <label htmlFor='email' className='font-medium'>
@@ -115,13 +115,14 @@ const ProfilePage = () => {
                              <input
                                  id='email'
                                  type='email'
-                                 placeholder='example@gmail.com'
-                                 className='mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+                                 name='email'
+                                 placeholder='Enter your email...'
+                                 className='mt-1 w-full px-4 py-2 border border-gray rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-light'
                                  autoComplete='email'
                              />
                         </form>
 
-                        <button className='w-full py-2 mb-7 bg-primary-light text-white rounded-full text-lg font-semibold'>
+                        <button className='w-full h-11 mb-7 bg-primary-light text-white rounded-full font-semibold'>
                              Next
                         </button>
 
@@ -129,7 +130,7 @@ const ProfilePage = () => {
                              <span className="px-2">or Sign in with Email</span>
                         </div>
 
-                        <button className='w-full py-2.5 border border-gray-300 rounded-full flex items-center justify-center space-x-2'>
+                        <button className='w-full h-11 border border-gray-300 rounded-full flex items-center justify-center space-x-2'>
                              <FcGoogle className='size-5' />
                              <span className='text-sm font-medium'>Continue with Google</span>
                         </button>
