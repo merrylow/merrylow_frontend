@@ -1,9 +1,8 @@
-import BackButton from "@/components/backButton"
 import FavouriteIcon from "@/components/favouriteIcon"
 import Image from "next/image"
 import Link from 'next/link'
 import { FaChevronLeft } from "react-icons/fa"
-import { IoAlarm, IoEllipsisHorizontal, IoHeartOutline, IoStar, IoTimer } from "react-icons/io5"
+import { IoAlarm, IoEllipsisHorizontal, IoStar, IoTimer } from "react-icons/io5"
 
 
 const menu = [
@@ -65,7 +64,13 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
 
                {/* navigation */}
                <section className='absolute flex justify-between items-center w-[88%] h-10 top-5 left-1/2 -translate-x-1/2 z-50'>
-                    <BackButton />
+                    <Link
+                         href={`/restaurants/${restaurantId}`}
+                         className='navigation-btn'
+                         aria-label='back button'
+                    >
+                         <FaChevronLeft className='size-5 fill-gray-pale' />
+                    </Link>
 
                     <button 
                          title='more options' 

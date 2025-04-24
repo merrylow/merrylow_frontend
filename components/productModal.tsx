@@ -38,7 +38,6 @@ const ProductModal = async ({ params }: { params: Promise<{ restaurantId: string
 
                               {/* Main Content */}
                               <section className="flex-1 w-[88%] mx-auto mt-6 space-y-6 pb-32">
-
                                    {/* Product Info */}
                                    <div className="flex justify-between items-start">
                                         <div>
