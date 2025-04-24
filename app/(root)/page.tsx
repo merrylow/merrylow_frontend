@@ -1,18 +1,24 @@
 import AdCarousel from "@/components/adCarousel"
 import Link from "next/link"
 import Card from "@/components/card"
+import {auth} from "@/lib/auth";
 
 
 
-const Home = () => {
-
-
+const Home = async () => {
+    const session = await auth()
 
   return (
     <main className='w-full mx-auto min-h-screen space-y-10'>
         {/* ad carousel */}
-        <section className="w-[90%] h-[14rem] min-h-[14.375rem] mx-auto mb-16 rounded-[18px]">
-          <AdCarousel />
+        <section className="w-[90%] h-[16rem] min-h-[16.375rem] flex flex-col space-y-2.5 mx-auto mt-1.5 mb-16 rounded-[18px]">
+            <h1 className={session
+                ? 'text-lg font-semibold'
+                : 'hidden'}
+            >
+                Hello {session?.user?.name}
+            </h1>
+            <AdCarousel />
         </section>
 
 

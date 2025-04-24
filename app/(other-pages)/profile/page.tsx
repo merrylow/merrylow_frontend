@@ -2,7 +2,7 @@
 import { FaUser, FaShoppingBag, FaHourglassHalf, FaMapMarkerAlt, FaCreditCard, FaEnvelope, FaCog, FaQuestionCircle, FaSignOutAlt, FaUserCircle } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import Link from 'next/link'
-import {auth, signIn} from '@/lib/auth'
+import {auth, signIn, signOut} from '@/lib/auth'
 
 
 const ProfilePage = async () => {
@@ -11,12 +11,12 @@ const ProfilePage = async () => {
      if (session) {
           return (
                <div className='min-h-screen w-full flex flex-col justify-around items-center'>
-                    <div className='w-[88%] flex flex-col gap-10'>
-                         <section className='flex flex-col items-center space-y-3 text-center'>
-                              <FaUserCircle className='text-secondary-pale size-24' />
+                    <div className='w-[88%] flex flex-col gap-12 mt-10'>
+                         <section className='flex flex-col space-y-3'>
+                              {/*<FaUserCircle className='text-secondary-pale size-24' />*/}
                               <div>
-                                   <h2 className='text-md font-bold text-black'>Username</h2>
-                                   <p className='text-sm text-gray-500'>email</p>
+                                   <h2 className='text-lg font-bold text-black'>{session?.user?.name}</h2>
+                                   <p className='text-sm text-gray-500'>{session?.user?.email}</p>
                               </div>
                          </section>
 
@@ -64,10 +64,16 @@ const ProfilePage = async () => {
                          </section>
 
                          <section>
-                              <button className='w-full h-11 flex items-center justify-center space-x-2.5 btn'>
-                                   <FaSignOutAlt />
-                                   <span>Log out</span>
-                              </button>
+                              <form action={async () => {
+                                   'use server'
+
+                                   await signOut()
+                              }}>
+                                   <button className='w-full h-11 flex items-center justify-center space-x-2.5 btn' type='submit'>
+                                        <FaSignOutAlt />
+                                        <span>Log out</span>
+                                   </button>
+                              </form>
                          </section>
 
                     </div>
@@ -98,7 +104,7 @@ const ProfilePage = async () => {
 
               {/* Bottom Section */}
               <section className='h-[50vh] w-[88%] max-w-md mt-1.5S flex flex-col justify-evenly'>
-                   <div className='space-y-5'>
+                   <div className='space-y-10'>
                         <form>
                              <label htmlFor='email' className='font-medium'>
                                   Email
