@@ -107,8 +107,8 @@ const SignOutButton = () => {
         try {
             await signOut()
         } catch (error) {
-            toast.error('Sign in failed. Try again')
-            console.error('Sign in failed', error)
+            toast.error('Sign out failed. Try again')
+            console.error('Sign out failed', error)
             setLoading(false)
         }
     }

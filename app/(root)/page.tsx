@@ -4,7 +4,6 @@ import Card from "@/components/card"
 import {auth} from "@/lib/auth";
 
 
-
 const Home = async () => {
     const session = await auth()
 
@@ -12,12 +11,15 @@ const Home = async () => {
     <main className='w-full mx-auto min-h-screen space-y-10'>
         {/* ad carousel */}
         <section className="w-[90%] h-[16rem] min-h-[16.375rem] flex flex-col space-y-2.5 mx-auto mt-1.5 mb-16 rounded-[18px]">
-            <h1 className={session
-                ? 'text-md font-semibold'
-                : 'hidden'}
-            >
-                Hello {session?.user?.name}
-            </h1>
+            {session ?
+                (
+                    <h1 className={session
+                        ? 'text-md font-semibold'
+                        : 'hidden'}
+                    >
+                        Hello {session?.user?.name}
+                    </h1>
+                ) : null}
             <AdCarousel />
         </section>
 

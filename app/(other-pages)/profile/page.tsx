@@ -3,14 +3,12 @@ import { FaUser, FaShoppingBag, FaHourglassHalf, FaMapMarkerAlt, FaCreditCard, F
 import Link from 'next/link'
 import { auth } from '@/lib/auth'
 import { EmailSignInButton, GoogleSignInButton, SignOutButton } from '@/components/authButtons'
-import { toast } from 'react-hot-toast'
 
 
 const ProfilePage = async () => {
      const session = await auth()
 
      if (session) {
-          // toast.success(`Welcome ${session.user?.name}`)
 
           return (
                <div className='min-h-screen w-full flex flex-col justify-around items-center'>
