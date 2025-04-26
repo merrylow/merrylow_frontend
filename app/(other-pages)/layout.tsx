@@ -2,6 +2,7 @@ import React from 'react'
 import type { Metadata } from "next";
 import { Rubik, Inter,  } from "next/font/google";
 import "../globals.css";
+import { Toaster } from 'react-hot-toast'
 
 
 
@@ -41,6 +42,7 @@ const OtherLayout = ({
                <body>
                     {children}
                     {modal}
+                    <Toaster />
                </body>
           </html>
      )

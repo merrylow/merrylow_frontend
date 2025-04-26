@@ -13,7 +13,7 @@ const Home = async () => {
         {/* ad carousel */}
         <section className="w-[90%] h-[16rem] min-h-[16.375rem] flex flex-col space-y-2.5 mx-auto mt-1.5 mb-16 rounded-[18px]">
             <h1 className={session
-                ? 'text-lg font-semibold'
+                ? 'text-md font-semibold'
                 : 'hidden'}
             >
                 Hello {session?.user?.name}

@@ -1,14 +1,17 @@
 ﻿import BottomNav from '@/components/bottomNav'
-import { FaUser, FaShoppingBag, FaHourglassHalf, FaMapMarkerAlt, FaCreditCard, FaEnvelope, FaCog, FaQuestionCircle, FaSignOutAlt, FaUserCircle } from 'react-icons/fa'
-import { FcGoogle } from 'react-icons/fc'
+import { FaUser, FaShoppingBag, FaHourglassHalf, FaMapMarkerAlt, FaCreditCard, FaEnvelope, FaCog, FaQuestionCircle } from 'react-icons/fa'
 import Link from 'next/link'
-import {auth, signIn, signOut} from '@/lib/auth'
+import { auth } from '@/lib/auth'
+import { EmailSignInButton, GoogleSignInButton, SignOutButton } from '@/components/authButtons'
+import { toast } from 'react-hot-toast'
 
 
 const ProfilePage = async () => {
      const session = await auth()
 
      if (session) {
+          // toast.success(`Welcome ${session.user?.name}`)
+
           return (
                <div className='min-h-screen w-full flex flex-col justify-around items-center'>
                     <div className='w-[88%] flex flex-col gap-12 mt-10'>
@@ -64,16 +67,7 @@ const ProfilePage = async () => {
                          </section>
 
                          <section>
-                              <form action={async () => {
-                                   'use server'
-
-                                   await signOut()
-                              }}>
-                                   <button className='w-full h-11 flex items-center justify-center space-x-2.5 btn' type='submit'>
-                                        <FaSignOutAlt />
-                                        <span>Log out</span>
-                                   </button>
-                              </form>
+                              <SignOutButton />
                          </section>
 
                     </div>
@@ -89,7 +83,7 @@ const ProfilePage = async () => {
 
 
      return (
-         <div className='min-h-screen flex flex-col items-center bg-white'>
+         <div className='min-h-screen flex flex-col items-center space-y-2.5'>
               {/* Top Section */}
               <section
                   className='relative h-[30vh] w-full bg-no-repeat bg-cover bg-center rounded-b-3xl flex flex-col justify-end pb-13 text-white'
@@ -103,48 +97,35 @@ const ProfilePage = async () => {
               </section>
 
               {/* Bottom Section */}
-              <section className='h-[50vh] w-[88%] max-w-md mt-1.5S flex flex-col justify-evenly'>
-                   <div className='space-y-10'>
-                        <form>
-                             <label htmlFor='email' className='font-medium'>
-                                  Email
-                             </label>
+              <section className='h-[45vh] w-[88%] max-w-md flex flex-col justify-evenly'>
+                   <form className='flex flex-col space-y-5'>
+                        <label htmlFor='email' className='font-medium'>
+                             Email
                              <input
                                  id='email'
                                  type='email'
                                  name='email'
                                  placeholder='Enter your email...'
-                                 className='mt-1 w-full px-4 py-2 border border-gray rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-light'
+                                 className='mt-1 w-full px-4 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-2 focus:ring-primary-light'
                                  autoComplete='email'
+                                 required
                              />
-                             <button className='w-full h-11 mb-7 bg-primary-light text-white rounded-full font-semibold' type='submit'>
-                                  Next
-                             </button>
-                        </form>
+                        </label>
 
-
-                        <div className='flex items-center justify-center text-sm text-gray-400'>
-                             <span className="px-2">or Sign in with Email</span>
+                        <div className='space-y-2'>
+                             <EmailSignInButton />
+                             <p className='text-sm text-gray-500'>
+                                  Don't have an account? <Link href='/auth/sign-up' className='text-primary-main font-medium'>Sign up</Link>
+                             </p>
                         </div>
+                   </form>
 
+
+                   <div className='flex items-center justify-center text-sm text-gray-400'>
+                        <span className="px-2">or Sign in with Google</span>
                    </div>
 
-                   {/*sign in with google*/}
-                   <div>
-                        <form action={async () => {
-                             'use server'
-                             await signIn('google')
-                        }}>
-                             <button className='w-full h-11 border border-gray-300 rounded-full flex items-center justify-center space-x-2' type='submit'>
-                                  <FcGoogle className='size-5' />
-                                  <span className='text-sm font-medium'>Continue with Google</span>
-                             </button>
-                        </form>
-                   </div>
-
-                   <p className='text-sm text-gray-500'>
-                        Don't have an account? <Link href='/auth/sign-up' className='text-primary-main font-medium'>Sign up</Link>
-                   </p>
+                    <GoogleSignInButton />
               </section>
 
               <div>
@@ -154,8 +135,6 @@ const ProfilePage = async () => {
 
 
      )
-
-
 }
 
 export default ProfilePage

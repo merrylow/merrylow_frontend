@@ -4,6 +4,7 @@ import { Rubik, Inter,  } from "next/font/google";
 import "../globals.css";
 import Navbar from "@/components/navbar";
 import BottomNav from "@/components/bottomNav";
+import { Toaster } from 'react-hot-toast'
 
 
 const rubik = Rubik({
@@ -43,6 +44,8 @@ export default function RootLayout({
         <Navbar />
           {children}
         <BottomNav />
+
+        <Toaster />
       </body>
     </html>
   );
