@@ -165,7 +165,7 @@ const Carousel = React.forwardRef<
           {children}
 
            {/* Indicator container */}
-          <div className="absolute top-[21.8rem] left-1/2 flex -translate-x-1/2  space-x-2.5">
+          <div className="absolute top-[21.5rem] left-1/2 flex -translate-x-1/2  space-x-2.5">
             {images.map((_, index) => (
               <button
                 key={index}
