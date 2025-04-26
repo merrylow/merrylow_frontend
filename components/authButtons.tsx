@@ -5,7 +5,6 @@ import { FcGoogle } from 'react-icons/fc';
 import { signIn, signOut } from 'next-auth/react'
 import { toast } from 'react-hot-toast'
 import { FaSignOutAlt } from 'react-icons/fa'
-import { useSession } from 'next-auth/react'
 // import SessionWrapper from '@/components/client/sessionWrapper';
 
 
@@ -30,7 +29,7 @@ const GoogleSignInButton = () => {
     return (
         // <SessionWrapper>
             <button
-                onClick={handleSignIn}
+                onClick={() => handleSignIn()}
                 className='w-full h-11 border border-gray-300 rounded-full flex items-center justify-center space-x-2'
                 type='submit'
                 disabled={loading}
@@ -76,7 +75,7 @@ const EmailSignInButton = () => {
     return (
         // <SessionWrapper>
             <button
-                onClick={handleSignOut}
+                onClick={() => handleSignOut}
                 className='w-full h-11 bg-primary-light text-white rounded-full font-semibold'
                 type='submit'
             >
@@ -116,7 +115,7 @@ const SignOutButton = () => {
     return (
         // <SessionWrapper>
             <button
-                onClick={handleSignOut}
+                onClick={() => handleSignOut}
                 className='w-full h-11 flex items-center justify-center space-x-2.5 btn'
                 disabled={loading}
                 type='submit'
