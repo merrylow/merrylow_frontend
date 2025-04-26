@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic'
 const ProfilePage = async () => {
      const session = await auth()
 
-     if (session) {
+     if (session?.user) {
 
           return (
                <div className='min-h-screen w-full flex flex-col justify-around items-center'>
