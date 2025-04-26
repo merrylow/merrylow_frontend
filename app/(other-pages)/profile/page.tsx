@@ -5,6 +5,9 @@ import { auth } from '@/lib/auth'
 import { EmailSignInButton, GoogleSignInButton, SignOutButton } from '@/components/authButtons'
 
 
+export const dynamic = 'force-dynamic'
+
+
 const ProfilePage = async () => {
      const session = await auth()
 
