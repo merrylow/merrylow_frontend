@@ -4,8 +4,7 @@ import Nodemailer from 'next-auth/providers/nodemailer'
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
-        Google,
-
+        Google
     ],
     pages: {
         signIn: "/profile",

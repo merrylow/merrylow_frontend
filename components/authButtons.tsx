@@ -18,7 +18,7 @@ const GoogleSignInButton = () => {
          try {
              await signIn('google')
              // if (!session?.user) return null
-             toast.success(`Welcome`)
+             // toast.success(`Welcome`)
          } catch (error) {
              toast.error('Sign in failed. Try again')
              console.error('Sign in failed', error)
