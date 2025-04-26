@@ -58,11 +58,11 @@ const EmailSignInButton = () => {
     const [loading, setLoading] = useState(false)
     // const { data: session } = useSession()
 
-    const handleSignOut = async () => {
+    const handleSignIn = async () => {
         setLoading(true)
 
         try {
-            await signOut()
+            // await signIn()
             // if (!session?.user) return null
             // toast.success(`Welcome ${session?.user?.name}`)
         } catch (error) {
@@ -75,7 +75,7 @@ const EmailSignInButton = () => {
     return (
         // <SessionWrapper>
             <button
-                onClick={handleSignOut}
+                onClick={handleSignIn}
                 className='w-full h-11 bg-primary-light text-white rounded-full font-semibold'
                 type='submit'
             >
