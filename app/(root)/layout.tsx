@@ -4,8 +4,8 @@ import { Rubik, Inter,  } from "next/font/google";
 import "../globals.css";
 import Navbar from "@/components/navbar";
 import BottomNav from "@/components/bottomNav";
-import { Toaster } from 'react-hot-toast'
-
+// import { Toaster } from 'react-hot-toast'
+import { Toaster } from '@/components/ui/sonner'
 
 const rubik = Rubik({
   subsets: ['latin'],

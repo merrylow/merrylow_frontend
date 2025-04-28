@@ -1,7 +1,7 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import QuantitySelector from '@/components/quantitySelector'
-import { FaChevronLeft } from 'react-icons/fa'
+import BackButton from '@/components/backButton'
+import { GoToCheckoutButton } from '@/components/orderButtons'
 
 
 const orderItems = [
@@ -19,9 +19,7 @@ const orderItems = [
 ]
 
 
-
 const CartPage = () => {
-
 
      return (
           <div className='w-full h-full flex flex-col overflow-hidden'>
@@ -31,17 +29,13 @@ const CartPage = () => {
                          <h1 className='text-lg text-secondary-light font-bold'>Your order</h1>
                     </section>
                     
-                    <section className='fixed flex justify-start items-center w-[90%] h-10 top-3.5 left-1/2 -translate-x-1/2 z-50'>
-                         <Link href='/restaurants' aria-label='back button'>
-                              <FaChevronLeft className='size-5 text-seconday-soft' />
-                         </Link>
+                    <section className='fixed flex justify-start items-center w-[90%] h-10 top-3 left-1/2 -translate-x-1/2 z-50'>
+                         <BackButton />
                     </section>
 
 
                     {/* Order Items */}
-                    <section className='w-[90%] mx-auto mt-7'>
-                         <h2 className='text-md text-secondary-light font-semibold mb-3'>Order items</h2>
-
+                    <section className='w-[90%] mx-auto mt-6'>
                          {Array(4).fill(0).map((_, i) => (
                               <div className='flex justify-between items-start space-y-2 bg-white mb-3' key={i}>
                                    <div className='flex gap-3'>
@@ -95,10 +89,7 @@ const CartPage = () => {
 
                {/* Checkout section */}
                <section className='fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[90%] bg-transparent py-4 flex justify-between items-center'>
-                    <Link href='/checkout' className='w-full h-12 px-7 flex items-center justify-between font-bold text-[15px] btn'>
-                         <span>Go to checkout</span>
-                         <span>c25.50</span>
-                    </Link>
+                    <GoToCheckoutButton />
                </section>
      </div>
      )

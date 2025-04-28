@@ -14,10 +14,10 @@ const Home = async () => {
             {session ?
                 (
                     <h1 className={session
-                        ? 'text-md font-semibold'
+                        ? 'text-lg font-semibold'
                         : 'hidden'}
                     >
-                        Hello {session?.user?.name}
+                        Hello {(session?.user?.name)?.split(' ')[0]} 👋🏽
                     </h1>
                 ) : null}
             <AdCarousel />

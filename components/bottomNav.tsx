@@ -12,11 +12,11 @@ const BottomNav = () => {
      const pathname = usePathname();
 
      return (
-          <section className="fixed left-1/2 transform -translate-x-1/2 bottom-4 w-[92%] glass h-[4.65em] flex items-center justify-center text-sm shadow-2xl rounded-[20px]">
-               <div className="w-full flex justify-between items-center px-4 py-2">
+          <section className="fixed left-1/2 transform -translate-x-1/2 bottom-4 w-[92%] glass h-[4.66em] flex items-center justify-center text-sm shadow-2xl rounded-[20px]">
+               <div className="w-full flex justify-between items-center px-4 py-2.5">
                     <Link
                          href="/"
-                         className={`flex flex-col items-center hover:text-primary-light ${
+                         className={`flex flex-col items-center hover:text-primary-light gap-1 ${
                               pathname === "/" ? "text-primary-main" : "text-black-light"
                          }`}
                     >
@@ -26,7 +26,7 @@ const BottomNav = () => {
 
                     <Link
                          href="/restaurants"
-                         className={`w-[16%] flex flex-col items-center hover:text-primary-light ${
+                         className={`w-[16%] flex flex-col items-center hover:text-primary-light gap-1 ${
                               pathname === "/restaurants" ? "text-primary-main" : "text-black-light"
                          }`}
                     >
@@ -37,7 +37,7 @@ const BottomNav = () => {
 
                     <Link
                          href="/cart"
-                         className={`flex flex-col items-center hover:text-primary-light ${
+                         className={`flex flex-col items-center hover:text-primary-light gap-1 ${
                               pathname === "/cart" ? "text-primary-main" : "text-black-light"
                          }`}
                     >
@@ -47,7 +47,7 @@ const BottomNav = () => {
 
                     <Link
                          href="/profile"
-                         className={`flex flex-col items-center hover:text-primary-light ${
+                         className={`flex flex-col items-center hover:text-primary-light gap-1 ${
                               pathname === "/profile" ? "text-primary-main" : "text-black-light"
                          }`}
                     >

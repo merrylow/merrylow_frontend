@@ -1,9 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { FaChevronLeft } from "react-icons/fa6"
+import { FaChevronLeft } from 'react-icons/fa6'
 import QuantitySelector from './quantitySelector'
 import Modal from "./modal"
 import FavouriteIcon from './favouriteIcon'
+import { AddToOrderButton } from '@/components/orderButtons'
 
 const ProductModal = async ({ params }: { params: Promise<{ restaurantId: string, productId: string }> }) => {
      const { restaurantId, productId } = await params
@@ -103,9 +104,7 @@ const ProductModal = async ({ params }: { params: Promise<{ restaurantId: string
                          <section className="fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[88%] bg-transparent py-4 flex justify-between items-center">
                               <QuantitySelector />
 
-                              <Link href='/cart' className="w-[55%] h-11 flex items-center justify-center font-bold text-[15px] btn">
-                                   Add to order
-                              </Link>
+                              <AddToOrderButton />
                          </section>
                     </div>
                </Modal>
