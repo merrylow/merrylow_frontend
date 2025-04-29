@@ -1,9 +1,9 @@
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label';
 import BackButton from '@/components/backButton'
 import { PlaceOrderButton } from '@/components/orderButtons'
-import PaymentMethodSelector from '@/components/paymentMethodSelector';
+import PaymentMethodSelector from '@/components/paymentMethodSelector'
+import DeliveryNotes from '@/components/deliveryNotes'
 
 const CheckoutPage = () => {
 
@@ -19,15 +19,15 @@ const CheckoutPage = () => {
               </section>
 
               <section className='w-full flex-1 overflow-x-auto'>
-                   <div className="min-w-full flex flex-col items-center space-y-3">
+                   <div className='min-w-full flex flex-col items-center space-y-3'>
                         {/* Personal Information Form Section */}
-                        <div className="w-[88%] space-y-3 mt-5">
-                             {/*<h2 className="text-md font-semibold mt-4">Personal Information</h2>*/}
+                        <div className='w-[88%] space-y-3'>
+                             <h2 className="text-md font-semibold mt-4">Customer Details</h2>
 
-                             <form className="space-y-11">
+                             <form className='space-y-11'>
                                   <section className='w-full space-y-7'>
                                        <div>
-                                            <Label htmlFor="firstName" className="block text-base font-semibold text-secondary-soft mb-1">
+                                            <Label htmlFor='firstName' className='block text-base font-semibold text-secondary-soft mb-1'>
                                                  First Name
                                             </Label>
                                             <Input
@@ -40,7 +40,7 @@ const CheckoutPage = () => {
                                             />
                                        </div>
                                        <div>
-                                            <Label htmlFor="lastName" className="block text-base font-semibold text-secondary-soft mb-1">Last Name</Label>
+                                            <Label htmlFor='lastName' className='block text-base font-semibold text-secondary-soft mb-1'>Last Name</Label>
                                             <Input
                                                 id='lastName'
                                                 type='text'
@@ -51,13 +51,13 @@ const CheckoutPage = () => {
                                             />
                                        </div>
                                        <div>
-                                            <Label htmlFor="location" className="block text-base font-semibold text-secondary-soft mb-1">Location</Label>
+                                            <Label htmlFor='location' className='block text-base font-semibold text-secondary-soft mb-1'>Location</Label>
                                             <Input
                                                 id='location'
                                                 type='text'
                                                 name='location'
                                                 placeholder='Enter the name of your hall/department'
-                                                className='mt-1 w-full pl-3 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/30'
+                                                className='mt-1 w-full pl-3 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/30 placeholder-gray'
                                                 required
                                             />
                                        </div>
@@ -68,23 +68,14 @@ const CheckoutPage = () => {
                                                 type='tel'
                                                 name='phone'
                                                 placeholder='Enter your phone number'
-                                                className='mt-1 w-full pl-3 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/30'
+                                                className='mt-1 w-full pl-3 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/30 placeholder-gray'
                                                 autoComplete='tel'
                                                 required
                                             />
                                        </div>
-                                  </section>
-
-                                  {/* Additional Information Section */}
-                                  <section className="w-full">
-                                       <h2 className="text-md font-semibold">Additional Information</h2>
                                        <div>
-                                            <Label htmlFor="notes" className="block text-base font-semibold text-secondary-soft mb-1">Delivery notes (optional)</Label>
-                                            <Textarea
-                                                id="notes"
-                                                placeholder="Special instructions for delivery, etc."
-                                                className=" w-full min-h-[120px] border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/30"
-                                            />
+                                            <Label htmlFor='notes' className='block text-base font-semibold text-secondary-soft mb-1.5'>Delivery notes (optional)</Label>
+                                             <DeliveryNotes />
                                        </div>
                                   </section>
 
@@ -99,20 +90,20 @@ const CheckoutPage = () => {
 
 
                         {/* Order Summary Section */}
-                        <div className="w-[88%]">
-                             <h2 className="text-md font-semibold mb-3.5">Your Order</h2>
-                             <div className="text-base text-secondary-soft space-y-3">
+                        <div className='w-[88%]'>
+                             <h2 className='text-md font-semibold mb-3.5'>Your Order</h2>
+                             <div className='text-base text-secondary-soft space-y-3'>
                                   <div className='flex justify-between py-2 border-b border-b-gray-pale'>
                                        <span className='font-medium'>Product</span>
                                        <span className='text-sm'>Meal name - Regular x 1</span>
                                   </div>
-                                  <div className="flex justify-between py-2 border-b border-b-gray-pale">
-                                       <span className="font-medium">Vendor</span>
+                                  <div className='flex justify-between py-2 border-b border-b-gray-pale'>
+                                       <span className='font-medium'>Vendor</span>
                                        <span className='text-sm'>Vendor name</span>
                                   </div>
-                                  <div className="flex justify-between text-md text-secondary-soft py-2 mt-3">
-                                       <span className="font-semibold">Total</span>
-                                       <span className="font-semibold text-primary-main">₵40.00</span>
+                                  <div className='flex justify-between text-md text-secondary-soft py-2 mt-3'>
+                                       <span className='font-semibold'>Total</span>
+                                       <span className='font-semibold text-primary-main'>₵40.00</span>
                                   </div>
                              </div>
                         </div>

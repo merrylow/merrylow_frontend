@@ -1,35 +1,29 @@
 'use client'
 
-// import Link from 'next/link';
+import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation'
 import { FaChevronLeft } from 'react-icons/fa'
 import clsx from 'clsx'
 
 const BackButton = () => {
-    const router = useRouter()
     const pathname = usePathname()
-    let backText = ''
+    let href = ''
 
     if (pathname === '/checkout') {
-        backText = 'Cart'
+        href = '/cart'
     } else if (pathname === '/cart') {
-        backText = 'Restaurant'
+        href = `/restaurants` // make it point to dynamic restaurant storefront
     }
 
     return (
-        <button
-            onClick={() => router.back()}
-            className={clsx('w-8 h-8 flex items-center justify-center rounded-full bg-transparent z-50 cursor-pointer', {'ml-3 text-primary-light': pathname === '/checkout', 'ml-8 text-primary-light': pathname === '/cart'})}
+        <Link
+            href={href}
+            className={clsx('w-8 h-8 flex items-center justify-center rounded-full bg-transparent z-50 cursor-pointer', {'-ml-1 text-primary-main/80': pathname === '/checkout', '-ml-2 text-primary-main/70': pathname === '/cart'})}
             type='button'
             aria-label='back button'
         >
-            <span>
-                <FaChevronLeft className='size-5 icon' />
-            </span>
-            <span className='text-md pt-0.5'>
-                {backText}
-            </span>
-        </button>
+            <FaChevronLeft className='size-5 fill-primary-main/60' />
+        </Link>
     )
 }
 

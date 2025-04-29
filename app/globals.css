@@ -81,7 +81,7 @@
           @apply h-[80%] flex items-center bg-transparent overflow-x-auto space-x-4 pb-5 px-2 scroll-smooth snap-x snap-mandatory shadow-2xl;
      }
 
-     .icon{ 
+     .icon{
           @apply size-5 fill-primary-light;
      }
 
