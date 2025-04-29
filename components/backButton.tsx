@@ -19,7 +19,7 @@ const BackButton = () => {
     return (
         <button
             onClick={() => router.back()}
-            className={clsx('w-8 h-8 flex items-center justify-center rounded-full bg-transparent z-50 cursor-pointer', {'ml-2 text-primary-light': pathname === '/checkout', 'ml-8 text-primary-light': pathname === '/cart'})}
+            className={clsx('w-8 h-8 flex items-center justify-center rounded-full bg-transparent z-50 cursor-pointer', {'ml-3 text-primary-light': pathname === '/checkout', 'ml-8 text-primary-light': pathname === '/cart'})}
             type='button'
             aria-label='back button'
         >

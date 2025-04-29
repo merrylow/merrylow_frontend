@@ -1,6 +1,6 @@
 import React from 'react'
 import type { Metadata } from "next";
-import { Rubik, Inter,  } from "next/font/google";
+import { Rubik, Inter, Nunito_Sans } from "next/font/google";
 import "../globals.css";
 import { Toaster } from 'react-hot-toast'
 
@@ -12,6 +12,11 @@ const rubik = Rubik({
 });
 
 const inter = Inter({
+     subsets: ['latin'],
+     display: 'swap',
+})
+
+const nunitoSans = Nunito_Sans({
      subsets: ['latin'],
      display: 'swap',
 })
@@ -38,7 +43,7 @@ const OtherLayout = ({
      modal: React.ReactNode
 }) => {
      return (
-          <html lang='en' className={inter.className}>
+          <html lang='en' className={nunitoSans.className}>
                <body>
                     {children}
                     {modal}

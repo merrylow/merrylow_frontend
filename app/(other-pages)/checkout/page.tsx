@@ -11,7 +11,7 @@ const CheckoutPage = () => {
          <div className='w-full flex flex-col items-center min-h-screen'>
               {/* Header section */}
               <section className='w-[90%] flex items-center mt-4'>
-                   <div className='flex-1 text-center text-lg text-secondary-light font-bold'>Checkout</div>
+                   <div className='flex-1 text-center text-lg text-secondary-soft font-bold'>Checkout</div>
               </section>
 
               <section className='fixed flex justify-start items-center w-[90%] h-10 top-3 left-1/2 -translate-x-1/2'>
@@ -21,68 +21,55 @@ const CheckoutPage = () => {
               <section className='w-full flex-1 overflow-x-auto'>
                    <div className="min-w-full flex flex-col items-center space-y-3">
                         {/* Personal Information Form Section */}
-                        <div className="w-[90%] space-y-3">
-                             <h2 className="text-md font-semibold mt-4">Personal Information</h2>
+                        <div className="w-[88%] space-y-3 mt-5">
+                             {/*<h2 className="text-md font-semibold mt-4">Personal Information</h2>*/}
 
                              <form className="space-y-11">
                                   <section className='w-full space-y-7'>
                                        <div>
-                                            <Label htmlFor="firstName" className="block text-base font-semibold text-gray-700 mb-1">
+                                            <Label htmlFor="firstName" className="block text-base font-semibold text-secondary-soft mb-1">
                                                  First Name
                                             </Label>
                                             <Input
                                                 id='firstName'
                                                 type='text'
                                                 name='first-name'
-                                                className='mt-1 w-full pl-3 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-light'
+                                                className='mt-1 w-full pl-3 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/50'
                                                 autoComplete='given-name'
                                                 required
                                             />
                                        </div>
                                        <div>
-                                            <Label htmlFor="lastName" className="block text-base font-semibold text-gray-700 mb-1">Last Name</Label>
+                                            <Label htmlFor="lastName" className="block text-base font-semibold text-secondary-soft mb-1">Last Name</Label>
                                             <Input
                                                 id='lastName'
                                                 type='text'
                                                 name='last-name'
-                                                className='mt-1 w-full pl-3 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-light'
+                                                className='mt-1 w-full pl-3 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/30'
                                                 autoComplete='family-name'
                                                 required
                                             />
                                        </div>
                                        <div>
-                                            <Label htmlFor="address" className="block text-base font-semibold text-gray-700 mb-1">Location</Label>
+                                            <Label htmlFor="location" className="block text-base font-semibold text-secondary-soft mb-1">Location</Label>
                                             <Input
-                                                id='address'
+                                                id='location'
                                                 type='text'
-                                                name='address'
+                                                name='location'
                                                 placeholder='Enter the name of your hall/department'
-                                                className='mt-1 w-full pl-3 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-light'
-                                                // autoComplete='location'
+                                                className='mt-1 w-full pl-3 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/30'
                                                 required
                                             />
                                        </div>
                                        <div>
-                                            <Label htmlFor='phone' className='block text-base font-semibold text-gray-700 mb-1'>Phone</Label>
+                                            <Label htmlFor='phone' className='block text-base font-semibold text-secondary-soft mb-1'>Phone</Label>
                                             <Input
                                                 id='phone'
                                                 type='tel'
                                                 name='phone'
                                                 placeholder='Enter your phone number'
-                                                className='mt-1 w-full pl-3 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-light'
+                                                className='mt-1 w-full pl-3 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/30'
                                                 autoComplete='tel'
-                                                required
-                                            />
-                                       </div>
-                                       <div>
-                                            <Label htmlFor="email" className="block text-base font-semibold text-gray-700 mb-1">Email Address</Label>
-                                            <Input
-                                                id='email'
-                                                type='email'
-                                                name='email'
-                                                placeholder='Enter your email address'
-                                                className='mt-1 w-full pl-3 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-light'
-                                                autoComplete='on'
                                                 required
                                             />
                                        </div>
@@ -92,11 +79,11 @@ const CheckoutPage = () => {
                                   <section className="w-full">
                                        <h2 className="text-md font-semibold">Additional Information</h2>
                                        <div>
-                                            <Label htmlFor="notes" className="block text-base font-semibold text-gray-700 mb-1">Order notes (optional)</Label>
+                                            <Label htmlFor="notes" className="block text-base font-semibold text-secondary-soft mb-1">Delivery notes (optional)</Label>
                                             <Textarea
                                                 id="notes"
                                                 placeholder="Special instructions for delivery, etc."
-                                                className=" w-full min-h-[120px] border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:border-primary-light"
+                                                className=" w-full min-h-[120px] border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/30"
                                             />
                                        </div>
                                   </section>
@@ -112,18 +99,18 @@ const CheckoutPage = () => {
 
 
                         {/* Order Summary Section */}
-                        <div className="w-[90%]">
+                        <div className="w-[88%]">
                              <h2 className="text-md font-semibold mb-3.5">Your Order</h2>
-                             <div className="text-base space-y-3">
+                             <div className="text-base text-secondary-soft space-y-3">
                                   <div className='flex justify-between py-2 border-b border-b-gray-pale'>
-                                       <span>Product</span>
-                                       <span>Meal name - Regular x 1</span>
+                                       <span className='font-medium'>Product</span>
+                                       <span className='text-sm'>Meal name - Regular x 1</span>
                                   </div>
                                   <div className="flex justify-between py-2 border-b border-b-gray-pale">
                                        <span className="font-medium">Vendor</span>
-                                       <span>Vendor name</span>
+                                       <span className='text-sm'>Vendor name</span>
                                   </div>
-                                  <div className="flex justify-between text-md py-2 mt-3">
+                                  <div className="flex justify-between text-md text-secondary-soft py-2 mt-3">
                                        <span className="font-semibold">Total</span>
                                        <span className="font-semibold text-primary-main">₵40.00</span>
                                   </div>
