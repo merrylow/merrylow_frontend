@@ -50,7 +50,7 @@
      }
 
      .navigation-btn {
-          @apply w-[2.39rem] h-[2.39rem] flex items-center justify-center rounded-full backdrop-blur-md bg-black/10 shadow-[2px_5px_11px_rgba(0,1,0,0.45)] transition-all;
+          @apply w-[2.42rem] h-[2.42rem] flex items-center justify-center rounded-full backdrop-blur-sm bg-black/20 shadow-[2px_5px_11px_rgba(0,1,0,0.45)] transition-all;
      }
 }
 
@@ -110,7 +110,7 @@ body {
      scroll-behavior: smooth;
      overflow-x: hidden;
      overscroll-behavior: none;
-      /*background-color: #222222;*/
+     /*background-color: #222222;*/
 }
 
 

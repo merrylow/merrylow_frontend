@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 
 const PaymentMethodSelector = () => {
-    const [selected, setSelected] = useState('mobile_money')
+    const [selected, setSelected] = useState('')
 
     return (
         <section className='w-full mt-6'>

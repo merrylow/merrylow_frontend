@@ -1,7 +1,7 @@
 'use client'
 
-import { Dialog, DialogOverlay, DialogContent, DialogTitle } from "@/components/ui/dialog"
-import { useRouter } from "next/navigation"
+import { Dialog, DialogOverlay, DialogContent, DialogTitle } from '@/components/ui/dialog'
+import { useRouter } from 'next/navigation'
 
 
 const Modal = ({ children }: { children: React.ReactNode }) => {

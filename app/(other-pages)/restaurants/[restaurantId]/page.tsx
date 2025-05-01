@@ -1,8 +1,22 @@
-import FavouriteIcon from "@/components/favouriteIcon"
-import Image from "next/image"
+import FavouriteIcon from '@/components/favouriteIcon'
+import Image from 'next/image'
 import Link from 'next/link'
-import { FaChevronLeft } from "react-icons/fa"
-import { IoAlarm, IoEllipsisHorizontal, IoStar, IoTimer } from "react-icons/io5"
+import { FaChevronLeft } from 'react-icons/fa'
+import {
+     IoAlarm,
+     IoClose,
+     IoEllipsisHorizontal,
+     IoStar,
+     IoTimer
+} from 'react-icons/io5'
+import {
+     Drawer,
+     DrawerClose,
+     DrawerContent,
+     DrawerTitle,
+     DrawerTrigger
+} from '@/components/ui/drawer'
+import ProductModal from '@/components/productModal'
 
 
 const menu = [
@@ -31,7 +45,7 @@ const menu = [
           id: 4,
           name: "Yam and palava sauce",
           description: "Yam and palava sauce-marg-tee...",
-          price: "€9.50",
+          price: "₵9.50",
           imgSrc: "/Yam and palava sauce-marg-tee.jpg",
      },
      {
@@ -65,7 +79,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                {/* navigation */}
                <section className='absolute flex justify-between items-center w-[88%] h-10 top-5 left-1/2 -translate-x-1/2 z-50'>
                     <Link
-                         href={`/restaurants/${restaurantId}`}
+                         href='/restaurants'
                          className='navigation-btn'
                          aria-label='back button'
                     >
@@ -110,17 +124,33 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                     <div className='space-y-5'>
                          {menu.map((item, i) => (
                               <div key={item.id} className='flex'>
-                                   <div className='flex-1 self-center space-y-1'>
+                                   <div className='flex-1 self-center space-y-1 relative'>
                                         <h3 className='font-semibold text-md text-secondary-light'>
                                              {item.name}
                                         </h3>
                                         <p className='text-[13.5px] text-black-pale'>
                                              {item.description}
                                         </p>
-                                        <Link href={`/restaurants/${restaurantId}/product/${productId}`} className="text-xs py-1.5 bg-primary-main text-white see-all-btn">
-                                             Add
-                                        </Link>
-                                        <span className="text-base text-secondary-soft font-semibold ml-2.5 self-end">
+                                        <Drawer>
+                                             <DrawerTrigger asChild>
+                                                  <button className="text-xs py-1.5 px-6 bg-primary-main text-white see-all-btn">
+                                                       Add
+                                                  </button>
+                                             </DrawerTrigger>
+                                             <DrawerContent className='p-0 max-w-full h-[85vh] rounded-t-4xl'>
+                                                  <DrawerTitle></DrawerTitle>
+                                                  <DrawerClose asChild>
+                                                       <button
+                                                           className='navigation-btn absolute top-6 right-5 z-50'
+                                                           aria-label='close modal'
+                                                       >
+                                                            <IoClose className='size-6 fill-gray-pale' />
+                                                       </button>
+                                                  </DrawerClose>
+                                                  <ProductModal restaurantId={restaurantId} productId={restaurantId} />
+                                             </DrawerContent>
+                                        </Drawer>
+                                        <span className="text-base text-secondary-soft font-bold ml-2.5 self-end">
                                              {item.price}
                                         </span>
                                    </div>

@@ -60,7 +60,7 @@ const CartPage = () => {
 
                          {/* Total */}
                          <div className='flex justify-between items-center mt-4'>
-                              <span className='text-md text-black-soft font-semibold'>Total</span>
+                              <span className='text-md text-black-soft font-bold'>Total</span>
                               <span className='text-primary-main text-md font-extrabold'>₵20.25</span>
                          </div>
                     </section>
