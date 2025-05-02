@@ -2,20 +2,8 @@ import FavouriteIcon from '@/components/favouriteIcon'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaChevronLeft } from 'react-icons/fa'
-import {
-     IoAlarm,
-     IoClose,
-     IoEllipsisHorizontal,
-     IoStar,
-     IoTimer
-} from 'react-icons/io5'
-import {
-     Drawer,
-     DrawerClose,
-     DrawerContent,
-     DrawerTitle,
-     DrawerTrigger
-} from '@/components/ui/drawer'
+import { IoAlarm, IoClose, IoEllipsisHorizontal, IoStar, IoTimer } from 'react-icons/io5'
+import { Drawer, DrawerClose, DrawerContent, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer'
 import ProductModal from '@/components/productModal'
 
 

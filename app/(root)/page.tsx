@@ -14,7 +14,7 @@ const Home = async () => {
             {session ?
                 (
                     <h1 className={session
-                        ? 'text-lg font-semibold'
+                        ? 'text-lg font-bold text-secondary-light'
                         : 'hidden'}
                     >
                         Hello {(session?.user?.name)?.split(' ')[0]} 👋🏽

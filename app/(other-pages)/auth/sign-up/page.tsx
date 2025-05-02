@@ -22,7 +22,8 @@ const SignUpPage = () => {
 // }
 
     return (
-        <div className='min-h-screen flex flex-col items-center space-y-2.5'>
+        <div className='min-h-screen flex flex-col items-center space
+        -y-2.5'>
             {/* Top Section */}
             <section
                 className='relative h-[30vh] w-full bg-no-repeat bg-cover bg-center rounded-b-3xl flex flex-col justify-end pb-13 text-white'
@@ -30,7 +31,7 @@ const SignUpPage = () => {
                 <div className='w-[88%] mx-auto'>
                     <h1 className='text-3xl font-bold  mb-2'>Welcome</h1>
                     <p className='text-sm'>
-                        Enter your email to sign up on Merrylow
+                        Enter your email to sign up on MERRYLOW
                     </p>
                 </div>
             </section>

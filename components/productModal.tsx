@@ -140,7 +140,7 @@ const ProductModal = ({ restaurantId, productId }: Props) => {
      // const isDesktop = useMediaQuery('(min-width: 768px)')
 
      return(
-              <div className='w-full h-full bg-white flex flex-col justify-start rounded-t-4xl overflow-hidden'>
+         <div className='w-full h-full bg-white flex flex-col justify-start rounded-t-4xl overflow-hidden'>
               <div className='flex-1 relative overflow-y-auto'>
                    <section className='w-full h-64 rounded-t-4xl relative overflow-hidden'>
                         <div className='bg-overlay' />
@@ -198,10 +198,10 @@ const ProductModal = ({ restaurantId, productId }: Props) => {
                              </RadioGroup>
                         </div>
                    </section>
-              <section className='fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[88%] bg-transparent py-4 flex justify-between items-center'>
-                   <QuantitySelector />
-                   <AddToOrderButton />
-              </section>
+                   <section className='fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[88%] bg-transparent py-4 flex justify-between items-center'>
+                        <QuantitySelector />
+                        <AddToOrderButton />
+                   </section>
               </div>
 
          </div>

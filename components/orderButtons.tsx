@@ -42,7 +42,7 @@ const AddToOrderButton = () => {
             onClick={() => {
                 router.push('/cart')
             }}
-            className='w-[55%] h-[2.65rem] flex items-center justify-center font-bold text-base btn'
+            className='w-[55%] h-[2.65rem] flex items-center justify-center font-bold text-sm btn'
         >
             Add to order
         </button>

@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
      description: 'A campus-based food delivery platform',
      start_url: '/',
      display: 'standalone',
-     background_color: '#ffffff',
+     background_color: '#CB6CE6',
      theme_color: '#cb6ce6',
      icons: [
           {
