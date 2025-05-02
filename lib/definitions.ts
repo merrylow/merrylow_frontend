@@ -1,6 +1,8 @@
-type UserState = {
-     isLoggedIn: boolean
+type CardDetails = {
+     imgSrc: string
+     mealName: string
+     mealDescription: string
 }
 
 
-export type { UserState }
+export type { CardDetails  }

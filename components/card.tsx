@@ -1,9 +1,9 @@
 'use client'
 
-import { CardDetails } from "@/global"
-import Image from "next/image"
-import { usePathname } from "next/navigation"
-import { IoTimer } from "react-icons/io5"
+import { CardDetails } from '@/lib/definitions'
+import Image from 'next/image'
+import { usePathname } from 'next/navigation'
+import { IoTimer } from 'react-icons/io5'
 
 
 const Card = ({ cardClass, cardDetails }: {
@@ -22,8 +22,8 @@ const Card = ({ cardClass, cardDetails }: {
                }>
                     <Image
                          src={imgSrc}
-                         className="object-cover rounded-t-[10px]"
-                         alt="Sh"
+                         className='object-cover rounded-t-[10px]'
+                         alt='Sh'
                          fill
                     />
                </figure>
@@ -44,7 +44,7 @@ const Card = ({ cardClass, cardDetails }: {
                     }>{mealDescription}</p>
 
                     <span>
-                         <IoTimer className="size-5 fill-primary-light" />
+                         <IoTimer className='size-5 fill-primary-light' />
                     </span>
                </div>
           </div>
