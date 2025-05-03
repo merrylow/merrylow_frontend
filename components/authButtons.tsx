@@ -8,6 +8,7 @@ import { FaSignOutAlt } from 'react-icons/fa'
 import { useRouter } from 'next/navigation';
 
 const GoogleSignInButton = () => {
+    const router = useRouter()
     const [loading, setLoading] = useState(false)
 
      const handleSignIn = async () => {
@@ -15,6 +16,7 @@ const GoogleSignInButton = () => {
 
          try {
              await signIn('google')
+             router.push('/')
          } catch (error) {
              toast.error('Sign in failed. Try again')
              console.error('Sign in failed', error)
@@ -31,7 +33,7 @@ const GoogleSignInButton = () => {
         >
             {loading ? (
                 <>
-                    <span className="loading loading-spinner loading-sm text-primary-main" />
+                    <span className="loading loading-spinner loading-sm fill-primary-main" />
                     <span className="text-sm text-secondary-soft font-medium">Signing you in...</span>
                 </>
             ) : (
@@ -87,6 +89,7 @@ const EmailSignInButton = () => {
 
 
 const SignOutButton = () => {
+    const router = useRouter()
     const [loading, setLoading] = useState(false)
 
     const handleSignOut = async () => {
@@ -94,6 +97,7 @@ const SignOutButton = () => {
 
         try {
             await signOut()
+            router.push('/auth/sign-in')
         } catch (error) {
             toast.error('Sign out failed. Try again')
             console.error('Sign out failed', error)

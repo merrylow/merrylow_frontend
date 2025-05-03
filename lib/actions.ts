@@ -4,7 +4,7 @@ import webpush from 'web-push'
 import { PushSubscription as WebPushSubscription } from 'web-push'
 
 webpush.setVapidDetails(
-    '<mailto:merrylow.ug@gmail.com>',
+    'mailto:merrylow.ug@gmail.com',
     process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
     process.env.VAPID_PRIVATE_KEY!
 )
