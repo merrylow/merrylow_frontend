@@ -57,7 +57,7 @@ const SignUpPage = () => {
                         {/*when user signs in with this for the first time, their details are automatically recorded
                          in db*/}
                         <p className='text-sm text-gray-500'>
-                            Already have an account? <Link href='/profile' className='text-primary-main font-medium'>Sign in</Link>
+                            Already have an account? <Link href='/auth/sign-in' className='text-primary-main font-medium'>Sign in</Link>
                         </p>
                     </div>
                 </form>
