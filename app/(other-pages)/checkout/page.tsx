@@ -3,7 +3,7 @@ import { Label } from '@/components/ui/label';
 import BackButton from '@/components/backButton'
 import { PlaceOrderButton } from '@/components/orderButtons'
 import PaymentMethodSelector from '@/components/paymentMethodSelector'
-import DeliveryNotes from '@/components/deliveryNotes'
+import DeliveryNote from '@/components/deliveryNote'
 
 const CheckoutPage = () => {
 
@@ -75,7 +75,7 @@ const CheckoutPage = () => {
                                        </div>
                                        <div>
                                             <Label htmlFor='notes' className='block text-base font-semibold text-secondary-soft mb-1.5'>Delivery notes (optional)</Label>
-                                             <DeliveryNotes />
+                                             <DeliveryNote />
                                        </div>
                                   </section>
 

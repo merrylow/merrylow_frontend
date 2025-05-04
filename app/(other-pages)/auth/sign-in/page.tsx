@@ -1,6 +1,5 @@
 import {EmailSignInButton, GoogleSignInButton} from "@/components/authButtons";
 import Link from "next/link";
-import BottomNav from "@/components/bottomNav";
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 

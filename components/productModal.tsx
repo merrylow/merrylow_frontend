@@ -119,17 +119,14 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import QuantitySelector from './quantitySelector'
 import FavouriteIcon from './favouriteIcon'
 import { AddToOrderButton } from '@/components/orderButtons'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Checkbox } from '@/components/ui/checkbox'
+import DeliveryNote from '@/components/deliveryNote'
 import { useMediaQuery } from 'usehooks-ts'
-import { IoClose } from 'react-icons/io5'
-import {
-     DrawerClose
-} from "@/components/ui/drawer";
+
 
 type Props = {
     restaurantId: string
@@ -152,7 +149,7 @@ const ProductModal = ({ restaurantId, productId }: Props) => {
                         />
                    </section>
 
-                   <section className='flex-1 w-[88%] mx-auto mt-5 space-y-6 pb-32'>
+                   <section className='flex-1 w-[88%] mx-auto mt-5 space-y-7 pb-32'>
                         <div className='flex justify-between items-start'>
                              <div>
                                   <h1 className='text-lg text-secondary-light font-extrabold'>Yam and palava sauce</h1>
@@ -174,7 +171,7 @@ const ProductModal = ({ restaurantId, productId }: Props) => {
                                       </div>
                                       <div className='space-x-2.5 flex items-center'>
                                            <span className='text-base text-black-soft font-semibold'>+₵20.50</span>
-                                           <Checkbox aria-label='menu-item checkbox' />
+                                           <Checkbox className={'border border-primary-light'} aria-label='menu-item checkbox' />
                                       </div>
                                  </div>
                              ))}
@@ -191,11 +188,17 @@ const ProductModal = ({ restaurantId, productId }: Props) => {
                                            </div>
                                            <div className='space-x-2.5 flex items-center'>
                                                 <span className='text-base text-black-soft font-semibold'>+₵0.50</span>
-                                                <RadioGroupItem value={`option-${i}`} id={`option-${i}`} />
+                                                <RadioGroupItem className={'border-primary-light'} value={`option-${i}`} id={`option-${i}`} />
                                            </div>
                                       </div>
                                   ))}
                              </RadioGroup>
+                        </div>
+
+                        <div className='space-y-2'>
+                             <h2 className="text-md text-secondary-light font-semibold">Delivery note</h2>
+
+                             <DeliveryNote />
                         </div>
                    </section>
                    <section className='fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[88%] bg-transparent py-4 flex justify-between items-center'>

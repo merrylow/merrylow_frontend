@@ -2,9 +2,11 @@ import Image from 'next/image'
 import QuantitySelector from '@/components/quantitySelector'
 import BackButton from '@/components/backButton'
 import { GoToCheckoutButton } from '@/components/orderButtons'
+import EmptyCart from '@/components/emptyCart'
+import BottomNav from '@/components/bottomNav'
 
 
-const orderItems = [
+const cart = [
      {
           id: 1,
           name: 'Yam and palava sauce',
@@ -24,7 +26,13 @@ const CartPage = () => {
 
      if(cart.length === 0) {
           return (
-              <div className='w-full h-full '>Oops. You dont have any orders</div>
+              <div className='w-full h-[80vh] flex justify-center items-center mt-15'>
+                   <section className='fixed flex justify-start items-center w-[90%] h-10 top-3 left-1/2 -translate-x-1/2 z-50'>
+                        <BackButton />
+                   </section>
+                   <EmptyCart />
+                   <BottomNav />
+              </div>
           )
      }
 

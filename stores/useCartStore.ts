@@ -6,8 +6,12 @@ const useCartStore = create((set, get) => ({
      cart: [],
      loading: false,
      error: false,
+     isFavourited: false,
+     favouriteMeals: [],
+     favouriteStores: [],
 
-     addProduct: () => {},
+     addCartItem: () => {},
+     removeCartItem: () => {},
      
 }))
 

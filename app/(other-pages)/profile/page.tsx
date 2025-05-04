@@ -18,7 +18,7 @@ const ProfilePage = async () => {
               <div
                   className='min-h-screen w-full flex flex-col justify-around items-center'>
                    <div
-                       className='w-[88%] flex flex-col gap-12 mt-2.5'>
+                       className='w-[88%] flex flex-col gap-11 mt-3'>
                         <section
                             className='flex flex-col space-y-3'>
                              {/*<FaUserCircle className='text-secondary-pale size-24' />*/}

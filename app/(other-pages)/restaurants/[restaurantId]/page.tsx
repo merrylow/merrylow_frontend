@@ -116,7 +116,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                                         <h3 className='font-semibold text-md text-secondary-light'>
                                              {item.name}
                                         </h3>
-                                        <p className='text-[13.5px] text-black-pale'>
+                                        <p className='text-[13.7px] text-black-pale'>
                                              {item.description}
                                         </p>
                                         <Drawer>
@@ -125,7 +125,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                                                        Add
                                                   </button>
                                              </DrawerTrigger>
-                                             <DrawerContent className='p-0 max-w-full h-[85vh] rounded-t-4xl'>
+                                             <DrawerContent className='p-0 max-w-full h-[93vh] rounded-t-4xl'>
                                                   <DrawerTitle></DrawerTitle>
                                                   <DrawerClose asChild>
                                                        <button
@@ -154,9 +154,9 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                     </div>
                </section>
 
-               <section className='mb-20' />
+               <section className='mb-16' />
           </main>
      );
 };
 
-export default RestaurantPage;
+export default RestaurantPage

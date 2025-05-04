@@ -13,7 +13,7 @@ const Home = async () => {
     return (
         <main className='w-full mx-auto min-h-screen space-y-10'>
             {/* ad carousel */}
-            <section className="w-[90%] h-[16rem] min-h-[16.375rem] flex flex-col space-y-2.5 mx-auto mt-1.5 mb-16 rounded-[18px]">
+            <section className="w-[90%] h-[16rem] min-h-[16.375rem] flex flex-col space-y-2.5 mx-auto mb-16 rounded-[18px]">
                 {session ?
                     (
                         <h1 className={session
