@@ -10,6 +10,7 @@ const useCartStore = create((set, get) => ({
      favouriteMeals: [],
      favouriteStores: [],
 
+     // setIsFavourited: (isFavourited) => set({ isFavourited }),
      addCartItem: () => {},
      removeCartItem: () => {},
      

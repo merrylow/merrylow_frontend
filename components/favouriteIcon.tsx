@@ -3,10 +3,11 @@
 import { useState } from 'react'
 import { IoHeartOutline, IoHeart } from 'react-icons/io5'
 import { toast } from 'sonner'
+import useCartStore from '@/stores/useCartStore'
 
 const FavouriteIcon = () => {
      const [isFavorited, setIsFavorited] = useState(false);
-     const{ isFavouri }
+     // const{ isFavourited } = useCartStore()
 
      return (
           <button
