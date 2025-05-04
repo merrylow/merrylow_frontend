@@ -2,7 +2,7 @@ import React from 'react'
 import type { Metadata } from 'next'
 import { Nunito_Sans } from 'next/font/google'
 import '../globals.css'
-import Navbar from '@/components/navbar'
+import Header from '@/components/header'
 import BottomNav from '@/components/bottomNav'
 import { Toaster } from '@/components/ui/sonner'
 import PushNotificationManager from '@/components/pwa-manager/pushNotificationManager'
@@ -45,7 +45,7 @@ export default function RootLayout({
   return (
     <html lang='en' className={nunitoSans.className}>
       <body>
-        <Navbar />
+        <Header />
         {/*<PushNotificationManager />*/}
         {/*<InstallPrompt />*/}
           {children}

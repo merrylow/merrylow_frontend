@@ -3,8 +3,7 @@ import Link from 'next/link'
 import Card from '@/components/card'
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
-import InstallPrompt from '@/components/pwa-manager/installPrompt'
-import PushNotificationManager from '@/components/pwa-manager/pushNotificationManager'
+
 
 const Home = async () => {
     const session = await auth()

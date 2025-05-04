@@ -55,10 +55,6 @@ const SignInPage = async () => {
 
                 <GoogleSignInButton />
             </section>
-
-            <div>
-                <BottomNav />
-            </div>
         </div>
     )
 }

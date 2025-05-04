@@ -46,7 +46,7 @@ const SignUpPage = () => {
                             type='email'
                             name='email'
                             placeholder='Enter your email...'
-                            className='mt-1 w-full px-4 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:border-none focus:ring-1 focus:ring-primary-light'
+                            className='mt-1 w-full px-4 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/50'
                             autoComplete='email'
                             required
                         />
@@ -71,10 +71,6 @@ const SignUpPage = () => {
                  in db*/}
                 <GoogleSignInButton />
             </section>
-
-            <div>
-                <BottomNav />
-            </div>
         </div>
     )
 }

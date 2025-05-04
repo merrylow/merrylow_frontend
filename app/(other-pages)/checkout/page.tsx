@@ -25,7 +25,7 @@ const CheckoutPage = () => {
                              <h2 className="text-md font-semibold mt-4">Customer Details</h2>
 
                              <form className='space-y-11'>
-                                  <section className='w-full space-y-7'>
+                                  <section className='w-full space-y-6'>
                                        <div>
                                             <Label htmlFor='firstName' className='block text-base font-semibold text-secondary-soft mb-1'>
                                                  First Name

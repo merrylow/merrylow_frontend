@@ -1,22 +1,21 @@
 'use client'
 
 import { useState } from 'react'
-import { FcGoogle } from 'react-icons/fc';
+import { FcGoogle } from 'react-icons/fc'
 import { signIn, signOut } from 'next-auth/react'
 import { toast } from 'react-hot-toast'
 import { FaSignOutAlt } from 'react-icons/fa'
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'
+
 
 const GoogleSignInButton = () => {
-    const router = useRouter()
     const [loading, setLoading] = useState(false)
 
      const handleSignIn = async () => {
         setLoading(true)
 
          try {
-             await signIn('google')
-             router.push('/')
+             await signIn('google', { redirectTo: '/' })
          } catch (error) {
              toast.error('Sign in failed. Try again')
              console.error('Sign in failed', error)

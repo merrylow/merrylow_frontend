@@ -20,6 +20,13 @@ const orderItems = [
 
 
 const CartPage = () => {
+     let cart = []
+
+     if(cart.length === 0) {
+          return (
+              <div className='w-full h-full '>Oops. You dont have any orders</div>
+          )
+     }
 
      return (
           <div className='w-full h-full flex flex-col overflow-hidden'>
