@@ -11,7 +11,7 @@ const EmptyCart = () => {
             </p>
             <Link
                 href='/restaurants'
-                className='px-6 py-2 bg-primary-light btn'
+                className='px-6 py-2.5 bg-primary-light btn'
             >
                 Browse restaurants
             </Link>

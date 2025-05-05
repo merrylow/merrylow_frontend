@@ -1,20 +1,19 @@
 import React from 'react'
-import type { Metadata } from "next";
-import { Rubik, Inter, Nunito_Sans } from "next/font/google";
-import "../globals.css";
-import { Toaster } from 'react-hot-toast'
+import type { Metadata } from 'next'
+import { Nunito_Sans } from 'next/font/google'
+import '../globals.css'
+import { Toaster } from '@/components/ui/sonner'
 
 
-
-const rubik = Rubik({
-     subsets: ['latin'],
-     display: 'swap'
-});
-
-const inter = Inter({
-     subsets: ['latin'],
-     display: 'swap',
-})
+// const rubik = Rubik({
+//      subsets: ['latin'],
+//      display: 'swap'
+// });
+//
+// const inter = Inter({
+//      subsets: ['latin'],
+//      display: 'swap',
+// })
 
 const nunitoSans = Nunito_Sans({
      subsets: ['latin'],

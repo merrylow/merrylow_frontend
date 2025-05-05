@@ -1,10 +1,12 @@
-import FavouriteIcon from '@/components/favouriteIcon'
+import { FavouriteRestaurantIcon } from '@/components/favouriteIcons'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaChevronLeft } from 'react-icons/fa'
 import { IoAlarm, IoClose, IoEllipsisHorizontal, IoStar, IoTimer } from 'react-icons/io5'
 import { Drawer, DrawerClose, DrawerContent, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer'
 import ProductModal from '@/components/productModal'
+import { MdLocationPin } from 'react-icons/md'
+
 
 
 const menu = [
@@ -85,7 +87,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                <section className='w-[88%] mx-auto flex flex-col justify-between items-start'>
                     <div className='w-full flex justify-between items-center'>
                          <h1 className='text-xl text-secondary-light font-extrabold'>Restaurant name</h1>
-                         <FavouriteIcon />
+                         <FavouriteRestaurantIcon />
                     </div>
                     <p className='text-md text-secondary-soft'>Restaurant slogan...</p>
                </section>
@@ -94,7 +96,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                {/* Quick Info */}
                <section className='w-[88%] mx-auto flex flex-col text-sm font-semibold gap-2.5 text-black-soft'>
                     <div className='flex items-center gap-1'>
-                         <IoStar className='icon' /> Excellent 4.5
+                         <MdLocationPin className='icon' /> Restaurant location
                     </div>
                     <div className='flex items-center gap-1'>
                          <IoAlarm className='icon' /> 40-50min
@@ -113,7 +115,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                          {menu.map((item, i) => (
                               <div key={item.id} className='flex'>
                                    <div className='flex-1 self-center space-y-1 relative'>
-                                        <h3 className='font-semibold text-md text-secondary-light'>
+                                        <h3 className='font-semibold text-md text-secondary-soft'>
                                              {item.name}
                                         </h3>
                                         <p className='text-[13.7px] text-black-pale'>
@@ -142,7 +144,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                                              {item.price}
                                         </span>
                                    </div>
-                                   <div className='size-24 relative rounded-xl overflow-hidden'>
+                                   <div className='w-25 h-24 relative rounded-xl overflow-hidden'>
                                         <Image 
                                              src={item.imgSrc} 
                                              alt={item.name} 

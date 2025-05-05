@@ -3,7 +3,7 @@
 // import { FaChevronLeft } from 'react-icons/fa6'
 // import QuantitySelector from './quantitySelector'
 // import Modal from "./modal"
-// import FavouriteIcon from './favouriteIcon'
+// import FavouriteIcons from './favouriteIcon'
 // import { AddToOrderButton } from '@/components/orderButtons'
 //
 // const ProductModal = async ({ params }: { params: Promise<{ restaurantId: string, productId: string }> }) => {
@@ -48,7 +48,7 @@
 //                                                   <span className="text-lg font-extrabold text-primary-main">₵20.00</span>
 //                                              </div>
 //                                         </div>
-//                                         <FavouriteIcon />
+//                                         <FavouriteIcons />
 //                                    </div>
 //
 //                                    {/* Add More Section */}
@@ -120,17 +120,17 @@
 
 import Image from 'next/image'
 import QuantitySelector from './quantitySelector'
-import FavouriteIcon from './favouriteIcon'
+import { FavouriteProductIcon } from './favouriteIcons'
 import { AddToOrderButton } from '@/components/orderButtons'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Checkbox } from '@/components/ui/checkbox'
-import DeliveryNote from '@/components/deliveryNote'
+import { OrderNote } from '@/components/deliveryAndOrderNotes'
 import { useMediaQuery } from 'usehooks-ts'
 
 
 type Props = {
-    restaurantId: string
-    productId: string
+    restaurantId: number
+    productId: number
 }
 
 const ProductModal = ({ restaurantId, productId }: Props) => {
@@ -158,7 +158,7 @@ const ProductModal = ({ restaurantId, productId }: Props) => {
                                        <span className='text-lg font-extrabold text-primary-main'>₵20.00</span>
                                   </div>
                              </div>
-                             <FavouriteIcon />
+                             <FavouriteProductIcon productId={productId} />
                         </div>
 
                         <div className='space-y-4'>
@@ -196,9 +196,9 @@ const ProductModal = ({ restaurantId, productId }: Props) => {
                         </div>
 
                         <div className='space-y-2'>
-                             <h2 className="text-md text-secondary-light font-semibold">Delivery note</h2>
+                             <h2 className="text-md text-secondary-light font-semibold">Order note</h2>
 
-                             <DeliveryNote />
+                             <OrderNote />
                         </div>
                    </section>
                    <section className='fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[88%] bg-transparent py-4 flex justify-between items-center'>

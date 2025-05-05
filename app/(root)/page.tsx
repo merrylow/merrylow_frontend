@@ -14,15 +14,9 @@ const Home = async () => {
         <main className='w-full mx-auto min-h-screen space-y-10'>
             {/* ad carousel */}
             <section className="w-[90%] h-[16rem] min-h-[16.375rem] flex flex-col space-y-2.5 mx-auto mb-16 rounded-[18px]">
-                {session ?
-                    (
-                        <h1 className={session
-                            ? 'text-lg font-extrabold text-secondary-light'
-                            : 'hidden'}
-                        >
-                            Hello {(session?.user?.name)?.split(' ')[0]} 👋🏽
-                        </h1>
-                    ) : null}
+                <h1 className='text-lg font-bold text-secondary-light'>
+                    Hello {(session?.user?.name)?.split(' ')[0]} 👋🏽
+                </h1>
                 <AdCarousel />
             </section>
 
@@ -90,11 +84,6 @@ const Home = async () => {
             </section>
 
             <section className='mb-20'></section>
-
-            {/*<div>*/}
-            {/*    <PushNotificationManager />*/}
-            {/*    <InstallPrompt />*/}
-            {/*</div>*/}
         </main>
     )
 }

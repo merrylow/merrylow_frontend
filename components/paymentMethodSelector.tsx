@@ -13,7 +13,7 @@ const PaymentMethodSelector = () => {
         <section className='w-full mt-6'>
             <h2 className='text-md font-semibold mb-2'>Payment Method</h2>
             <RadioGroup
-                defaultValue='mobile_money'
+                // defaultValue='mobile_money'
                 onValueChange={(value) => setSelected(value)}
                 className='space-y-4'
             >

@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
 
-
 const PlaceOrderButton = () => {
     const router = useRouter()
 

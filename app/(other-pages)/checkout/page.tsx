@@ -3,7 +3,7 @@ import { Label } from '@/components/ui/label';
 import BackButton from '@/components/backButton'
 import { PlaceOrderButton } from '@/components/orderButtons'
 import PaymentMethodSelector from '@/components/paymentMethodSelector'
-import DeliveryNote from '@/components/deliveryNote'
+import { DeliveryNote } from '@/components/deliveryAndOrderNotes'
 
 const CheckoutPage = () => {
 
@@ -25,7 +25,7 @@ const CheckoutPage = () => {
                              <h2 className="text-md font-semibold mt-4">Customer Details</h2>
 
                              <form className='space-y-11'>
-                                  <section className='w-full space-y-6'>
+                                  <section className='w-full space-y-7'>
                                        <div>
                                             <Label htmlFor='firstName' className='block text-base font-semibold text-secondary-soft mb-1'>
                                                  First Name
@@ -34,7 +34,7 @@ const CheckoutPage = () => {
                                                 id='firstName'
                                                 type='text'
                                                 name='first-name'
-                                                className='mt-1 w-full pl-3 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/50'
+                                                className='mt-1 w-full pl-3 py-2 border border-gray-soft rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/50'
                                                 autoComplete='given-name'
                                                 required
                                             />
@@ -45,7 +45,7 @@ const CheckoutPage = () => {
                                                 id='lastName'
                                                 type='text'
                                                 name='last-name'
-                                                className='mt-1 w-full pl-3 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/30'
+                                                className='mt-1 w-full pl-3 py-2 border border-gray-soft rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/30'
                                                 autoComplete='family-name'
                                                 required
                                             />
@@ -57,7 +57,7 @@ const CheckoutPage = () => {
                                                 type='text'
                                                 name='location'
                                                 placeholder='Enter the name of your hall/department'
-                                                className='mt-1 w-full pl-3 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/30 placeholder-gray'
+                                                className='mt-1 w-full pl-3 py-2 border border-gray-soft rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/30 placeholder-gray'
                                                 required
                                             />
                                        </div>
@@ -68,7 +68,7 @@ const CheckoutPage = () => {
                                                 type='tel'
                                                 name='phone'
                                                 placeholder='Enter your phone number'
-                                                className='mt-1 w-full pl-3 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/30 placeholder-gray'
+                                                className='mt-1 w-full pl-3 py-2 border border-gray-soft rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/30 placeholder-gray'
                                                 autoComplete='tel'
                                                 required
                                             />

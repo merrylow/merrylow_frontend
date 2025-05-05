@@ -26,7 +26,7 @@ const CartPage = () => {
 
      if(cart.length === 0) {
           return (
-              <div className='w-full h-[80vh] flex justify-center items-center mt-15'>
+              <div className='w-full h-[80vh] flex justify-center items-center mt-12'>
                    <section className='fixed flex justify-start items-center w-[90%] h-10 top-3 left-1/2 -translate-x-1/2 z-50'>
                         <BackButton />
                    </section>
