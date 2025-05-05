@@ -46,9 +46,13 @@ const FavouriteProductIcon = ({ productId }: { productId: number }) => {
 }
 
 
-const FavouriteRestaurantIcon = ({ productId }: { productId: number }) => {
+const FavouriteRestaurantIcon = ({ restaurantId }: { restaurantId: number }) => {
     // const { toggleFavouriteProduct, isMealFavourited, favouriteProducts } = useOrderStore()
     //
+
+    // const restaurant = useProductsStore.getState().restaurants.find(restaurant => restaurant.id === productId)
+    // if (!product) return toast.error("Product not found") // exclude this
+    // pass product to toggleFavouriteProduct
     //
     // const handleClick = () => {
     //     toggleFavouriteProduct(productId)

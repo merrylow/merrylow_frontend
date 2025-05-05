@@ -50,7 +50,7 @@ const menu = [
 
 
 
-const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: string, productId: string }> }) => {
+const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: number, productId: number }> }) => {
      const { restaurantId, productId } = await params
 
      return (
@@ -87,7 +87,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                <section className='w-[88%] mx-auto flex flex-col justify-between items-start'>
                     <div className='w-full flex justify-between items-center'>
                          <h1 className='text-xl text-secondary-light font-extrabold'>Restaurant name</h1>
-                         <FavouriteRestaurantIcon />
+                         <FavouriteRestaurantIcon restaurantId={restaurantId} />
                     </div>
                     <p className='text-md text-secondary-soft'>Restaurant slogan...</p>
                </section>

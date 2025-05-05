@@ -13,7 +13,7 @@ const RestaurantsPage = () => {
 
                     <div className="h-[160rem] flex flex-col gap-9">
                          {Array(8).fill(0).map((_, i) => (
-                              <Link href='/restaurants/1' className="w-full h-[16rem]" key={i}>
+                              <Link href='/restaurants/1' className="w-full h-[17rem]" key={i}>
                                    <Card
                                         cardClass="w-full"
                                         cardDetails={{
