@@ -11,21 +11,21 @@ import { useRouter } from 'next/navigation'
 const GoogleSignInButton = () => {
     const [loading, setLoading] = useState(false)
 
-     const handleSignIn = async () => {
-        setLoading(true)
-
-         try {
-             await signIn('google', { redirectTo: '/' })
-         } catch (error) {
-             toast.error('Sign in failed. Try again')
-             console.error('Sign in failed', error)
-             setLoading(false)
-         }
-     }
+     // const handleSignIn = async () => {
+     //    setLoading(true)
+     //
+     //     try {
+     //         await signIn('google', { redirectTo: '/' })
+     //     } catch (error) {
+     //         toast.error('Sign in failed. Try again')
+     //         console.error('Sign in failed', error)
+     //         setLoading(false)
+     //     }
+     // }
 
     return (
         <button
-            onClick={handleSignIn}
+            // onClick={}
             className='w-full h-11 border border-gray-300 rounded-full flex items-center justify-center space-x-2'
             type='submit'
             disabled={loading}
@@ -52,21 +52,21 @@ const GoogleSignInButton = () => {
 const EmailSignInButton = () => {
     const [loading, setLoading] = useState(false)
 
-    const handleSignIn = async () => {
-        setLoading(true)
-
-        try {
-            await signIn()
-        } catch (error) {
-            toast.error('Sign in failed. Try again')
-            console.error('Sign in failed', error)
-            setLoading(false)
-        }
-    }
+    // const handleSignIn = async () => {
+    //     setLoading(true)
+    //
+    //     try {
+    //         await signIn()
+    //     } catch (error) {
+    //         toast.error('Sign in failed. Try again')
+    //         console.error('Sign in failed', error)
+    //         setLoading(false)
+    //     }
+    // }
 
     return (
         <button
-            onClick={handleSignIn}
+            // onClick={}
             className='w-full h-11 bg-primary-light text-white rounded-full font-semibold'
             type='submit'
         >
@@ -91,22 +91,22 @@ const SignOutButton = () => {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
 
-    const handleSignOut = async () => {
-        setLoading(true)
-
-        try {
-            await signOut()
-            router.push('/auth/sign-in')
-        } catch (error) {
-            toast.error('Sign out failed. Try again')
-            console.error('Sign out failed', error)
-            setLoading(false)
-        }
-    }
+    // const handleSignOut = async () => {
+    //     setLoading(true)
+    //
+    //     try {
+    //         await signOut()
+    //         router.push('/auth/sign-in')
+    //     } catch (error) {
+    //         toast.error('Sign out failed. Try again')
+    //         console.error('Sign out failed', error)
+    //         setLoading(false)
+    //     }
+    // }
 
     return (
         <button
-            onClick={handleSignOut}
+            // onClick={}
             className='w-full h-11 flex items-center justify-center space-x-2.5 btn'
             disabled={loading}
             type='submit'

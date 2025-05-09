@@ -6,20 +6,7 @@ import axios from 'axios'
 const SignUpPage = () => {
     // add redirect
 
-    // const handleSubmit = async () => {
-//     const res = await fetch('/api/register', {
-//         method: 'POST',
-//         body: JSON.stringify({ email, password }),
-//         headers: { 'Content-Type': 'application/json' }
-//     })
-//
-//     if (res.ok) {
-//         // auto-login after signup
-//         await signIn('credentials', { email, password })
-           // await signIn('google')
-           // await signIn('apple')
-//     }
-// }
+
 
     return (
         <div className='min-h-screen h-screen flex flex-col items-center space

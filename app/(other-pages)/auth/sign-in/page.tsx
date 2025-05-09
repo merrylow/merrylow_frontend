@@ -1,12 +1,12 @@
-import {EmailSignInButton, GoogleSignInButton} from "@/components/authButtons";
+import {EmailSignInButton, GoogleSignInButton} from "@/components/authButtons"
 import Link from "next/link";
-import { auth } from '@/lib/auth';
-import { redirect } from 'next/navigation';
+// import { auth } from '@/lib/auth';
+// import { redirect } from 'next/navigation';
 
 const SignInPage = async () => {
-    const session = await auth()
+    // const session = await auth()
 
-    if (session) redirect('/')
+    // if (session) redirect('/')
 
     return (
         <div className='min-h-screen flex flex-col items-center space-y-2.5'>

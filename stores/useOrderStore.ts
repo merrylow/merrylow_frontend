@@ -1,9 +1,9 @@
 import { create } from 'zustand'
-import { OrderState, Product, Restaurant, CartItem, PaymentMethod, CardDetails } from '@/lib/typeDefs'
+import { OrderStore, Product, Restaurant, CartItem, PaymentMethod, CardDetails } from '@/lib/typeDefs'
 
 const BASE_URL = process.env.PORT
 
-const useOrderStore = create<OrderState>((set, get) => ({
+const useOrderStore = create<OrderStore>((set, get) => ({
      loading: false,
      error: false,
 
@@ -54,28 +54,7 @@ const useOrderStore = create<OrderState>((set, get) => ({
      setPaymentMethod: (paymentMethod: PaymentMethod) => set({ paymentMethod: paymentMethod }),
 
 
-     //favourites
-     // favouriteProducts: [],
-     // favouriteRestaurants: [],
 
-     // toggleFavouriteProduct: (product) => {
-     //      // const currentFavourites = get().favouriteProducts
-     //      // const isAlreadyFavourited = currentFavourites.some(item => item.id === product.id)
-     //      //
-     //      // if (isAlreadyFavourited) {
-     //      //      set({
-     //      //           favouriteProducts: currentFavourites.filter(item => item.id !== product.id)
-     //      //      })
-     //      // } else {
-     //      //      set({
-     //      //           favouriteProducts: [...currentFavourites, product] // ,productId
-     //      //      })
-     //      // }
-     // },
-
-     // isMealFavourited: (mealId: number) => {
-     //      return get().favouriteProducts.some(item => item.id === mealId)
-     // },
 
      // toggleFavouriteRestaurant: (restaurantId) => {
      //      const currentFavourites = get().favouriteProducts

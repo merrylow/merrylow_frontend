@@ -33,7 +33,7 @@ const ProductModal = ({ product }: { product: Product }) => {
                                        <span className='text-lg font-extrabold text-primary-main'>₵{formatCurrency(product?.price)}</span>
                                   </div>
                              </div>
-                             <FavouriteProductIcon product={product} />
+                             {/*<FavouriteProductIcon product={product} />*/}
                         </div>
 
                         <div className='space-y-4'>

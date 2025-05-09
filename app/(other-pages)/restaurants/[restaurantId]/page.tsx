@@ -10,7 +10,6 @@ import fetchRestaurantsAndProducts from '@/lib/api'
 import { Restaurant, Product } from '@/lib/typeDefs'
 import { formatCurrency } from '@/lib/utilFunctions'
 import { BiSolidStopwatch } from 'react-icons/bi'
-import useProductModalStore from '@/stores/useProductModalStore'
 
 const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: string, productId: string }> }) => {
     const { restaurantId, productId } = await params
@@ -29,10 +28,6 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
     const menuItems = products.filter(
         product => product.restaurant?.id === matchingRestaurant.id
     )
-
-    // console.log(matchingRestaurant)
-    // console.log(menuItems)
-
 
     return (
           <main className='w-full h-full min-h-screen relative space-y-5'>
@@ -68,7 +63,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                <section className='w-[88%] mx-auto flex flex-col justify-between items-start'>
                     <div className='w-full flex justify-between items-center'>
                          <h1 className='text-xl text-secondary-light font-extrabold'>{matchingRestaurant.name}</h1>
-                         <FavouriteRestaurantIcon restaurant={matchingRestaurant} />
+                         {/*<FavouriteRestaurantIcon restaurant={matchingRestaurant} />*/}
                     </div>
                     <p className='text-md text-secondary-soft'>Restaurant slogan...</p>
                </section>
