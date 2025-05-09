@@ -1,25 +1,30 @@
 type CardDetails = {
      imgSrc: string
-     mealName: string
-     mealDescription: string
+     name: string
+     // description: string
 }
 
 interface Restaurant {
      name: string;
-     id: number;
-     slug: string;
+     id: string;
+     phone: string;
+     location: string;
+     startTime: string;
+     endTime: string;
+     available: boolean;
      products: [];
 }
 
 interface Product {
      name: string;
-     id: number;
-     images: { src: string }[];
-     store: { shop_name: string };
+     id: string;
+     // images: { src: string }[];
+     restaurant: Restaurant;
+     // description: string;
+     imgSrc: string;
      price: string;
-     currency: string;
      alt: string;
-     stock_status: string;
+     addOns: string;
 }
 
 interface CartItem extends Product {
@@ -29,13 +34,11 @@ interface CartItem extends Product {
 
 type PaymentMethod = string | null
 
-type OrderState = {
+type OrderStore = {
      loading: boolean;
      error: boolean;
      // cart: CartItem[]
      // cartCount: number
-     // favouriteProducts: Product[]
-     // favouriteRestaurants: Restaurant[]
      orderNote: string
      deliveryNote: string
      paymentMethod: PaymentMethod
@@ -46,13 +49,38 @@ type OrderState = {
      setOrderNote: (note: string) => void
      setDeliveryNote: (note: string) => void
      setPaymentMethod: (method: PaymentMethod) => void
-
-
-     // isMealFavourited: (mealId: number) => boolean
-     // toggleFavouriteProduct: (mealId: number) => void
-     // toggleFavouriteRestaurant: (restaurant: Restaurant) => void
 }
 
 
 
-export type { CardDetails, Restaurant, Product, CartItem, PaymentMethod, OrderState }
+// type ProductModalState = {
+//      restaurantId: string | null
+//      productId: string | null
+//      open: boolean
+//      setProductData: (restaurantId: string, productId: string) => void
+//      closeModal: () => void
+// }
+
+
+interface ProductStore {
+     products: Product[]
+     restaurants: Restaurant[]
+     loading: boolean
+     error: string | null
+     currentProduct: Product | null
+
+     fetchProducts: () => Promise<void>
+     fetchRestaurants: () => Promise<void>
+     // fetchProduct: (id: string) => Promise<void>
+     // fetchProduct: ;
+     favouriteProducts: Product[] | undefined;
+     favouriteRestaurants: Restaurant[] | undefined;
+     isProductFavourited: (product: Product | undefined) => boolean
+     isRestaurantFavourited: (product: Restaurant | undefined) => boolean
+     toggleFavouriteProduct: (product: Product | undefined) => void
+     toggleFavouriteRestaurant: (restaurant: Restaurant | undefined) => void
+
+}
+
+
+export type { CardDetails, Restaurant, Product, CartItem, PaymentMethod, OrderStore, ProductStore }

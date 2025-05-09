@@ -42,12 +42,12 @@
 
 @layer components {
      .btn {
-          @apply px-6 py-1.5 rounded-full bg-primary-main text-white font-semibold shadow-[0_5px_25px_rgba(0,1,0,0.2)] transition-colors focus:outline-none focus:ring-2 focus:ring-primary-soft hover:bg-primary-light;
-          /*[0_4px_20px_rgba(0,0,0,0.2)]*/
+          @apply px-6 py-1.5 rounded-full bg-primary-main text-white font-semibold shadow-[0_4px_20px_rgba(0,0,0,0.2)] transition-colors focus:outline-none hover:bg-primary-light;
+          /* [0_5px_25px_rgba(0,1,0,0.2)] */
      }
 
      .see-all-btn {
-          @apply px-5 py-[0.26rem] rounded-full bg-primary-pale text-primary-main text-[13.8px] font-semibold shadow-[0_5px_25px_rgba(0,1,0,0.2)] hover:bg-primary-soft hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-primary-soft;
+          @apply px-5 py-[0.26rem] rounded-full bg-primary-pale text-primary-main text-[13.8px] font-semibold shadow-md hover:bg-primary-soft hover:text-white transition-colors focus:outline-none;
      }
 
      .navigation-btn {

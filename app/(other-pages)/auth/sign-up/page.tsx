@@ -22,7 +22,7 @@ const SignUpPage = () => {
 // }
 
     return (
-        <div className='min-h-screen flex flex-col items-center space
+        <div className='min-h-screen h-screen flex flex-col items-center space
         -y-2.5'>
             {/* Top Section */}
             <section
