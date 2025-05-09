@@ -1,6 +1,6 @@
 import ProductModal from "@/components/productModal"
 
-const ProductPage = async ({ params }: { params: Promise<{ restaurantId: number, productId: number }> }) => {
+const ProductPage = async ({ params }: { params: Promise<{ restaurantId: string, productId: string }> }) => {
     const { restaurantId, productId } = await params
 
     return (

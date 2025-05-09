@@ -5,55 +5,36 @@ import { FaChevronLeft } from 'react-icons/fa'
 import { IoAlarm, IoClose, IoEllipsisHorizontal, IoStar, IoTimer } from 'react-icons/io5'
 import { Drawer, DrawerClose, DrawerContent, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer'
 import ProductModal from '@/components/productModal'
-import { MdLocationPin } from 'react-icons/md'
+import { MdDeliveryDining, MdLocationPin } from 'react-icons/md'
+import fetchRestaurantsAndProducts from '@/lib/api'
+import { Restaurant, Product } from '@/lib/typeDefs'
+import { formatCurrency } from '@/lib/utilFunctions'
+import { BiSolidStopwatch } from 'react-icons/bi'
+import useProductModalStore from '@/stores/useProductModalStore'
+
+const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: string, productId: string }> }) => {
+    const { restaurantId, productId } = await params
+    const { restaurants, products } = await fetchRestaurantsAndProducts()
+
+    // Find the matching store
+    const matchingRestaurant: Restaurant | undefined = restaurants.find((restaurant) => restaurant.id === restaurantId);
 
 
-
-const menu = [
-     {
-          id: 1,
-          name: "Jollof rice",
-          description: "jollof-rice-marg-tee...",
-          price: "₵29.50",
-          imgSrc: "/jollof-rice-marg-tee-1094739000-612x612.jpg",
-     },
-     {
-     id: 2,
-          name: "Yam and palava sauce",
-          description: "Yam and palava sauce-marg-tee...",
-          price: "₵9.50",
-          imgSrc: "/Yam and palava sauce-marg-tee.jpg",
-     },
-     {
-          id: 3,
-          name: "Jollof rice",
-          description: "jollof-rice-marg-tee...",
-          price: "₵29.00",
-          imgSrc: "/jollof-rice-marg-tee-1094739000-612x612.jpg",
-     },
-     {
-          id: 4,
-          name: "Yam and palava sauce",
-          description: "Yam and palava sauce-marg-tee...",
-          price: "₵9.50",
-          imgSrc: "/Yam and palava sauce-marg-tee.jpg",
-     },
-     {
-          id: 5,
-          name: "Jollof rice",
-          description: "jollof-rice-marg-tee",
-          price: "₵29.00",
-          imgSrc: "/jollof-rice-marg-tee-1094739000-612x612.jpg",
-     },
-]
+    if (!matchingRestaurant) {
+        return <div>Restaurant not found</div>
+    }
 
 
+    // drafts a menu
+    const menuItems = products.filter(
+        product => product.restaurant?.id === matchingRestaurant.id
+    )
+
+    // console.log(matchingRestaurant)
+    // console.log(menuItems)
 
 
-const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: number, productId: number }> }) => {
-     const { restaurantId, productId } = await params
-
-     return (
+    return (
           <main className='w-full h-full min-h-screen relative space-y-5'>
                {/* Restaurant Banner */}
                <section className='w-full h-64 relative rounded-b-3xl overflow-hidden'>
@@ -86,23 +67,23 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: numb
               {/* Title + Favorite */}
                <section className='w-[88%] mx-auto flex flex-col justify-between items-start'>
                     <div className='w-full flex justify-between items-center'>
-                         <h1 className='text-xl text-secondary-light font-extrabold'>Restaurant name</h1>
-                         <FavouriteRestaurantIcon restaurantId={restaurantId} />
+                         <h1 className='text-xl text-secondary-light font-extrabold'>{matchingRestaurant.name}</h1>
+                         <FavouriteRestaurantIcon restaurant={matchingRestaurant} />
                     </div>
                     <p className='text-md text-secondary-soft'>Restaurant slogan...</p>
                </section>
 
 
                {/* Quick Info */}
-               <section className='w-[88%] mx-auto flex flex-col text-sm font-semibold gap-2.5 text-black-soft'>
+               <section className='w-[88%] mx-auto -mt-1 flex flex-col text-sm font-semibold gap-2.5 text-black-soft'>
                     <div className='flex items-center gap-1'>
                          <MdLocationPin className='icon' /> Restaurant location
                     </div>
                     <div className='flex items-center gap-1'>
-                         <IoAlarm className='icon' /> 40-50min
+                        <BiSolidStopwatch className='icon' /> 40-50min
                     </div>
                     <div className='flex items-center gap-1'>
-                         <IoTimer className='icon' /> Open 10:00 - 22:00
+                         <IoTimer className='icon' /> Open {matchingRestaurant?.startTime?.replace(/\s*:\s*/, ':')} - {matchingRestaurant?.endTime?.replace(/\s*:\s*/, ':')}
                     </div>
                </section>
 
@@ -111,16 +92,13 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: numb
                <section className='w-[88%] mx-auto mt-9 space-y-3'>
                     <h2 className='text-[1.6rem] font-bold text-secondary-light'>Our Menu</h2>
 
-                    <div className='space-y-5'>
-                         {menu.map((item, i) => (
-                              <div key={item.id} className='flex'>
-                                   <div className='flex-1 self-center space-y-1 relative'>
-                                        <h3 className='font-semibold text-md text-secondary-soft'>
-                                             {item.name}
+                    <div className='space-y-3'>
+                         {menuItems.map((menuItem, i: number) => (
+                              <div key={i} className='flex border-b border-gray-100 pb-3'>
+                                   <div className='flex-1 self-center space-y-1.5 relative'>
+                                        <h3 className='w-[96%] font-semibold text-md text-secondary-soft leading-5'>
+                                             {menuItem.name}
                                         </h3>
-                                        <p className='text-[13.7px] text-black-pale'>
-                                             {item.description}
-                                        </p>
                                         <Drawer>
                                              <DrawerTrigger asChild>
                                                   <button className="text-xs py-1.5 px-6 bg-primary-main text-white see-all-btn">
@@ -137,17 +115,17 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: numb
                                                             <IoClose className='size-6 fill-gray-pale' />
                                                        </button>
                                                   </DrawerClose>
-                                                  <ProductModal restaurantId={restaurantId} productId={restaurantId} />
+                                                  <ProductModal product={menuItem} />
                                              </DrawerContent>
                                         </Drawer>
-                                        <span className="text-base text-secondary-soft font-bold ml-2.5 self-end">
-                                             {item.price}
+                                        <span className='text-base text-secondary-soft font-bold ml-2.5 pt-0.5'>
+                                             ₵{formatCurrency(menuItem.price)}
                                         </span>
                                    </div>
-                                   <div className='w-25 h-24 relative rounded-xl overflow-hidden'>
+                                   <div className='w-24 h-22 relative rounded-xl overflow-hidden'>
                                         <Image 
-                                             src={item.imgSrc} 
-                                             alt={item.name} 
+                                             src='/Yam and palava sauce-marg-tee.jpg'
+                                             alt={menuItem.name}
                                              fill 
                                              className='object-cover' />
                                    </div>

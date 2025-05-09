@@ -1,7 +1,11 @@
 import Link from "next/link"
 import Card from "@/components/card"
+import fetchRestaurantsAndProducts from '@/lib/api'
 
-const RestaurantsPage = () => {
+const RestaurantsPage = async () => {
+    const { restaurants } = await fetchRestaurantsAndProducts()
+    // console.log(restaurants)
+
      return (
           <main className="min-h-screen flex flex-col items-center space-y-5">
                <section className="w-[90%]">
@@ -12,14 +16,13 @@ const RestaurantsPage = () => {
                     <h2 className="tracking-wide text-lg font-bold mb-1.5">All restaurants</h2>
 
                     <div className="h-[160rem] flex flex-col gap-9">
-                         {Array(8).fill(0).map((_, i) => (
-                              <Link href='/restaurants/1' className="w-full h-[17rem]" key={i}>
+                         {restaurants.map((restaurant) => (
+                              <Link href={`/restaurants/${restaurant.id}`} className="w-full" key={restaurant.id}>
                                    <Card
-                                        cardClass="w-full"
+                                        cardClass="w-full h-[14.6rem]"
                                         cardDetails={{
                                              imgSrc: '/Yam and palava sauce-marg-tee.jpg',
-                                             mealName: 'Tasty bowl',
-                                             mealDescription: 'Choose from a variety of...'
+                                             name: restaurant.name,
                                         }}
                                    />
                               </Link>

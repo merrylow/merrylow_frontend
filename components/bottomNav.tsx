@@ -11,7 +11,7 @@ const BottomNav = () => {
      const pathname = usePathname()
 
      return (
-         <section className='fixed left-1/2 transform -translate-x-1/2 bottom-4 w-[94%] glass h-[4.7em] flex items-center justify-center text-sm shadow-[0_5px_25px_rgba(0,1,0,0.2)] rounded-[20px]'>
+         <section className='fixed left-1/2 transform -translate-x-1/2 bottom-4 w-[94%] glass h-[4.8em] flex items-center justify-center text-sm shadow-[0_5px_25px_rgba(0,1,0,0.2)] rounded-[22px]'>
               <div className='w-full flex justify-between items-center px-4 py-3'>
                    <Link
                        href='/'
