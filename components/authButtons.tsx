@@ -69,6 +69,7 @@ const EmailSignInButton = () => {
             // onClick={}
             className='w-full h-11 bg-primary-light text-white rounded-full font-semibold'
             type='submit'
+            disabled={loading}
         >
             {loading ? (
                 <>

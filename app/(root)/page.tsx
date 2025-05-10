@@ -1,13 +1,13 @@
 import AdCarousel from '@/components/adCarousel'
 import Link from 'next/link'
 import Card from '@/components/card'
-import { auth } from '@/lib/auth'
+// import { auth } from '@/lib/auth'
 import fetchRestaurantsAndProducts from '@/lib/api'
 import { redirect } from 'next/navigation'
 
 
 const Home = async () => {
-    const session = await auth()
+    // const session = await auth()
 
     // if (!session?.user) redirect('/auth/sign-up')
 
@@ -15,9 +15,9 @@ const Home = async () => {
         <main className='w-full mx-auto min-h-screen space-y-10'>
             {/* ad carousel */}
             <section className="w-[90%] h-[16rem] min-h-[16.375rem] flex flex-col space-y-2.5 mx-auto mb-16 rounded-[18px]">
-                <h1 className='text-lg font-bold text-secondary-light'>
-                    Hello {session ? (session?.user?.name)?.split(' ')[0] : 'there'}👋🏽
-                </h1>
+                {/*<h1 className='text-lg font-bold text-secondary-light'>*/}
+                {/*    Hello {session ? (session?.user?.name)?.split(' ')[0] : 'there'}👋🏽*/}
+                {/*</h1>*/}
                 <AdCarousel />
             </section>
 

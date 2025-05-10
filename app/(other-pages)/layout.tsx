@@ -36,16 +36,16 @@ export const viewport = {
 
 const OtherLayout = ({
      children,
-     modal,
+     // modal,
 }: {
      children: React.ReactNode;
-     modal: React.ReactNode
+     // modal: React.ReactNode
 }) => {
      return (
           <html lang='en' className={nunitoSans.className}>
                <body>
                     {children}
-                    {modal}
+                    {/*{modal}*/}
                     <Toaster />
                </body>
           </html>
