@@ -3,21 +3,21 @@ import Link from 'next/link'
 import Card from '@/components/card'
 // import { auth } from '@/lib/auth'
 import fetchRestaurantsAndProducts from '@/lib/api'
-import { redirect } from 'next/navigation'
 
 
 const Home = async () => {
-    // const session = await auth()
-
-    // if (!session?.user) redirect('/auth/sign-up')
+    const session = 1
 
     return (
         <main className='w-full mx-auto min-h-screen space-y-10'>
+            <section className='w-[90%] mx-auto'>
+                <h1 className='text-lg font-bold text-secondary-light -mb-7'>
+                    {/*Hello {session ? (session?.user?.name)?.split(' ')[0] : 'there'}👋🏽*/}
+                    Hello there👋🏽
+                </h1>
+            </section>
             {/* ad carousel */}
-            <section className="w-[90%] h-[16rem] min-h-[16.375rem] flex flex-col space-y-2.5 mx-auto mb-16 rounded-[18px]">
-                {/*<h1 className='text-lg font-bold text-secondary-light'>*/}
-                {/*    Hello {session ? (session?.user?.name)?.split(' ')[0] : 'there'}👋🏽*/}
-                {/*</h1>*/}
+            <section className="w-[90%] h-[15rem] min-h-[15rem] mx-auto mb-12 rounded-[18px]">
                 <AdCarousel />
             </section>
 

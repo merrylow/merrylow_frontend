@@ -21,7 +21,7 @@ const fetchRestaurantsAndProducts = async (): Promise<{
 
         const allProducts: Product[] = []
         let page = 1
-        const limit = 50
+        const limit = 50 //change this later if it's changed in the backend
         let totalFetched = 0
         let keepFetching = true
 

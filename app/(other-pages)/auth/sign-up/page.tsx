@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import BottomNav from '@/components/bottomNav'
-import {EmailSignInButton, GoogleSignInButton} from '@/components/authButtons'
-import axios from 'axios'
+import { GoogleSignInButton, EmailSignUpForm } from '@/components/authButtons'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
 
 const SignUpPage = () => {
     // add redirect
@@ -25,30 +25,7 @@ const SignUpPage = () => {
 
             {/* Bottom Section */}
             <section className='h-[50vh] w-[88%] max-w-md flex flex-col justify-evenly'>
-                <form className='flex flex-col space-y-5'>
-                    <label htmlFor='email' className='font-medium'>
-                        Email
-                        <input
-                            id='email'
-                            type='email'
-                            name='email'
-                            placeholder='Enter your email...'
-                            className='mt-1 w-full px-4 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/50'
-                            autoComplete='email'
-                            required
-                        />
-                    </label>
-
-                    <div className='space-y-2.5'>
-                        <EmailSignInButton />
-                        {/*when user signs in with this for the first time, their details are automatically recorded
-                         in db*/}
-                        <p className='text-sm text-gray-500'>
-                            Already have an account? <Link href='/auth/sign-in' className='text-primary-main font-medium'>Sign in</Link>
-                        </p>
-                    </div>
-                </form>
-
+                <EmailSignUpForm />
 
                 <div className='flex items-center justify-center text-sm text-gray-400'>
                     <span className="px-2">or Sign up with Google</span>

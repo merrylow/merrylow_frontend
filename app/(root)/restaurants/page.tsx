@@ -2,6 +2,9 @@ import Link from "next/link"
 import Card from "@/components/card"
 import fetchRestaurantsAndProducts from '@/lib/api'
 
+
+// wrap in suspense
+
 const RestaurantsPage = async () => {
     const { restaurants } = await fetchRestaurantsAndProducts()
     // console.log(restaurants)

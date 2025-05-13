@@ -20,7 +20,8 @@ const AdCarousel = () => {
                <Carousel images={sliderImages} opts={{
                     align: 'start',
                     loop: true,
-               }}> 
+                    }}
+               >
                     <CarouselContent>
                          <CarouselItem />
                     </CarouselContent>

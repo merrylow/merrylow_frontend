@@ -5,6 +5,7 @@ import '../globals.css'
 import Header from '@/components/header'
 import BottomNav from '@/components/bottomNav'
 import { Toaster } from '@/components/ui/sonner'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 import PushNotificationManager from '@/components/pwa-manager/pushNotificationManager'
 import InstallPrompt from '@/components/pwa-manager/installPrompt'
 // import { Toaster } from 'react-hot-toast'
@@ -45,6 +46,8 @@ export default function RootLayout({
   return (
     <html lang='en' className={nunitoSans.className}>
       <body>
+      <GoogleOAuthProvider clientId={process.env.AUTH_GOOGLE_ID!}>
+
         <Header />
         {/*<PushNotificationManager />*/}
         {/*<InstallPrompt />*/}
@@ -52,6 +55,7 @@ export default function RootLayout({
         <BottomNav />
 
         <Toaster />
+      </GoogleOAuthProvider>;
       </body>
     </html>
   );
