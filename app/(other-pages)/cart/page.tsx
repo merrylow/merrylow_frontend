@@ -1,3 +1,8 @@
+'use client'
+
+import useCartStore from '@/stores/useCartStore'
+import { CartItem } from '@/lib/typeDefs'
+import { formatCurrency } from '@/lib/utilFunctions'
 import Image from 'next/image'
 import QuantitySelector from '@/components/quantitySelector'
 import BackButton from '@/components/backButton'
@@ -6,23 +11,24 @@ import EmptyCart from '@/components/emptyCart'
 import BottomNav from '@/components/bottomNav'
 
 
-const cart = [
-     {
-          id: 1,
-          name: 'Yam and palava sauce',
-          price: '',
-          image: {
-               src: '/Yam and palava sauce-marg-tee.jpg',
-               alt: 'Yam and palava sauce-marg-tee'
-          },
-          addons: {},
-
-     }
-]
+// const cart = [
+//      {
+//           id: 1,
+//           name: 'Yam and palava sauce',
+//           price: '',
+//           image: {
+//                src: '/Yam and palava sauce-marg-tee.jpg',
+//                alt: 'Yam and palava sauce-marg-tee'
+//           },
+//           addons: {},
+//
+//      }
+// ]
 
 
 const CartPage = () => {
-     let cart = []
+     const cart = useCartStore(state => state.cart)
+     // let cart = []
 
      if(cart.length === 0) {
           return (
@@ -51,21 +57,21 @@ const CartPage = () => {
 
                     {/* Order Items */}
                     <section className='w-[90%] mx-auto mt-6'>
-                         {Array(4).fill(0).map((_, i) => (
+                         {cart.map((cartItem: CartItem, i) => (
                               <div className='flex justify-between items-start space-y-2 bg-white mb-3' key={i}>
                                    <div className='flex gap-3'>
                                         <div className='relative w-20 h-20 rounded-xl overflow-hidden'>
                                              <Image
                                                   src='/Yam and palava sauce-marg-tee.jpg'
-                                                  alt='Yam and palava sauce'
+                                                  alt=''
                                                   fill
                                                   className='object-cover'
                                              />
                                         </div>
                                         <div>
-                                             <h3 className='leading-none text-base font-semibold text-black-soft'>Yam and palava sauce</h3>
-                                             <p className='text-xs text-secondary-soft'>+ Packaging fee<br />+ Parmesan cheese</p>
-                                             <span className='text-primary-main font-bold text-[1rem] block mt-1'>₵12.50</span>
+                                             <h3 className='leading-none text-base font-semibold text-black-soft'>{cartItem.name}</h3>
+                                             <p className='text-xs text-secondary-soft'>+ Packaging option<br />+ Parmesan chicken</p>
+                                             <span className='text-primary-main font-bold text-[1rem] block mt-1'>₵{formatCurrency(cartItem.price)}</span>
                                         </div>
                                    </div>
 

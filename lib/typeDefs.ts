@@ -30,9 +30,9 @@ interface Product {
 interface CartItem extends Product {
      // order_status: string;
      quantity: number;
-     selectedAddons: Record<string, boolean>;
+     selectedAddons: Record<string, boolean> | null;
      packageOption: string;
-     orderNote: string;
+     orderNote: string | null;
 }
 
 type PaymentMethod = string | null
@@ -51,7 +51,7 @@ type CartStore = {
      // deliveryNote: string
      // paymentMethod: PaymentMethod
 
-     addToCart: (product: Product, quantity: number, selectedAddons: Record<string, boolean>, packageOption: string, orderNote: string) => void
+     addToCart: (product: Product, quantity: number, selectedAddons: Record<string, boolean> | null, packageOption: string, orderNote: string | null) => void
      // removeFromCart: (productId: string) => void
      // clearCart: () => void
      // setOrderNote: (note: string) => void

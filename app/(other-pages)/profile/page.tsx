@@ -40,23 +40,23 @@ const ProfilePage = async () => {
      //                    {/* Menu Items */}
      //                    <section
      //                        className='flex flex-col items-start space-y-6'>
-     //                         <Link
-     //                             href='#'
-     //                             className='flex items-center space-x-4 text-black'>
-     //                              <FaUser
-     //                                  className='text-primary-main size-6'/>
-     //                              <span
-     //                                  className='font-medium text-base'>My profile</span>
-     //                         </Link>
+     //                        // <Link
+     //                           //  href='#'
+     //                          //   className='flex items-center space-x-4 text-black'>
+     //                           //   <FaUser
+     //                            //      className='text-primary-main size-6'/>
+     //                            //  <span
+     //                             //     className='font-medium text-base'>My profile</span>
+     //                         // </Link>
      //
-     //                         <Link
-     //                             href='/checkout'
-     //                             className='flex items-center space-x-4 text-black'>
-     //                              <FaHourglassHalf
-     //                                  className='text-primary-main size-6'/>
-     //                              <span
-     //                                  className='font-medium text-base'>Processing orders</span>
-     //                         </Link>
+     //                        // <Link
+     //                         //    href='/checkout'
+     //                          //   className='flex items-center space-x-4 text-black'>
+     //                           //   <FaHourglassHalf
+     //                            //      className='text-primary-main size-6'/>
+     //                            //  <span
+     //                             //     className='font-medium text-base'>Processing orders</span>
+     //                        //  </Link>
      //
      //                         <Link
      //                             href='/'

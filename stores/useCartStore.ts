@@ -10,7 +10,9 @@ const useCartStore = create<CartStore>((set, get) => ({
      error: false,
 
      // cart data
-     cart: [],
+     cart: typeof window !== 'undefined'
+         ? JSON.parse(localStorage.getItem('cart') || '[]')
+         : [],
      cartCount: 0,
 
      addToCart: async (product, quantity, selectedAddons, packageOption, orderNote) => {
@@ -32,6 +34,8 @@ const useCartStore = create<CartStore>((set, get) => ({
               item.orderNote === orderNote
           )
 
+          let updatedCart
+
           if (existingItem) {
                // set({
                //      cart: get().cart.map((item: CartItem) => (
@@ -42,17 +46,30 @@ const useCartStore = create<CartStore>((set, get) => ({
                //          )
                //      ),
                // })
-               set({
-                    cart: get().cart.map(item =>
-                        item === existingItem
-                            ? { ...item, quantity: item.quantity + quantity }
-                            : item
-                    )
-               })
+               // set({
+               //      cart: get().cart.map(item =>
+               //          item === existingItem
+               //              ? { ...item, quantity: item.quantity + quantity }
+               //              : item
+               //      )
+               // })
+
+               updatedCart = get().cart.map(item =>
+                   item === existingItem
+                       ? { ...item, quantity: item.quantity + quantity }
+                       : item
+               )
+
+               set({ cart: updatedCart })
 
           } else {
-               set({ cart: [...get().cart, newCartItem] })
+               // set({ cart: [...get().cart, newCartItem] })
+
+               updatedCart = [...get().cart, newCartItem]
+               set({ cart: updatedCart })
           }
+
+          localStorage.setItem('cart', JSON.stringify(updatedCart))
 
           // sync with backend cart
           try {

@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Nunito_Sans } from 'next/font/google'
 import '../globals.css'
 import { Toaster } from '@/components/ui/sonner'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 
 // const rubik = Rubik({
@@ -42,6 +43,7 @@ const OtherLayout = ({
      // modal: React.ReactNode
 }) => {
      return (
+         <GoogleOAuthProvider clientId={process.env.AUTH_GOOGLE_ID!}>
           <html lang='en' className={nunitoSans.className}>
                <body>
                     {children}
@@ -49,6 +51,7 @@ const OtherLayout = ({
                     <Toaster />
                </body>
           </html>
+         </GoogleOAuthProvider>
      )
 }
 

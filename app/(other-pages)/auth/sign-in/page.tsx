@@ -1,6 +1,6 @@
 import { EmailSignInForm, GoogleSignInButton } from '@/components/authButtons'
 import Link from "next/link"
-import { GoogleLogin } from '@react-oauth/google'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 // import { auth } from '@/lib/auth';
 // import { redirect } from 'next/navigation';
 
@@ -31,7 +31,9 @@ const SignInPage = async () => {
                     <span className="px-2">or Sign in with Google</span>
                 </div>
 
-                <GoogleSignInButton />
+                <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
+                    <GoogleSignInButton />
+                </GoogleOAuthProvider>
             </section>
         </div>
     )

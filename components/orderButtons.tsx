@@ -6,7 +6,7 @@ import { Product } from '@/lib/typeDefs'
 import useCartStore from '@/stores/useCartStore'
 
 
-const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote, packageOption }: { product: Product, quantity: number, selectedAddons: {}, orderNote: string, packageOption: string }) => {
+const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote, packageOption }: { product: Product, quantity: number, selectedAddons: {} | null, orderNote: string | null, packageOption: string }) => {
     const addToCart = useCartStore(state => state.addToCart)
     const router = useRouter()
 
@@ -14,7 +14,7 @@ const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote, packag
         addToCart(product, quantity, selectedAddons, packageOption, orderNote)
         toast.success('Your order has been added!')
 
-        router.push('/')
+        router.push('/cart')
     }
 
     return (

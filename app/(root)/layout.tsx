@@ -44,9 +44,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+      <GoogleOAuthProvider clientId={process.env.AUTH_GOOGLE_ID!}>
     <html lang='en' className={nunitoSans.className}>
       <body>
-      <GoogleOAuthProvider clientId={process.env.AUTH_GOOGLE_ID!}>
 
         <Header />
         {/*<PushNotificationManager />*/}
@@ -55,8 +55,8 @@ export default function RootLayout({
         <BottomNav />
 
         <Toaster />
-      </GoogleOAuthProvider>;
       </body>
     </html>
+      </GoogleOAuthProvider>
   );
 }

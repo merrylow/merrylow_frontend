@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 import axios from 'axios'
 import { FaSignOutAlt } from 'react-icons/fa'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google'
+import { GoogleOAuthProvider, GoogleLogin, useGoogleLogin } from '@react-oauth/google'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
@@ -16,63 +16,67 @@ import Link from 'next/link'
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const GoogleSignInButton = () => {
-    const clientId: string = process.env.AUTH_GOOGLE_ID!
+    const clientId: string | undefined = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!
     const router = useRouter()
-    // const [loading, setLoading] = useState(false)
-    //
-    // const handleSubmit = async (e: React.FormEvent) => {
-    //     e.preventDefault()
-    //
-    //     // await axios.post(`${API_URL}/api/auth/google`, { token })
-    //
-    // }
-    const handleSuccess = async (credentialResponse: any) => {
-        const token = credentialResponse.credential
+    const [loading, setLoading] = useState(false)
+
+
+    const handleSuccess = async (codeResponse: any) => {
+        const token = codeResponse
+        console.log(token)
         try {
             const response = await axios.post(`${API_URL}/api/auth/google`, { token
             })
 
             localStorage.setItem('accessToken', response.data.accessToken)
-            router.push('/')
+            const user = response.data.user
+            // router.push('/')
         } catch(error) {
             toast.error('Sign in failed. Please try again')
         }
     }
 
+
+    const login = useGoogleLogin({
+        onSuccess: handleSuccess,
+        flow: 'auth-code',
+        redirect_uri: 'http://localhost:3000',
+    });
+
     return (
-        // <button
-        //     // onClick={}
-        //     className='w-full h-11 border border-gray-300 rounded-full flex items-center justify-center space-x-2'
-        //     type='submit'
-        //     disabled={loading}
-        // >
-        //     {loading ? (
-        //         <>
-        //             <span className="loading loading-spinner loading-sm fill-primary-main" />
-        //             <span className="text-sm text-secondary-soft font-medium">Signing you in...</span>
-        //         </>
-        //     ) : (
-        //         <>
-        //             <FcGoogle className='size-5' />
-        //             <span className='text-sm font-medium'>Continue with Google</span>
-        //         </>
-        //     )
-        //     }
-        // </button>
-        <GoogleOAuthProvider clientId={clientId}>
-        <GoogleLogin
-            onSuccess={handleSuccess}
-            onError={() => {
-                toast.error('Sign in failed. Please try again')
-            }}
-            text={'continue_with'}
-            theme={'outline'}
-            shape={'pill'}
-            logo_alignment={'center'}
-            ux_mode={'redirect'}
-            login_uri={'/auth/sign-in'}
-        />
-        </GoogleOAuthProvider>
+        <button
+            onClick={login}
+            className='w-full h-11 border border-gray-300 rounded-full flex items-center justify-center space-x-2'
+            type='submit'
+            disabled={loading}
+        >
+            {loading ? (
+                <>
+                    <span className="loading loading-spinner loading-sm fill-primary-main" />
+                    <span className="text-sm text-secondary-soft font-medium">Signing you in...</span>
+                </>
+            ) : (
+                <>
+                    <FcGoogle className='size-5' />
+                    <span className='text-sm font-medium'>Continue with Google</span>
+                </>
+            )
+            }
+        </button>
+        // <GoogleOAuthProvider clientId={clientId}>
+        //     <GoogleLogin
+        //         onSuccess={handleSuccess}
+        //         onError={() => {
+        //             toast.error('Sign in failed. Please try again')
+        //         }}
+        //         text={'continue_with'}
+        //         theme={'outline'}
+        //         shape={'pill'}
+        //         logo_alignment={'center'}
+        //         ux_mode={'redirect'}
+        //         login_uri={'/auth/sign-in'}
+        //     />
+        // </GoogleOAuthProvider>
     )
 }
 
