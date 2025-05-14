@@ -49,7 +49,7 @@ const FavouriteProductIcon = ({ product }: { product: Product }) => {
 
 
 const FavouriteRestaurantIcon = ({ restaurant }: { restaurant: Restaurant }) => {
-    // const { toggleFavouriteProduct, isMealFavourited, favouriteProducts } = useOrderStore()
+    // const { toggleFavouriteProduct, isMealFavourited, favouriteProducts } = useProductStore()
     //
 
     // const restaurant = useProductsStore.getState().restaurants.find(restaurant => restaurant.id === productId)

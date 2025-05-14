@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
      name: 'MERRYLOW',
      short_name: 'MERRYLOW',
      description: 'A campus-based food delivery platform',
-     start_url: '/auth/sign-up',
+     start_url: '/',
      display: 'standalone',
      background_color: '#CB6CE6',
      theme_color: '#cb6ce6',

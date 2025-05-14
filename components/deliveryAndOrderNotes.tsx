@@ -1,18 +1,9 @@
 'use client'
 
 import { Textarea } from '@/components/ui/textarea'
-import useOrderStore from '@/stores/useOrderStore'
+import { OrderNoteProps } from '@/lib/typeDefs'
 
-
-const OrderNote = () => {
-    // import { shallow } from 'zustand/shallow'
-    // const [orderNote, setOrderNote] = useOrderStore(
-    //     state => [state.orderNote, state.setOrderNote],
-    //     shallow
-    // )
-
-    const orderNote = useOrderStore(state => state.orderNote)
-    const setOrderNote = useOrderStore(state => state.setOrderNote)
+const OrderNote = ({ orderNote, setOrderNote }: OrderNoteProps) => {
     return (
         <>
             <Textarea

@@ -117,6 +117,31 @@ const useProductStore = create<ProductStore>((set, get) => ({
         const favourites: Restaurant[] = get().favouriteRestaurants ?? []
         return favourites.some(item => item.id === restaurant.id)
     },
+
+
+    // toggleFavouriteRestaurant: (restaurantId) => {
+    //      const currentFavourites = get().favouriteProducts
+    //      const isAlreadyFavourited = currentFavourites.some(item => item.id === product.id)
+    //
+    //      if (isAlreadyFavourited) {
+    //           set({
+    //                favouriteProducts: currentFavourites.filter(item => item.id !== product.id)
+    //           })
+    //      } else {
+    //           set({
+    //                favouriteProducts: [...currentFavourites, product] // ,productId
+    //           })
+    //      }
+    //
+    //      // const isFav = get().favouriteRestaurants.some(item => item.id === restaurantId)
+    //      // if (isFav) {
+    //      //      set({
+    //      //           favouriteRestaurants: get().favouriteRestaurants.filter(item => item.id !== restaurantId),
+    //      //      })
+    //      // } else {
+    //      //      set({ favouriteRestaurants: [...get().favouriteRestaurants, restaurantId] })
+    //      // }
+    // },
 }))
 
 export default useProductStore

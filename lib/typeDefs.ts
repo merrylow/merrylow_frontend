@@ -28,27 +28,35 @@ interface Product {
 }
 
 interface CartItem extends Product {
-     order_status: string;
+     // order_status: string;
      quantity: number;
+     selectedAddons: Record<string, boolean>;
+     packageOption: string;
+     orderNote: string;
 }
 
 type PaymentMethod = string | null
 
-type OrderStore = {
+type OrderNoteProps = {
+     orderNote: string;
+     setOrderNote: (value: string) => void;
+}
+
+type CartStore = {
      loading: boolean;
      error: boolean;
-     // cart: CartItem[]
-     // cartCount: number
-     orderNote: string
-     deliveryNote: string
-     paymentMethod: PaymentMethod
+     cart: CartItem[]
+     cartCount: number
+     // orderNote: string
+     // deliveryNote: string
+     // paymentMethod: PaymentMethod
 
-     // addToCart: (meal: Product) => void
-     // removeFromCart: (mealId: string) => void
+     addToCart: (product: Product, quantity: number, selectedAddons: Record<string, boolean>, packageOption: string, orderNote: string) => void
+     // removeFromCart: (productId: string) => void
      // clearCart: () => void
-     setOrderNote: (note: string) => void
-     setDeliveryNote: (note: string) => void
-     setPaymentMethod: (method: PaymentMethod) => void
+     // setOrderNote: (note: string) => void
+     // setDeliveryNote: (note: string) => void
+     // setPaymentMethod: (method: PaymentMethod) => void
 }
 
 
@@ -83,4 +91,4 @@ interface ProductStore {
 }
 
 
-export type { CardDetails, Restaurant, Product, CartItem, PaymentMethod, OrderStore, ProductStore }
+export type { CardDetails, Restaurant, Product, CartItem, PaymentMethod, CartStore, ProductStore, OrderNoteProps }

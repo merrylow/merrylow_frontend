@@ -1,16 +1,30 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
 import QuantitySelector from './quantitySelector'
 import { FavouriteProductIcon } from './favouriteIcons'
 import { AddToOrderButton } from '@/components/orderButtons'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Checkbox } from '@/components/ui/checkbox'
+import { Label } from '@/components/ui/label'
 import { OrderNote } from '@/components/deliveryAndOrderNotes'
 import { formatCurrency } from '@/lib/utilFunctions'
 import { Product } from '@/lib/typeDefs'
 
 const ProductModal = ({ product }: { product: Product }) => {
+     const [quantity, setQuantity] = useState<number>(1)
+     const [selectedAddons, setSelectedAddons] = useState<Record<string, boolean>>({})
+     const [packageOption, setPackageOption] = useState('')
+     const [orderNote, setOrderNote] = useState('')
+
+     // const toggleAddon = (addonId: string) => {
+     //      setSelectedAddons(prev => ({
+     //           ...prev,
+     //           [addonId]: !prev[addonId]
+     //      }))
+     // }
+
      return(
          <div className='w-full h-full bg-white flex flex-col justify-start rounded-t-4xl overflow-hidden'>
               <div className='flex-1 relative overflow-y-auto'>
@@ -39,6 +53,15 @@ const ProductModal = ({ product }: { product: Product }) => {
                         <div className='space-y-4'>
                              <h2 className='text-md text-secondary-light font-semibold'>Add more</h2>
 
+                             {/*{product.addOns?.map(addon => (*/}
+                             {/*    <Label key={addon.id}>*/}
+                             {/*         <Checkbox*/}
+                             {/*             checked={selectedAddons[addon.id] || false}*/}
+                             {/*             onCheckedChange={() => toggleAddon(addon.id)}*/}
+                             {/*         />*/}
+                             {/*         {addon.name}*/}
+                             {/*    </label>*/}
+                             {/*))}*/}
                              {Array(7).fill(0).map((_, i) => (
                                  <div className='flex justify-between items-center' key={i}>
                                       <div className='flex items-center gap-2'>
@@ -46,7 +69,14 @@ const ProductModal = ({ product }: { product: Product }) => {
                                       </div>
                                       <div className='space-x-2.5 flex items-center'>
                                            <span className='text-base text-black-soft font-semibold'>+₵20.50</span>
-                                           <Checkbox className={'border border-primary-light'} aria-label='menu-item checkbox' />
+                                           <Checkbox
+                                               className={'border border-primary-light'}
+                                               aria-label='menu-item checkbox'
+                                               // // checked={selectedAddons.includes('Chicken')}
+                                               // // onCheckedChange={(checked) =>
+                                               // //     setSelectedAddons((prev) =>
+                                               //     {/*checked ? [...prev, 'chicken'] : prev.filter(item => item !== 'chicken'))}*/}
+                                           />
                                       </div>
                                  </div>
                              ))}
@@ -55,6 +85,18 @@ const ProductModal = ({ product }: { product: Product }) => {
                         <div className='space-y-4'>
                              <h2 className='text-md text-secondary-light font-semibold'>Package</h2>
 
+                             {/*{product.packageOptions?.map(option => (*/}
+                             {/*    <label key={option}>*/}
+                             {/*         <input*/}
+                             {/*             type="radio"*/}
+                             {/*             name="packageOption"*/}
+                             {/*             value={option}*/}
+                             {/*             checked={packageOption === option}*/}
+                             {/*             onChange={() => setPackageOption(option)}*/}
+                             {/*         />*/}
+                             {/*         {option}*/}
+                             {/*    </label>*/}
+                             {/*))}*/}
                              <RadioGroup>
                                   {Array(2).fill(0).map((_, i) => (
                                       <div className='flex justify-between items-center' key={i}>
@@ -63,7 +105,13 @@ const ProductModal = ({ product }: { product: Product }) => {
                                            </div>
                                            <div className='space-x-2.5 flex items-center'>
                                                 <span className='text-base text-black-soft font-semibold'>+₵0.50</span>
-                                                <RadioGroupItem className={'border-primary-light'} value={`option-${i}`} id={`option-${i}`} />
+                                                <RadioGroupItem
+                                                    className={'border-primary-light'}
+                                                    value={`option-${i}`}
+                                                    // value={packageOption}
+                                                    // onValueChange={setSelectedPackage}
+                                                    id={`option-${i}`}
+                                                />
                                            </div>
                                       </div>
                                   ))}
@@ -73,15 +121,20 @@ const ProductModal = ({ product }: { product: Product }) => {
                         <div className='space-y-2'>
                              <h2 className="text-md text-secondary-light font-semibold">Order note</h2>
 
-                             <OrderNote />
+                             <OrderNote orderNote={orderNote} setOrderNote={setOrderNote} />
                         </div>
                    </section>
                    <section className='fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[88%] bg-transparent py-4 flex justify-between items-center'>
                         <QuantitySelector />
-                        <AddToOrderButton />
+                        <AddToOrderButton
+                            product={product}
+                            quantity={quantity}
+                            selectedAddons={selectedAddons}
+                            packageOption={packageOption}
+                            orderNote={orderNote}
+                        />
                    </section>
               </div>
-
          </div>
      )
 

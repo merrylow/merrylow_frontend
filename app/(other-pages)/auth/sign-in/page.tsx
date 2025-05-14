@@ -7,7 +7,6 @@ import { GoogleLogin } from '@react-oauth/google'
 const SignInPage = async () => {
     // const session = await auth()
 
-    // if (session) redirect('/')
 
     return (
         <div className='min-h-screen flex flex-col items-center space-y-2.5'>
