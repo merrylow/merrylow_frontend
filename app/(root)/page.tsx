@@ -1,8 +1,7 @@
 import AdCarousel from '@/components/adCarousel'
 import Link from 'next/link'
 import Card from '@/components/card'
-// import { auth } from '@/lib/auth'
-import fetchRestaurantsAndProducts from '@/lib/api'
+import Greeting from '@/components/greeting'
 
 
 const Home = async () => {
@@ -11,10 +10,7 @@ const Home = async () => {
     return (
         <main className='w-full mx-auto min-h-screen space-y-10'>
             <section className='w-[90%] mx-auto'>
-                <h1 className='text-lg font-bold text-secondary-light -mb-7'>
-                    {/*Hello {session ? (session?.user?.name)?.split(' ')[0] : 'there'}👋🏽*/}
-                    Hello there👋🏽
-                </h1>
+                <Greeting />
             </section>
             {/* ad carousel */}
             <section className="w-[90%] h-[15rem] min-h-[15rem] mx-auto mb-12 rounded-[18px]">

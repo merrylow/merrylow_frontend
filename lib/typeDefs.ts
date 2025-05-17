@@ -1,3 +1,19 @@
+interface User {
+     id: string;
+     name: string;
+     email: string;
+     imgUrl: string;
+     // other properties
+}
+
+type UserState = {
+     user: User | null;
+     setUser: (user: User | null) => void;
+     isAuthenticated: boolean;
+     setAuthenticated: (isAuthenticated: boolean) => void;
+     loading: boolean;
+}
+
 type CardDetails = {
      imgSrc: string
      name: string
@@ -65,7 +81,7 @@ type CartStore = {
 
 type PaymentMethod = string;
 
-interface ProductStore {
+type ProductStore = {
      products: Product[];
      restaurants: Restaurant[];
      loading: boolean;
@@ -86,4 +102,4 @@ interface ProductStore {
 }
 
 
-export type { CardDetails, Restaurant, Product, CartItem, PaymentMethod, CartStore, ProductStore, Addon, PackageOption }
+export type { CardDetails, Restaurant, Product, CartItem, PaymentMethod, CartStore, ProductStore, Addon, PackageOption, User, UserState }

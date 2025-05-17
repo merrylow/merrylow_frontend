@@ -45,8 +45,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const CLIENT_ID: string = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!
+
   return (
-      <GoogleOAuthProvider clientId={process.env.AUTH_GOOGLE_ID!}>
+      <GoogleOAuthProvider clientId={CLIENT_ID}>
     <html lang='en' className={nunitoSans.className}>
       <body>
 

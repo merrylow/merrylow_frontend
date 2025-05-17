@@ -11,39 +11,52 @@ import { GoogleOAuthProvider, GoogleLogin, useGoogleLogin } from '@react-oauth/g
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
+import useUserStore from '@/stores/useUserStore'
 
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const GoogleSignInButton = () => {
-    const clientId: string | undefined = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!
+    const CLIENT_ID: string = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!
     const router = useRouter()
+    const user = useUserStore(state => state.user)
+    const setAuthenticated = useUserStore(state => state.setAuthenticated)
     const [loading, setLoading] = useState(false)
 
 
     const handleSuccess = async (codeResponse: any) => {
-        const token = codeResponse
-        console.log(token)
-        try {
-            const response = await axios.post(`${API_URL}/api/auth/google`, { token
-            })
-
-            localStorage.setItem('accessToken', response.data.accessToken)
-            const user = response.data.user
-            // router.push('/')
-        } catch(error) {
-            toast.error('Sign in failed. Please try again')
+        setLoading(true)
+        if(codeResponse.code) {
+            toast.success('Signed in successfully')
         }
+        // const token = codeResponse
+        console.log(codeResponse)
+
+        // try {
+        //     const response = await axios.post(`${API_URL}/api/auth/google`, { code: codeResponse.code })
+        //
+        //     console.log(response.data.accessToken)
+        // setUser(response.data.data)
+        // setAuthenticated(true)
+        //     localStorage.setItem('accessToken', response.data.accessToken)
+        //     // router.push('/')
+        // } catch(error) {
+        //     toast.error('Sign in failed. Please try again')
+        // } finally {
+        //     setLoading(false)
+        // }
     }
 
 
     const login = useGoogleLogin({
         onSuccess: handleSuccess,
         flow: 'auth-code',
-        redirect_uri: 'http://localhost:3000',
+        redirect_uri: 'http://localhost:3000/',
     });
 
     return (
+        <GoogleOAuthProvider clientId={CLIENT_ID}>
         <button
             onClick={login}
             className='w-full h-11 border border-gray-300 rounded-full flex items-center justify-center space-x-2'
@@ -63,6 +76,8 @@ const GoogleSignInButton = () => {
             )
             }
         </button>
+        </GoogleOAuthProvider>
+        
         // <GoogleOAuthProvider clientId={clientId}>
         //     <GoogleLogin
         //         onSuccess={handleSuccess}
@@ -77,6 +92,33 @@ const GoogleSignInButton = () => {
         //         login_uri={'/auth/sign-in'}
         //     />
         // </GoogleOAuthProvider>
+
+        //
+        // <GoogleOAuthProvider clientId={CLIENT_ID}>
+        //     <GoogleLogin
+        //         onSuccess={async credentialResponse => {
+        //             console.log(credentialResponse);
+        //             toast.success(`Login successful customer: ${credentialResponse}`)
+        //
+        //             // const token = credentialResponse
+        //             // try {
+        //             //     const response = await axios.post(`${API_URL}/api/auth/google`, { token
+        //             //     })
+        //             //
+        //             //     localStorage.setItem('accessToken', response.data.accessToken)
+        //             //     console.log(response.data)
+        //             //     const user = response.data.user
+        //             //     console.log(user)
+        //             //     router.push('/')
+        //             // } catch(error) {
+        //             //     toast.error('Sign in failed. Please try again')
+        //             // }
+        //         }}
+        //         onError={() => {
+        //             console.log('Login Failed');
+        //         }}
+        //     />
+        // </GoogleOAuthProvider>
     )
 }
 
@@ -85,7 +127,6 @@ const GoogleSignInButton = () => {
 
 const EmailSignUpForm = () => {
     const [loading, setLoading] = useState(false)
-    // const [status, setStatus] = useState('')
     const [email, setEmail] = useState('')
 
     const handleSignIn = async (e: React.FormEvent) => {

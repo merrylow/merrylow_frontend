@@ -33,7 +33,7 @@ const SignUpPage = () => {
 
                 {/*when user signs in with this for the first time, their details are automatically recorded
                  in db*/}
-                {/*<GoogleSignInButton />*/}
+                <GoogleSignInButton />
             </section>
         </div>
     )
