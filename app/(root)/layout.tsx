@@ -8,6 +8,8 @@ import { Toaster } from '@/components/ui/sonner'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import PushNotificationManager from '@/components/pwa-manager/pushNotificationManager'
 import InstallPrompt from '@/components/pwa-manager/installPrompt'
+import LoadingOverlay from '@/components/loadingOverlay'
+import ClientLayoutShell from '@/components/clientLayoutShell'
 // import { Toaster } from 'react-hot-toast'
 
 // const rubik = Rubik({
@@ -54,6 +56,8 @@ export default function RootLayout({
           {children}
         <BottomNav />
 
+        <LoadingOverlay />
+        <ClientLayoutShell children={undefined} />
         <Toaster />
       </body>
     </html>

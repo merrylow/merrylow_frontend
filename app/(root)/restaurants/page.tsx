@@ -33,7 +33,7 @@ const RestaurantsPage = async () => {
                     </div>
                </section>
 
-               <div className="mb-20" />
+               <div className='mb-48' />
           </main>
      )
 }

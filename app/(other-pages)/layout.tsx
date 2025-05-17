@@ -4,6 +4,8 @@ import { Nunito_Sans } from 'next/font/google'
 import '../globals.css'
 import { Toaster } from '@/components/ui/sonner'
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import LoadingOverlay from '@/components/loadingOverlay'
+import ClientLayoutShell from '@/components/clientLayoutShell'
 
 
 // const rubik = Rubik({
@@ -48,6 +50,9 @@ const OtherLayout = ({
                <body>
                     {children}
                     {/*{modal}*/}
+
+                    <LoadingOverlay />
+                    <ClientLayoutShell children={undefined} />
                     <Toaster />
                </body>
           </html>

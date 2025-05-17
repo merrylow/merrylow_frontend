@@ -10,12 +10,12 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { OrderNote } from '@/components/deliveryAndOrderNotes'
 import { formatCurrency } from '@/lib/utilFunctions'
-import { Product } from '@/lib/typeDefs'
+import { Product, Addon, PackageOption } from '@/lib/typeDefs'
 
 const ProductModal = ({ product }: { product: Product }) => {
      const [quantity, setQuantity] = useState<number>(1)
-     const [selectedAddons, setSelectedAddons] = useState<Record<string, boolean>>({})
-     const [packageOption, setPackageOption] = useState('')
+     const [selectedAddons, setSelectedAddons] = useState<Addon[]>([])
+     const [packageOption, setPackageOption] = useState<PackageOption | null>(null)
      const [orderNote, setOrderNote] = useState('')
 
      // const toggleAddon = (addonId: string) => {

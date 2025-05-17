@@ -24,71 +24,66 @@ interface Product {
      imgSrc: string;
      price: string;
      alt: string;
-     addOns: string;
+     addons: string;
+}
+
+type Addon = {
+     id: string;
+     name: string;
+     price: string;
+}
+
+type PackageOption = {
+     id: string;
+     name: string;
+     price: string;
 }
 
 interface CartItem extends Product {
      // order_status: string;
      quantity: number;
-     selectedAddons: Record<string, boolean> | null;
-     packageOption: string;
+     // selectedAddons: Record<string, boolean> | null;
+     selectedAddons: Addon[] | null;
+     packageOption: PackageOption | null;
      orderNote: string | null;
-}
-
-type PaymentMethod = string | null
-
-type OrderNoteProps = {
-     orderNote: string;
-     setOrderNote: (value: string) => void;
 }
 
 type CartStore = {
      loading: boolean;
      error: boolean;
-     cart: CartItem[]
-     cartCount: number
-     // orderNote: string
-     // deliveryNote: string
-     // paymentMethod: PaymentMethod
-
-     addToCart: (product: Product, quantity: number, selectedAddons: Record<string, boolean> | null, packageOption: string, orderNote: string | null) => void
+     cart: CartItem[];
+     cartCount: number;
+     cartTotal: number;
+     addToCart: (product: Product, quantity: number, selectedAddons: Addon[] | null, packageOption: PackageOption | null, orderNote: string | null) => void
      // removeFromCart: (productId: string) => void
      // clearCart: () => void
-     // setOrderNote: (note: string) => void
-     // setDeliveryNote: (note: string) => void
-     // setPaymentMethod: (method: PaymentMethod) => void
+     updateCartCount: () => void
+     // calculateCartTotals: () => void
+     paymentMethod: PaymentMethod
+     setPaymentMethod: (method: PaymentMethod) => void
 }
 
-
-
-// type ProductModalState = {
-//      restaurantId: string | null
-//      productId: string | null
-//      open: boolean
-//      setProductData: (restaurantId: string, productId: string) => void
-//      closeModal: () => void
-// }
-
+type PaymentMethod = string;
 
 interface ProductStore {
-     products: Product[]
-     restaurants: Restaurant[]
-     loading: boolean
-     error: string | null
-     currentProduct: Product | null
+     products: Product[];
+     restaurants: Restaurant[];
+     loading: boolean;
+     error: string | null;
+     currentProduct: Product | null;
 
-     fetchProducts: () => Promise<void>
-     fetchRestaurants: () => Promise<void>
+     fetchProducts: () => Promise<void>;
+     fetchRestaurants: () => Promise<void>;
      // fetchProduct: (id: string) => Promise<void>
      // fetchProduct: ;
      favouriteProducts: Product[] | undefined;
      favouriteRestaurants: Restaurant[] | undefined;
-     isProductFavourited: (product: Product | undefined) => boolean
-     isRestaurantFavourited: (product: Restaurant | undefined) => boolean
-     toggleFavouriteProduct: (product: Product | undefined) => void
-     toggleFavouriteRestaurant: (restaurant: Restaurant | undefined) => void
+     isProductFavourited: (product: Product | undefined) => boolean;
+     isRestaurantFavourited: (product: Restaurant | undefined) => boolean;
+     toggleFavouriteProduct: (product: Product | undefined) => void;
+     toggleFavouriteRestaurant: (restaurant: Restaurant | undefined) => void;
 
 }
 
 
-export type { CardDetails, Restaurant, Product, CartItem, PaymentMethod, CartStore, ProductStore, OrderNoteProps }
+export type { CardDetails, Restaurant, Product, CartItem, PaymentMethod, CartStore, ProductStore, Addon, PackageOption }

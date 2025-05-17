@@ -1,6 +1,9 @@
 import axios from 'axios'
 import { Product, Restaurant } from '@/lib/typeDefs'
 
+
+export const revalidate = 1209600
+
 const fetchRestaurantsAndProducts = async (): Promise<{
     restaurants: Restaurant[]
     products: Product[]

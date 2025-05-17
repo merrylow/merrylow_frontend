@@ -1,7 +1,18 @@
 'use client'
 
 import { Textarea } from '@/components/ui/textarea'
-import { OrderNoteProps } from '@/lib/typeDefs'
+
+
+type OrderNoteProps = {
+    orderNote: string;
+    setOrderNote: (value: string) => void;
+}
+
+type DeliveryNoteProps = {
+    deliveryNote: string;
+    setDeliveryNote: (value: string) => void;
+}
+
 
 const OrderNote = ({ orderNote, setOrderNote }: OrderNoteProps) => {
     return (
@@ -19,12 +30,14 @@ const OrderNote = ({ orderNote, setOrderNote }: OrderNoteProps) => {
 }
 
 
-const DeliveryNote = () => {
+const DeliveryNote = ({ deliveryNote, setDeliveryNote }: DeliveryNoteProps) => {
     return (
         <>
             <Textarea
                 id='delivery-note'
                 name='delivery-note'
+                value={deliveryNote}
+                onChange={(e) => setDeliveryNote(e.target.value)}
                 placeholder='Special instructions for delivery, etc.'
                 className='w-full min-h-[120px] border border-gray-soft rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/30 placeholder-gray'
             />

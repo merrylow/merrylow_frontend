@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import useCartStore from '@/stores/useCartStore'
 import { CartItem } from '@/lib/typeDefs'
 import { formatCurrency } from '@/lib/utilFunctions'
@@ -11,24 +12,29 @@ import EmptyCart from '@/components/emptyCart'
 import BottomNav from '@/components/bottomNav'
 
 
-// const cart = [
-//      {
-//           id: 1,
-//           name: 'Yam and palava sauce',
-//           price: '',
-//           image: {
-//                src: '/Yam and palava sauce-marg-tee.jpg',
-//                alt: 'Yam and palava sauce-marg-tee'
-//           },
-//           addons: {},
+// const CartWatcher = () => {
+//     const cart = useCartStore(state => state.cart)
+//     const updateCartCount = useCartStore(state => state.updateCartCount)
+//     // const calculateCartTotals = useCartStore(state => state.calculateCartTotals)
 //
-//      }
-// ]
+//     useEffect(() => {
+//         updateCartCount()
+//         // calculateCartTotals()
+//     }, [cart])
+//
+//     return null
+// }
 
 
 const CartPage = () => {
      const cart = useCartStore(state => state.cart)
-     // let cart = []
+     const cartTotal = useCartStore(state => state.cartTotal)
+     const updateCartCount = useCartStore(state => state.updateCartCount)
+
+    useEffect(() => {
+        updateCartCount()
+        // calculateCartTotals()
+    }, [cart]);
 
      if(cart.length === 0) {
           return (
@@ -36,6 +42,7 @@ const CartPage = () => {
                    <section className='fixed flex justify-start items-center w-[90%] h-10 top-3 left-1/2 -translate-x-1/2 z-50'>
                         <BackButton />
                    </section>
+
                    <EmptyCart />
                    <BottomNav />
               </div>
@@ -75,14 +82,14 @@ const CartPage = () => {
                                         </div>
                                    </div>
 
-                                   <QuantitySelector />
+                                   {/*<QuantitySelector />*/}
                               </div>
                          ))}
 
                          {/* Total */}
                          <div className='flex justify-between items-center mt-4'>
                               <span className='text-md text-black-soft font-bold'>Total</span>
-                              <span className='text-primary-main text-md font-extrabold'>₵20.25</span>
+                              <span className='text-primary-main text-md font-extrabold'>₵{cartTotal}</span>
                          </div>
                     </section>
 

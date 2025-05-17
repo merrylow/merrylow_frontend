@@ -94,9 +94,12 @@ const EmailSignUpForm = () => {
         console.log(email)
 
         try {
-            const response = await axios.post(`${API_URL}/api/auth/signup/email`, { email } )
-            if (response.status === 200) toast('Check your email for a magic link')
+            const response = await axios.post(`${API_URL}/api/auth/signup/email`, { email })
+            // if (response.status === 200) toast('Check your email for a magic link')
+            const backendError = response.data.message
+            if (response.status === 500) toast(`${backendError}`)
             else toast.error('Error sending link. Please try again')
+            console.log(response)
         } catch (error) {
             console.log(error)
         } finally {
@@ -105,7 +108,7 @@ const EmailSignUpForm = () => {
     }
 
     return (
-        <form className='flex flex-col space-y-5' onSubmit={handleSignIn}>
+        <form className='flex flex-col space-y-5'>
             <Label htmlFor='email' className='font-medium'>
                 Email
                 <Input
@@ -126,11 +129,12 @@ const EmailSignUpForm = () => {
                     className='w-full h-11 bg-primary-light text-white rounded-full font-semibold'
                     type='submit'
                     disabled={loading}
+                    onClick={handleSignIn}
                 >
                     {loading ? (
                         <>
                             <span className='loading loading-spinner loading-sm text-primary-main' />
-                            <span className='text-sm text-secondary-soft font-medium'>Signing you in...</span>
+                            <span className='text-sm text-secondary-soft font-medium'>Wait...</span>
                         </>
                     ) : (
                         <>

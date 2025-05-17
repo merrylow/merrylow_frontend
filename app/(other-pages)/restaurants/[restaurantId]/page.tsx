@@ -96,9 +96,12 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                                         </h3>
                                         <Drawer>
                                              <DrawerTrigger asChild>
-                                                  <button className="text-xs py-1.5 px-6 bg-primary-main text-white see-all-btn">
+                                                  <button
+                                                      className='text-xs py-1.5 px-6 bg-primary-main text-white see-all-btn'
+                                                  >
                                                        Add
                                                   </button>
+
                                              </DrawerTrigger>
                                              <DrawerContent className='p-0 max-w-full h-[93vh] rounded-t-4xl'>
                                                   <DrawerTitle></DrawerTitle>

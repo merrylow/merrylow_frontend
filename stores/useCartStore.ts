@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { create } from 'zustand'
-import { CartStore, Product, Restaurant, CartItem, PaymentMethod, CardDetails } from '@/lib/typeDefs'
+import { CartStore, Product, Restaurant, CartItem, PaymentMethod, CardDetails, Addon } from '@/lib/typeDefs'
+import { formatCurrency } from '@/lib/utilFunctions'
 
 const BASE_URL = process.env.PORT
 const API_URL = process.env.NEXT_PUBLIC_API_URL
@@ -11,11 +12,12 @@ const useCartStore = create<CartStore>((set, get) => ({
 
      // cart data
      cart: typeof window !== 'undefined'
-         ? JSON.parse(localStorage.getItem('cart') || '[]')
+         ? (JSON.parse(localStorage.getItem('cart') || '[]') as CartItem[])
          : [],
      cartCount: 0,
+     cartTotal: 0,
 
-     addToCart: async (product, quantity, selectedAddons, packageOption, orderNote) => {
+     addToCart: async (product, quantity, selectedAddons: Addon[] | null, packageOption, orderNote) => {
           set({ loading: true })
 
           const newCartItem: CartItem = {
@@ -26,7 +28,6 @@ const useCartStore = create<CartStore>((set, get) => ({
                orderNote,
           }
 
-          // const existingItem = get().cart.find(item => item.id === product.id)
           const existingItem = get().cart.find(item =>
               item.id === product.id &&
               JSON.stringify(item.selectedAddons) === JSON.stringify(selectedAddons) &&
@@ -63,8 +64,6 @@ const useCartStore = create<CartStore>((set, get) => ({
                set({ cart: updatedCart })
 
           } else {
-               // set({ cart: [...get().cart, newCartItem] })
-
                updatedCart = [...get().cart, newCartItem]
                set({ cart: updatedCart })
           }
@@ -78,8 +77,28 @@ const useCartStore = create<CartStore>((set, get) => ({
           } catch (error) {
                console.log('Cart sync error', error)
           }
+
+          get().updateCartCount()
+          // get().calculateCartTotals()
           set({ loading: false })
      },
+
+     updateCartCount: () => {
+          const totalCount = get().cart.reduce((acc, item) => acc + item.quantity, 0)
+          set({ cartCount: totalCount })
+     },
+     //
+     // calculateCartTotals: () => {
+     //      const total = get().cart.reduce((acc, cartItem: CartItem) => {
+     //           const basePrice = Number(cartItem.price)
+     //           const addonsTotal = cartItem.selectedAddons?.reduce((sum, addon) => sum + Number(addon.price), 0) || 0
+     //           const packagePrice = cartItem.packageOption?.price ? Number(cartItem.packageOption.price) : 0
+     //           const itemTotal = (basePrice + addonsTotal + packagePrice) * cartItem.quantity
+     //
+     //           return acc + itemTotal
+     //      }, 0)
+     //      set({ cartTotal: formatCurrency(total) })
+     // }
 
 
      // removeFromCart: (mealId) => {
@@ -95,15 +114,12 @@ const useCartStore = create<CartStore>((set, get) => ({
 
      // clearCart: () => set({ cart: [], cartCount: 0 }),
 
-
-     // order data
-     // orderNote: '',
-     // deliveryNote: '',
-     // paymentMethod: null,
-
-     // setOrderNote: (note: string) => set({ orderNote: note }),
-     // setDeliveryNote: (note: string) => set({ orderNote: note }),
-     // setPaymentMethod: (paymentMethod: PaymentMethod) => set({ paymentMethod: paymentMethod }),
+     // checkout page
+     paymentMethod: 'mobile_money',
+     setPaymentMethod: (method: PaymentMethod) => {
+          set({ paymentMethod: method })
+          // localStorage.setItem('default-payment-method', get().paymentMethod)
+     },
 }))
 
 export default useCartStore
