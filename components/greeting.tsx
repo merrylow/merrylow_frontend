@@ -1,8 +1,12 @@
+'use client'
+
 import useUserStore from '@/stores/useUserStore'
 
 const Greeting = () => {
     const user = useUserStore(state => state.user)
     const isAuthenticated = useUserStore(state => state.isAuthenticated)
+
+    console.log(user)
 
     return (
         <h1 className='text-lg font-bold text-secondary-light -mb-7'>

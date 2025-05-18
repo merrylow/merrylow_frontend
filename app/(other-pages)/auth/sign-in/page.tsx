@@ -9,7 +9,7 @@ const SignInPage = async () => {
 
 
     return (
-        <div className='min-h-screen flex flex-col items-center space-y-2.5'>
+        <main className='min-h-screen flex flex-col items-center space-y-2.5'>
             {/* Top Section */}
             <section
                 className='relative h-[30vh] w-full bg-no-repeat bg-cover bg-center rounded-b-3xl flex flex-col justify-end pb-13 text-white'
@@ -35,7 +35,7 @@ const SignInPage = async () => {
                     <GoogleSignInButton />
                 </GoogleOAuthProvider>
             </section>
-        </div>
+        </main>
     )
 }
 

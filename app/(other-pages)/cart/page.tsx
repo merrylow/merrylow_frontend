@@ -38,19 +38,19 @@ const CartPage = () => {
 
      if(cart.length === 0) {
           return (
-              <div className='w-full h-[80vh] flex justify-center items-center mt-12'>
+              <main className='w-full max-w-[450px] h-[80vh] flex justify-center items-center mt-12'>
                    <section className='fixed flex justify-start items-center w-[90%] h-10 top-3 left-1/2 -translate-x-1/2 z-50'>
                         <BackButton />
                    </section>
 
                    <EmptyCart />
                    <BottomNav />
-              </div>
+              </main>
           )
      }
 
      return (
-          <div className='w-full h-full flex flex-col overflow-hidden'>
+          <main className='w-full h-full flex flex-col overflow-hidden'>
                <div className='flex-1 overflow-y-auto'>
                     {/* Header */}
                     <section className='flex justify-center items-center w-[90%] mx-auto mt-4'>
@@ -94,32 +94,32 @@ const CartPage = () => {
                     </section>
 
                     {/* Recommendations */}
-                    <section className='w-[90%] mx-auto mt-12 mb-24'>
-                         <h2 className='text-md text-secondary-light font-semibold mb-3'>Recommendations</h2>
-                         <div className='flex gap-3 overflow-x-auto'>
-                              {Array(6).fill(0).map((_, i) => (
-                                   // {/* Recommendation 1 */}
-                                   <div className='min-w-[130px] flex-shrink-0 rounded-2xl bg-white shadow-lg p-2 mb-6' key={i}>
-                                        <div className='relative w-full h-20 rounded-xl overflow-hidden mb-2'>
-                                             <Image src='/Yam and palava sauce-marg-tee.jpg' alt='Tiramisu' fill className='object-cover' />
-                                        </div>
-                                        <div className='flex justify-between items-center'>
-                                             <span className='text-primary-main font-bold text-sm'>₵10.00</span>
-                                             <button className='w-4.5 h-4.5 rounded-md bg-primary-main text-white flex items-center justify-center text-base font-bold'>+</button>
-                                        </div>
-                                        <p className='text-xs text-black-soft mt-1'>Snack</p>
-                                   </div>
-                              ))}
+               {/*     <section className='w-[90%] mx-auto mt-12 mb-24'>*/}
+               {/*          <h2 className='text-md text-secondary-light font-semibold mb-3'>Recommendations</h2>*/}
+               {/*          <div className='flex gap-3 overflow-x-auto'>*/}
+               {/*               {Array(6).fill(0).map((_, i) => (*/}
+               {/*                    // /!* Recommendation 1 *!/*/}
+               {/*                    <div className='min-w-[130px] flex-shrink-0 rounded-2xl bg-white shadow-lg p-2 mb-6' key={i}>*/}
+               {/*                         <div className='relative w-full h-20 rounded-xl overflow-hidden mb-2'>*/}
+               {/*                              <Image src='/Yam and palava sauce-marg-tee.jpg' alt='Tiramisu' fill className='object-cover' />*/}
+               {/*                         </div>*/}
+               {/*                         <div className='flex justify-between items-center'>*/}
+               {/*                              <span className='text-primary-main font-bold text-sm'>₵10.00</span>*/}
+               {/*                              <button className='w-4.5 h-4.5 rounded-md bg-primary-main text-white flex items-center justify-center text-base font-bold'>+</button>*/}
+               {/*                         </div>*/}
+               {/*                         <p className='text-xs text-black-soft mt-1'>Snack</p>*/}
+               {/*                    </div>*/}
+               {/*               ))}*/}
 
-                         </div>       
-                    </section>
+               {/*          </div>       */}
+               {/*     </section>*/}
                </div>
 
                {/* Checkout section */}
                <section className='fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[90%] bg-transparent py-4 flex justify-between items-center'>
                     <GoToCheckoutButton />
                </section>
-     </div>
+         </main>
      )
 }
 

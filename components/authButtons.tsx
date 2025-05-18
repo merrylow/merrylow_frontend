@@ -20,105 +20,88 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL
 const GoogleSignInButton = () => {
     const CLIENT_ID: string = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!
     const router = useRouter()
-    const user = useUserStore(state => state.user)
+    const setUser = useUserStore(state => state.setUser)
     const setAuthenticated = useUserStore(state => state.setAuthenticated)
     const [loading, setLoading] = useState(false)
 
 
-    const handleSuccess = async (codeResponse: any) => {
-        setLoading(true)
-        if(codeResponse.code) {
-            toast.success('Signed in successfully')
-        }
-        // const token = codeResponse
-        console.log(codeResponse)
+    // const handleSuccess = async (codeResponse: any) => {
+    //     setLoading(true)
+    //     if(codeResponse.code) {
+    //         toast.success('Signed in successfully')
+    //     }
+    //     console.log(codeResponse)
+    //     const idToken = codeResponse.code
+    //
+    //     try {
+    //         const response = await axios.post(`${API_URL}/api/auth/google`, { idToken })
+    //
+    //         console.log(response.data.accessToken)
+    //         setUser(response.data.data)
+    //         setAuthenticated(true)
+    //         localStorage.setItem('accessToken', response.data.accessToken)
+    //         router.push('/')
+    //     } catch(error) {
+    //         toast.error('Sign in failed. Please try again')
+    //         console.error(error)
+    //     } finally {
+    //         setLoading(false)
+    //     }
+    // }
 
-        // try {
-        //     const response = await axios.post(`${API_URL}/api/auth/google`, { code: codeResponse.code })
-        //
-        //     console.log(response.data.accessToken)
-        // setUser(response.data.data)
-        // setAuthenticated(true)
-        //     localStorage.setItem('accessToken', response.data.accessToken)
-        //     // router.push('/')
-        // } catch(error) {
-        //     toast.error('Sign in failed. Please try again')
-        // } finally {
-        //     setLoading(false)
-        // }
-    }
-
-
-    const login = useGoogleLogin({
-        onSuccess: handleSuccess,
-        flow: 'auth-code',
-        redirect_uri: 'http://localhost:3000/',
-    });
+    //
+    // const login = useGoogleLogin({
+    //     onSuccess: handleSuccess,
+    //     // flow: 'auth-code',
+    //     redirect_uri: 'http://localhost:3000/',
+    //     // redirect_uri: BASE_URL,
+    //     // ux_mode: 'redirect',
+    // });
 
     return (
-        <GoogleOAuthProvider clientId={CLIENT_ID}>
-        <button
-            onClick={login}
-            className='w-full h-11 border border-gray-300 rounded-full flex items-center justify-center space-x-2'
-            type='submit'
-            disabled={loading}
-        >
-            {loading ? (
-                <>
-                    <span className="loading loading-spinner loading-sm fill-primary-main" />
-                    <span className="text-sm text-secondary-soft font-medium">Signing you in...</span>
-                </>
-            ) : (
-                <>
-                    <FcGoogle className='size-5' />
-                    <span className='text-sm font-medium'>Continue with Google</span>
-                </>
-            )
-            }
-        </button>
-        </GoogleOAuthProvider>
-        
-        // <GoogleOAuthProvider clientId={clientId}>
-        //     <GoogleLogin
-        //         onSuccess={handleSuccess}
-        //         onError={() => {
-        //             toast.error('Sign in failed. Please try again')
-        //         }}
-        //         text={'continue_with'}
-        //         theme={'outline'}
-        //         shape={'pill'}
-        //         logo_alignment={'center'}
-        //         ux_mode={'redirect'}
-        //         login_uri={'/auth/sign-in'}
-        //     />
-        // </GoogleOAuthProvider>
+        // <button
+        //     onClick={login}
+        //     className='w-full h-11 border border-gray-300 rounded-full flex items-center justify-center space-x-2'
+        //     type='submit'
+        //     disabled={loading}
+        // >
+        //     {loading ? (
+        //         <>
+        //             <span className="loading loading-spinner loading-sm fill-primary-main" />
+        //             <span className="text-sm text-secondary-soft font-medium">Signing you in...</span>
+        //         </>
+        //     ) : (
+        //         <>
+        //             <FcGoogle className='size-5' />
+        //             <span className='text-sm font-medium'>Continue with Google</span>
+        //         </>
+        //     )
+        //     }
+        // </button>
+        <GoogleLogin
+            onSuccess={async credentialResponse => {
+                const idToken = credentialResponse.credential
 
-        //
-        // <GoogleOAuthProvider clientId={CLIENT_ID}>
-        //     <GoogleLogin
-        //         onSuccess={async credentialResponse => {
-        //             console.log(credentialResponse);
-        //             toast.success(`Login successful customer: ${credentialResponse}`)
-        //
-        //             // const token = credentialResponse
-        //             // try {
-        //             //     const response = await axios.post(`${API_URL}/api/auth/google`, { token
-        //             //     })
-        //             //
-        //             //     localStorage.setItem('accessToken', response.data.accessToken)
-        //             //     console.log(response.data)
-        //             //     const user = response.data.user
-        //             //     console.log(user)
-        //             //     router.push('/')
-        //             // } catch(error) {
-        //             //     toast.error('Sign in failed. Please try again')
-        //             // }
-        //         }}
-        //         onError={() => {
-        //             console.log('Login Failed');
-        //         }}
-        //     />
-        // </GoogleOAuthProvider>
+                try {
+                    const response = await axios.post(`${API_URL}/api/auth/google`, { idToken })
+
+                    console.log(response.data.accessToken)
+                    setUser(response.data.data)
+                    setAuthenticated(true)
+                    localStorage.setItem('accessToken', response.data.accessToken)
+                    router.push('/')
+                } catch(error) {
+                    toast.error('Sign in failed. Please try again')
+                    console.error(error)
+                } finally {
+                    setLoading(false)
+                }
+            }}
+            onError={() => {
+                console.log('Login Failed');
+            }}
+            useOneTap
+        />
     )
 }
 
@@ -136,9 +119,9 @@ const EmailSignUpForm = () => {
 
         try {
             const response = await axios.post(`${API_URL}/api/auth/signup/email`, { email })
-            // if (response.status === 200) toast('Check your email for a magic link')
-            const backendError = response.data.message
-            if (response.status === 500) toast(`${backendError}`)
+            if (response.status === 200) toast('Check your email for a magic link')
+            // const backendError = response.data.message
+            // if (response.status === 500) toast(`${backendError}`)
             else toast.error('Error sending link. Please try again')
             console.log(response)
         } catch (error) {

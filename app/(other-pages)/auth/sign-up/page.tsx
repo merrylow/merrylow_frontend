@@ -2,14 +2,14 @@ import Link from 'next/link'
 import { GoogleSignInButton, EmailSignUpForm } from '@/components/authButtons'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 const SignUpPage = () => {
     // add redirect
-
-
+    const CLIENT_ID: string = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!
 
     return (
-        <div className='min-h-screen h-screen flex flex-col items-center space
+        <main className='min-h-screen h-screen flex flex-col items-center space
         -y-2.5'>
             {/* Top Section */}
             <section
@@ -33,9 +33,11 @@ const SignUpPage = () => {
 
                 {/*when user signs in with this for the first time, their details are automatically recorded
                  in db*/}
+                <GoogleOAuthProvider clientId={CLIENT_ID}>
                 <GoogleSignInButton />
+                </GoogleOAuthProvider>
             </section>
-        </div>
+        </main>
     )
 }
 
