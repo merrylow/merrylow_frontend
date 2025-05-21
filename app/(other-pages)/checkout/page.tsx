@@ -1,9 +1,6 @@
 'use client'
 
-import {
-    useEffect,
-    useState
-} from 'react'
+import { useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label';
 import BackButton from '@/components/backButton'
@@ -16,7 +13,6 @@ import { toast } from 'sonner'
 import useUserStore from '@/stores/useUserStore'
 
 
-
 const CheckoutPage = () => {
      const [firstName, setFirstName] = useState('') // get session.user.name
      const [lastName, setLastName] = useState('')
@@ -26,13 +22,14 @@ const CheckoutPage = () => {
      const paymentMethod = useCartStore(state => state.paymentMethod)
      const setPaymentMethod = useCartStore(state => state.setPaymentMethod)
      const { user, fetchUser } = useUserStore()
+     const { cart, fetchCart, cartTotal } = useCartStore()
 
     useEffect(() => {
         fetchUser()
     }, []);
 
-     const cart = useCartStore(state => state.cart)
-     const cartTotal = useCartStore(state => state.cartTotal)
+     // const cart = useCartStore(state => state.cart)
+     // const cartTotal = useCartStore(state => state.cartTotal)
 
     const PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!
 

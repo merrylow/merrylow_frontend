@@ -33,9 +33,12 @@ const SignUpPage = () => {
 
                 {/*when user signs in with this for the first time, their details are automatically recorded
                  in db*/}
-                <GoogleOAuthProvider clientId={CLIENT_ID}>
-                <GoogleSignInButton />
-                </GoogleOAuthProvider>
+                <div className='flex items-center justify-center'>
+                    <GoogleOAuthProvider clientId={CLIENT_ID!}>
+                        <GoogleSignInButton />
+                    </GoogleOAuthProvider>
+                </div>
+
             </section>
         </main>
     )

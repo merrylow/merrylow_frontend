@@ -1,12 +1,8 @@
 import { EmailSignInForm, GoogleSignInButton } from '@/components/authButtons'
-import Link from "next/link"
 import { GoogleOAuthProvider } from '@react-oauth/google'
-// import { auth } from '@/lib/auth';
-// import { redirect } from 'next/navigation';
 
 const SignInPage = async () => {
-    // const session = await auth()
-
+    const CLIENT_ID: string = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!
 
     return (
         <main className='min-h-screen flex flex-col items-center space-y-2.5'>
@@ -31,9 +27,11 @@ const SignInPage = async () => {
                     <span className="px-2">or Sign in with Google</span>
                 </div>
 
-                <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
-                    <GoogleSignInButton />
-                </GoogleOAuthProvider>
+                <div className='flex items-center justify-center'>
+                    <GoogleOAuthProvider clientId={CLIENT_ID!}>
+                        <GoogleSignInButton />
+                    </GoogleOAuthProvider>
+                </div>
             </section>
         </main>
     )
