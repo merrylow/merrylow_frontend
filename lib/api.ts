@@ -2,12 +2,11 @@ import axios from 'axios'
 import { Product, Restaurant } from '@/lib/typeDefs'
 
 
-// export const revalidate = 1209600
-
 const fetchRestaurantsAndProducts = async (): Promise<{
     restaurants: Restaurant[]
     products: Product[]
 }> => {
+    const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
 
     try {
         const restaurantsResponse = await axios.get<
@@ -15,7 +14,7 @@ const fetchRestaurantsAndProducts = async (): Promise<{
                 success: boolean;
                 data: Restaurant[]
             }
-        >(`${process.env.NEXT_PUBLIC_API_URL}/api/restaurant`)
+        >(`${API_URL}/api/restaurant`)
 
         if (!restaurantsResponse.data.success) {
             throw new Error(`Failed to fetch restaurants: ${restaurantsResponse.status}`)
@@ -33,7 +32,7 @@ const fetchRestaurantsAndProducts = async (): Promise<{
                 page: number
                 limit: number
                 products: Product[]
-            }>(`${process.env.NEXT_PUBLIC_API_URL}/api/products?page=${page}&limit=${limit}`)
+            }>(`${API_URL}/api/products?page=${page}&limit=${limit}`)
 
             const { products } = productsResponse.data
             allProducts.push(...products)

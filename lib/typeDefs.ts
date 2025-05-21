@@ -8,7 +8,7 @@ interface User {
 
 type UserState = {
      user: User | null;
-     setUser: (user: User | null) => void;
+     fetchUser: () => void;
      isAuthenticated: boolean;
      setAuthenticated: (isAuthenticated: boolean) => void;
      loading: boolean;
@@ -37,30 +37,72 @@ interface Product {
      // images: { src: string }[];
      restaurant: Restaurant;
      // description: string;
-     imgSrc: string;
+     imageUrl: string;
      price: string;
      alt: string;
-     addons: string;
+     addOns: Addon;
 }
 
 type Addon = {
-     id: string;
-     name: string;
-     price: string;
+     package: PackageAddOns;
+     optional: OptionalAddOns;
+     compulsory: CompulsoryAddOns;
 }
 
-type PackageOption = {
-     id: string;
-     name: string;
-     price: string;
+type PackageAddOns = {
+     // pack: number;
+     // rubber: number;
+     name: number
+};
+
+// type OptionalAddOns = Record<string, number>;
+// type CompulsoryAddOns = Record<string, number>;
+type OptionalAddOns = {
+     name: number;
+}
+
+type CompulsoryAddOns = {
+     name: number;
+}
+
+
+// type PackageOption = {
+//      id: string;
+//      name: string;
+//      price: string;
+// }
+
+
+type SelectedAddon = {
+     package: PackageAddOns;
+     optional: OptionalAddOns;
+     compulsory: CompulsoryAddOns;
+}
+
+
+
+// type SelectedAddon = {
+//      package: string
+//      compulsory: string[]
+//      optional: string[]
+// }
+
+// type SelectedAddons = SelectedAddon[]
+
+
+type SelectedAddons = {
+     package: string;
+     compulsory: string[];
+     optional: string[];
 }
 
 interface CartItem extends Product {
      // order_status: string;
      quantity: number;
+     productId: string;
      // selectedAddons: Record<string, boolean> | null;
-     selectedAddons: Addon[] | null;
-     packageOption: PackageOption | null;
+     selectedAddons: SelectedAddons | null;
+     // packageOption: PackageOption | null;
      orderNote: string | null;
 }
 
@@ -70,7 +112,8 @@ type CartStore = {
      cart: CartItem[];
      cartCount: number;
      cartTotal: number;
-     addToCart: (product: Product, quantity: number, selectedAddons: Addon[] | null, packageOption: PackageOption | null, orderNote: string | null) => void
+     fetchCart: () => void;
+     addToCart: (product: Product, quantity: number, selectedAddons: SelectedAddons | null, orderNote: string | null) => void
      // removeFromCart: (productId: string) => void
      // clearCart: () => void
      updateCartCount: () => void
@@ -102,4 +145,4 @@ type ProductStore = {
 }
 
 
-export type { CardDetails, Restaurant, Product, CartItem, PaymentMethod, CartStore, ProductStore, Addon, PackageOption, User, UserState }
+export type { CardDetails, Restaurant, Product, CartItem, PaymentMethod, CartStore, ProductStore, SelectedAddons, User, UserState }

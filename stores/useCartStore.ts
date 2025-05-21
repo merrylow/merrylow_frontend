@@ -1,37 +1,68 @@
 import axios from 'axios'
 import { create } from 'zustand'
-import { CartStore, Product, Restaurant, CartItem, PaymentMethod, CardDetails, Addon } from '@/lib/typeDefs'
+import { CartStore, Product, Restaurant, CartItem, PaymentMethod, CardDetails, SelectedAddons } from '@/lib/typeDefs'
 import { formatCurrency } from '@/lib/utilFunctions'
+import { toast } from 'sonner'
 
 const BASE_URL = process.env.PORT
-const API_URL = process.env.NEXT_PUBLIC_API_URL
+const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
 
 const useCartStore = create<CartStore>((set, get) => ({
      loading: false,
      error: false,
 
      // cart data
-     cart: typeof window !== 'undefined'
-         ? (JSON.parse(localStorage.getItem('cart') || '[]') as CartItem[])
-         : [],
+     cart: [],
      cartCount: 0,
      cartTotal: 0,
 
-     addToCart: async (product, quantity, selectedAddons: Addon[] | null, packageOption, orderNote) => {
+     fetchCart: async () => {
+          try {
+               set({ loading: true });
+               const accessToken = localStorage.getItem('accessToken');
+
+               const response = await axios.post(`${API_URL}/api/cart`, {}, {
+                    headers: {
+                         Authorization: `Bearer ${accessToken}`
+                    }
+               });
+
+               if (response.status === 200) {
+                    const fetchedCart = response.data.data // Adjust if your API sends it differently
+                    set({ cart: fetchedCart });
+                    get().updateCartCount();
+                    // get().calculateCartTotals();
+               } else {
+                    console.log('Unexpected response', response);
+               }
+          } catch (error) {
+               console.error('Failed to fetch cart from server:', error);
+               set({ error: true });
+          } finally {
+               set({ loading: false });
+          }
+     },
+
+     addToCart: async (product: Product, quantity, selectedAddons: SelectedAddons | null, orderNote) => {
           set({ loading: true })
 
           const newCartItem: CartItem = {
-               ...product,
+               id: product.id,
+               name: product.name,
+               imageUrl: product.imageUrl,
+               price: product.price,
+               restaurant: product.restaurant,
+               productId: product.id,
+               alt: product.alt,
+               addOns: product.addOns,
                quantity,
                selectedAddons,
-               packageOption,
                orderNote,
           }
 
+
           const existingItem = get().cart.find(item =>
               item.id === product.id &&
-              JSON.stringify(item.selectedAddons) === JSON.stringify(selectedAddons) &&
-              item.packageOption === packageOption &&
               item.orderNote === orderNote
           )
 
@@ -68,12 +99,29 @@ const useCartStore = create<CartStore>((set, get) => ({
                set({ cart: updatedCart })
           }
 
-          localStorage.setItem('cart', JSON.stringify(updatedCart))
+          // localStorage.setItem('cart', JSON.stringify(updatedCart))
+
+          const cartItemForBackend = {
+               productId: newCartItem.productId,
+               quantity: newCartItem.quantity,
+               selectedAddons: newCartItem.selectedAddons,
+               // packageOption: newCartItem.packageOption,
+               orderNote: newCartItem.orderNote,
+               price: newCartItem.price
+          }
+          console.log(cartItemForBackend)
 
           // sync with backend cart
           try {
-               const response = await axios.post(`${API_URL}/api/cart`, { newCartItem })
-               if (response.status === 500) throw new Error('Failed to sync with backend cart')
+               const accessToken = localStorage.getItem('accessToken')
+               const response = await axios.post(`${API_URL}/api/cart`, cartItemForBackend, {
+                    headers: {
+                         Authorization: `Bearer ${accessToken}`
+                    }
+               })
+               console.log(response)
+               if(response.status === 200) toast('Added to cart')
+               if (response.status === 500) console.log('Failed to sync with backend cart')
           } catch (error) {
                console.log('Cart sync error', error)
           }

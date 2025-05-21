@@ -4,16 +4,36 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Label } from '@/components/ui/label'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
+import { HookConfig, InitializePayment } from 'react-paystack/libs/types'
+import { usePaystackPayment } from 'react-paystack'
 
 
 type PaymentMethodProps = {
     paymentMethod: string;
     setPaymentMethod: (value: string) => void;
+    config: HookConfig;
+    onSuccess: (reference: any) => void;
+    onClose: () => void;
 }
 
-const PaymentMethodSelector = ({ paymentMethod, setPaymentMethod }: PaymentMethodProps) => {
+const PaymentMethodSelector = ({ paymentMethod, setPaymentMethod, config, onSuccess, onClose }: PaymentMethodProps) => {
     // const [selected, setSelected] = useState('')
     const selected = paymentMethod
+
+    const PaystackHookExample = () => {
+        const initializePayment: InitializePayment = usePaystackPayment(config)
+        return (
+            <button
+                className='w-full h-10 mt-2 px-7 font-light text-xs btn'
+                type='submit'
+                onClick={() => {
+                    initializePayment({onSuccess, onClose})
+                }}
+            >
+                Make payment
+            </button>
+        )
+    }
 
     return (
         <section className='w-full mt-6'>
@@ -32,7 +52,7 @@ const PaymentMethodSelector = ({ paymentMethod, setPaymentMethod }: PaymentMetho
                 {/* Mobile Money Option */}
                 <Label
                     htmlFor='mobile_money'
-                    className={`flex items-start rounded-lg space-x-4 transition-all cursor-pointer p-4 ${
+                    className={`flex items-start rounded-xl space-x-4 transition-all cursor-pointer p-4 ${
                         selected === 'mobile_money'
                             ? 'border border-primary-light/50 bg-primary-light/5 ring-2 ring-primary-light/30 shadow-lg'
                             : 'border border-gray-soft'
@@ -61,6 +81,8 @@ const PaymentMethodSelector = ({ paymentMethod, setPaymentMethod }: PaymentMetho
                                     className='text-sm font-medium text-gray-500 -mt-1 overflow-hidden'
                                 >
                                     Make payment using your mobile money wallet or debit/credit cards
+
+                                    <PaystackHookExample  />
                                 </motion.p>
                             )}
                         </AnimatePresence>
@@ -70,7 +92,7 @@ const PaymentMethodSelector = ({ paymentMethod, setPaymentMethod }: PaymentMetho
                 {/* Cash on Delivery Option */}
                 <Label
                     htmlFor='cash_on_delivery'
-                    className={`flex items-start p-4 rounded-lg space-x-4 transition-all cursor-pointer ${
+                    className={`flex items-start p-4 rounded-xl space-x-4 transition-all cursor-pointer ${
                         selected === 'cash_on_delivery'
                             ? 'border border-primary-main/50 bg-primary-main/5 ring-2 ring-primary-main/30 shadow-lg'
                             : 'border border-gray-soft'

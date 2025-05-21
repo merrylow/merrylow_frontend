@@ -17,9 +17,32 @@ const useProductStore = create<ProductStore>((set, get) => ({
         set({ loading: true })
 
         try {
-            const response = await axios.get(`${API_URL}/api/products`)
-            console.log('Fetched products: ', response.data);
-            set({ products: response.data.data, error: null }) // one 'data' is coming from axios, the other from our api
+            const Products: Product[] = []
+            let page = 1
+            const limit = 50 //change this later if it's changed in the backend
+            let totalFetched = 0
+            let keepFetching = true
+
+            while (keepFetching) {
+                const productsResponse = await axios.get<{
+                    page: number
+                    limit: number
+                    products: Product[]
+                }>(`${API_URL}/api/products?page=${page}&limit=${limit}`)
+
+                const { products } = productsResponse.data
+                Products.push(...products)
+                totalFetched += products.length
+
+                if (products.length < limit) {
+                    keepFetching = false
+                } else {
+                    page++
+                }
+            }
+            // const response = await axios.get(`${API_URL}/api/products`)
+            // console.log('Fetched products: ', productsResponse.data);
+            set({ products: Products, error: null })
         } catch (err: any) {
             if(err.status === 429) set({ error: 'Rate limit exceeded', products: [] })
             else set({ error: 'Something went wrong', products: [] })

@@ -5,31 +5,21 @@ import useCartStore from '@/stores/useCartStore'
 import { CartItem } from '@/lib/typeDefs'
 import { formatCurrency } from '@/lib/utilFunctions'
 import Image from 'next/image'
-import QuantitySelector from '@/components/quantitySelector'
 import BackButton from '@/components/backButton'
 import { GoToCheckoutButton } from '@/components/orderButtons'
 import EmptyCart from '@/components/emptyCart'
 import BottomNav from '@/components/bottomNav'
 
-
-// const CartWatcher = () => {
-//     const cart = useCartStore(state => state.cart)
-//     const updateCartCount = useCartStore(state => state.updateCartCount)
-//     // const calculateCartTotals = useCartStore(state => state.calculateCartTotals)
-//
-//     useEffect(() => {
-//         updateCartCount()
-//         // calculateCartTotals()
-//     }, [cart])
-//
-//     return null
-// }
-
-
 const CartPage = () => {
+
      const cart = useCartStore(state => state.cart)
+     const fetchCart = useCartStore(state => state.fetchCart)
      const cartTotal = useCartStore(state => state.cartTotal)
      const updateCartCount = useCartStore(state => state.updateCartCount)
+
+    useEffect(() => {
+        fetchCart()
+    }, []);
 
     useEffect(() => {
         updateCartCount()

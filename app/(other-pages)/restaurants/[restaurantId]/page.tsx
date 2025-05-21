@@ -113,7 +113,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                                                             <IoClose className='size-6 fill-gray-pale' />
                                                        </button>
                                                   </DrawerClose>
-                                                  <ProductModal product={menuItem} />
+                                                  <ProductModal productId={menuItem.id} />
                                              </DrawerContent>
                                         </Drawer>
                                         <span className='text-base text-secondary-soft font-bold ml-2.5 pt-0.5'>

@@ -2,25 +2,24 @@
 
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
-import { Product, Addon, PackageOption } from '@/lib/typeDefs'
+import { Product, SelectedAddons } from '@/lib/typeDefs'
 import useCartStore from '@/stores/useCartStore'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL
+const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
 
-const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote, packageOption }: { product: Product, quantity: number, selectedAddons: Addon[] | null, orderNote: string | null, packageOption: PackageOption | null }) => {
+const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote }: { product: Product, quantity: number, selectedAddons: SelectedAddons | null, orderNote: string | null }) => {
     const [loading, setLoading] = useState<boolean>(false)
     const addToCart = useCartStore(state => state.addToCart)
     const router = useRouter()
 
-    const handleClick = () => {
+    const handleClick = async () => {
         setLoading(true)
         try {
-            addToCart(product, quantity, selectedAddons, packageOption, orderNote)
-            toast.success('Your order has been added!')
-            router.push('/cart')
+            addToCart(product, quantity, selectedAddons, orderNote)
+            // router.push('/cart')
         } catch (error) {
             console.error('Add to cart error', error)
             toast.error('Try again')
@@ -32,11 +31,11 @@ const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote, packag
     return (
         <button
             onClick={handleClick}
-            className='w-[55%] h-[2.65rem] flex items-center justify-center font-bold text-sm btn'
+            className='w-[55%] max-w-[450px] h-[2.65rem] mx-auto flex items-center justify-center font-bold text-sm btn'
         >
             Add to order
             {
-                loading ? <span className='loading loading-spinner loading-sm'></span> : ''
+                loading ? <span className='loading loading-spinner loading-sm'>Wait...</span> : ''
             }
         </button>
     )
@@ -58,7 +57,13 @@ const GoToCheckoutButton = () => {
                 quantity: cartItem.quantity
             }))
 
-            const response = await axios.post(`${API_URL}/api/checkout`, {formattedItems})
+            const accessToken = localStorage.getItem('accessToken')
+            console.log(accessToken)
+            const response = await axios.post(`${API_URL}/api/checkout`, { formattedItems }, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            })
 
             if(response.status === 200) {
                 router.push('/checkout')
@@ -78,7 +83,7 @@ const GoToCheckoutButton = () => {
         <>
             <button
                 onClick={handleCheckout}
-                className='w-full h-11 px-7 flex items-center justify-between font-bold text-[15px] btn'
+                className='w-full h-11 max-w-[450px] mx-auto px-7 flex items-center justify-between font-bold text-[15px] btn'
             >
                 {
                     loading ? (
@@ -104,7 +109,7 @@ const PlaceOrderButton = () => {
 
     return (
         <>
-            <button className='w-full h-11 px-7 font-bold text-[15px] btn' type='submit'>
+            <button className='w-full max-w-[450px] mx-auto h-11 px-7 font-bold text-[15px] btn' type='submit'>
                 Place Order
             </button>
         </>

@@ -5,7 +5,6 @@ import Greeting from '@/components/greeting'
 
 
 const Home = async () => {
-    const session = 1
 
     return (
         <main className='w-full mx-auto min-h-screen space-y-10'>
