@@ -3,7 +3,6 @@ import Link from 'next/link'
 import Card from '@/components/card'
 import Greeting from '@/components/greeting'
 
-
 const Home = async () => {
 
     return (
