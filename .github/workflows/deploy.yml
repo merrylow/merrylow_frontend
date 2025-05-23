@@ -1,0 +1,49 @@
+name: Deploy Frontend to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH Agent
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+
+      - name: Deploy via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no \
+              -o HostKeyAlgorithms=+ssh-rsa \
+              -o PubkeyAcceptedKeyTypes=+ssh-rsa \
+              root@162.241.87.232 << 'EOF'
+
+            echo "Pulling latest changes"
+            cd /var/www/merrylow/frontend/merrylow-frontend
+            git fetch --all
+            git reset --hard origin/main
+
+            echo "Installing dependencies"
+            npm install --legacy-peer-deps
+
+            echo "Building frontend"
+            npm run build
+
+            echo "Restarting frontend with PM2"
+            pm2 describe merrylow-frontend > /dev/null
+            if [ $? -eq 0 ]; then
+              pm2 restart merrylow-frontend
+            else
+              pm2 start npm --name "merrylow-frontend" -- start
+            fi
+
+            echo " Deployment finished"
+
+          EOF
