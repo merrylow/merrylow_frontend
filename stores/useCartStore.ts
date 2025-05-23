@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { create } from 'zustand'
 import { CartStore, Product, Restaurant, CartItem, PaymentMethod, CardDetails, SelectedAddons } from '@/lib/typeDefs'
-import { formatCurrency } from '@/lib/utilFunctions'
+import { transformAddonsForBackend } from '@/lib/utilFunctions'
+import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
 const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
@@ -61,54 +62,40 @@ const useCartStore = create<CartStore>((set, get) => ({
 
 
           const existingItem = get().cart.find(item =>
-              item.id === product.id &&
-              item.orderNote === orderNote
+              item.productId === newCartItem.productId &&
+              item.orderNote === newCartItem.orderNote &&
+              JSON.stringify(item.selectedAddons) === JSON.stringify(newCartItem.selectedAddons)
           )
 
           let updatedCart
 
           if (existingItem) {
-               // set({
-               //      cart: get().cart.map((item: CartItem) => (
-               //               item.id === product.id ? {
-               //                    ...item,
-               //                    quantity: item.quantity + quantity // item.quantity+1
-               //               } : item
-               //          )
-               //      ),
-               // })
-               // set({
-               //      cart: get().cart.map(item =>
-               //          item === existingItem
-               //              ? { ...item, quantity: item.quantity + quantity }
-               //              : item
-               //      )
-               // })
-
                updatedCart = get().cart.map(item =>
-                   item === existingItem
-                       ? { ...item, quantity: item.quantity + quantity }
-                       : item
+                    item.productId === existingItem.productId &&
+                    item.orderNote === existingItem.orderNote &&
+                    JSON.stringify(item.selectedAddons) === JSON.stringify(existingItem.selectedAddons)
+                        ? { ...item, quantity: item.quantity + quantity }
+                        : item
                )
-
-               set({ cart: updatedCart })
-
           } else {
                updatedCart = [...get().cart, newCartItem]
-               set({ cart: updatedCart })
           }
+          set({ cart: updatedCart })
 
           // localStorage.setItem('cart', JSON.stringify(updatedCart))
 
+          const backendAddons = transformAddonsForBackend(selectedAddons, newCartItem.addOns);
+
           const cartItemForBackend = {
-               productId: newCartItem.productId,
-               quantity: newCartItem.quantity,
-               selectedAddons: newCartItem.selectedAddons,
-               // packageOption: newCartItem.packageOption,
-               orderNote: newCartItem.orderNote,
-               price: newCartItem.price
+               productId: product.id,
+               quantity,
+               selectedAddons: backendAddons,
+               basePrice: Number(product.price),
+               notes: orderNote,
           }
+
           console.log(cartItemForBackend)
+          console.log(cartItemForBackend.selectedAddons)
 
           // sync with backend cart
           try {
@@ -119,8 +106,11 @@ const useCartStore = create<CartStore>((set, get) => ({
                     }
                })
                console.log(response)
-               if(response.status === 200) toast('Added to cart')
-               if (response.status === 500) console.log('Failed to sync with backend cart')
+               if(response.status === 200) {
+                    toast('Added to cart')
+               } else if(response.status === 500) {
+                    console.log('Failed to sync with backend cart')
+               }
           } catch (error) {
                console.log('Cart sync error', error)
           }

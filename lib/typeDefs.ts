@@ -43,34 +43,37 @@ interface Product {
      addOns: Addon;
 }
 
-type Addon = {
+// type Addon = {
+//      package: PackageAddOns;
+//      optional: OptionalAddOns;
+//      compulsory: CompulsoryAddOns;
+// }
+//
+// type PackageAddOns = {
+//      // pack: number;
+//      // rubber: number;
+//      name: number
+// };
+
+// type OptionalAddOns = Record<string, number>;
+// type CompulsoryAddOns = Record<string, number>;
+// type OptionalAddOns = {
+//      name: number;
+// }
+//
+// type CompulsoryAddOns = {
+//      name: number;
+// }
+
+type PackageAddOns = Record<string, number>;  // Changed from { name: number }
+type OptionalAddOns = Record<string, number>; // Changed from { name: number }
+type CompulsoryAddOns = Record<string, number>; // Changed from { name: number }
+
+interface Addon {
      package: PackageAddOns;
      optional: OptionalAddOns;
      compulsory: CompulsoryAddOns;
 }
-
-type PackageAddOns = {
-     // pack: number;
-     // rubber: number;
-     name: number
-};
-
-// type OptionalAddOns = Record<string, number>;
-// type CompulsoryAddOns = Record<string, number>;
-type OptionalAddOns = {
-     name: number;
-}
-
-type CompulsoryAddOns = {
-     name: number;
-}
-
-
-// type PackageOption = {
-//      id: string;
-//      name: string;
-//      price: string;
-// }
 
 
 type SelectedAddon = {
@@ -92,7 +95,7 @@ type SelectedAddon = {
 
 type SelectedAddons = {
      package: string;
-     compulsory: string[];
+     compulsory: string;
      optional: string[];
 }
 
@@ -145,4 +148,4 @@ type ProductStore = {
 }
 
 
-export type { CardDetails, Restaurant, Product, CartItem, PaymentMethod, CartStore, ProductStore, SelectedAddons, User, UserState }
+export type { CardDetails, Restaurant, Product, CartItem, PaymentMethod, CartStore, ProductStore, SelectedAddons, User, UserState, Addon }

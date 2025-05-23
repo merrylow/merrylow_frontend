@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { UserState } from '@/lib/typeDefs'
+import { storeTokens, getAccessToken } from '@/lib/auth'
 import axios from 'axios'
 
 
@@ -10,7 +11,7 @@ const useUserStore = create<UserState>((set, get) => ({
     user: null,
     fetchUser: async () => {
         set({ loading: true })
-        const accessToken = localStorage.getItem('accessToken')
+        const accessToken = getAccessToken()
 
         try {
             const response = await axios.get(`${API_URL}/api/account`, {

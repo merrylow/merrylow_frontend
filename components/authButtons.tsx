@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
 import useUserStore from '@/stores/useUserStore'
+import { storeTokens, clearTokens } from '@/lib/auth'
 
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
@@ -25,38 +26,7 @@ const GoogleSignInButton = () => {
     const [loading, setLoading] = useState(false)
 
 
-    // const handleSuccess = async (codeResponse: any) => {
-    //     setLoading(true)
-    //     if(codeResponse.code) {
-    //         toast.success('Signed in successfully')
-    //     }
-    //     console.log(codeResponse)
-    //     const idToken = codeResponse.code
-    //
-    //     try {
-    //         const response = await axios.post(`${API_URL}/api/auth/google`, { idToken })
-    //
-    //         console.log(response.data.accessToken)
-    //         setUser(response.data.data)
-    //         setAuthenticated(true)
-    //         localStorage.setItem('accessToken', response.data.accessToken)
-    //         router.push('/')
-    //     } catch(error) {
-    //         toast.error('Sign in failed. Please try again')
-    //         console.error(error)
-    //     } finally {
-    //         setLoading(false)
-    //     }
-    // }
 
-    //
-    // const login = useGoogleLogin({
-    //     onSuccess: handleSuccess,
-    //     // flow: 'auth-code',
-    //     redirect_uri: API_URL,
-    //     // redirect_uri: BASE_URL,
-    //     // ux_mode: 'redirect',
-    // });
 
     return (
         // <button
@@ -91,8 +61,7 @@ const GoogleSignInButton = () => {
                         console.log(response.data.accessToken)
                         // setUser(response.data.user)
                         setAuthenticated(true)
-                        localStorage.setItem('accessToken', response.data.accessToken)
-                        localStorage.setItem('refreshToken', response.data.refreshToken)
+                        storeTokens(response.data.accessToken, response.data.refreshToken)
                         router.push('/')
                     } catch(error) {
                         toast.error('Sign in failed. Please try again')
@@ -225,7 +194,6 @@ const EmailSignUpForm = () => {
 
 const EmailSignInForm = () => {
     const setAuthenticated = useUserStore(state => state.setAuthenticated)
-    // const setUser = useUserStore(state => state.setUser)
     const router = useRouter()
     const [loading, setLoading] = useState(false)
     const [email, setEmail] = useState('')
@@ -239,26 +207,17 @@ const EmailSignInForm = () => {
         try {
             const response = await axios.post(`${API_URL}/api/auth/login`, { email, password })
             console.log(response)
-            const accessToken = response.data.accessToken
+            const accessToken: string = response.data.accessToken
             const refreshToken = response.data.refreshToken
             localStorage.setItem('accessToken', accessToken)
             localStorage.setItem('refreshToken', refreshToken)
-            console.log('hjkl;')
-            console.log(accessToken)
-            // setUser(response.data.user)
             setAuthenticated(true)
-            // const token = document.cookie
-            //     .split('; ')
-            //     .find(row => row.startsWith('refreshToken='))
-            //     ?.split('=')[1];
-            //
-            // console.log('token:', token);
-            // if(token) {
-            //     toast('Welcome')
-            // console.log('token', token)
-            // }
 
-            router.push('/')
+            if(accessToken) {
+                router.push('/')
+            } else {
+                toast('An error occurred while signing you in. Please try again')
+            }
             console.log('Welcome')
         } catch (error) {
             console.log(error)
@@ -346,12 +305,18 @@ const SignOutButton = () => {
                 {},
                 { withCredentials: true }
             )
+            //
+            // localStorage.removeItem('accessToken')
+            // if (typeof window !== 'undefined') {
+            //     document.cookie = 'refreshToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+            // }
+            clearTokens()
 
-            localStorage.removeItem('accessToken')
-            router.push('/auth/sign-in')
             googleLogout()
+            router.push('/auth/sign-in')
+            router.refresh()
         } catch (error) {
-            toast.error('Please try again')
+            toast.error('Failed to log you out. Please try again')
         } finally {
              setLoading(false)
         }

@@ -11,15 +11,15 @@ import axios from 'axios'
 const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
 
 const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote }: { product: Product, quantity: number, selectedAddons: SelectedAddons | null, orderNote: string | null }) => {
+    const router = useRouter()
     const [loading, setLoading] = useState<boolean>(false)
     const addToCart = useCartStore(state => state.addToCart)
-    const router = useRouter()
 
     const handleClick = async () => {
         setLoading(true)
         try {
             addToCart(product, quantity, selectedAddons, orderNote)
-            // router.push('/cart')
+            // router.push('cart')
         } catch (error) {
             console.error('Add to cart error', error)
             toast.error('Try again')

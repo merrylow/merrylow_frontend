@@ -21,7 +21,7 @@ const Home = async () => {
               <div className='w-[90%] h-[14%] mx-auto flex justify-between items-center'>
                 <h1 className='font-bold text-secondary-light text-[18px]'>What others are ordering🔥</h1>
 
-                <Link href='/' className='see-all-btn px-5'>See all</Link>
+                <Link href='/see-all/what-others-are-ordering' className='see-all-btn px-5'>See all</Link>
               </div>
 
               <div className="slider-container">
@@ -42,7 +42,7 @@ const Home = async () => {
               <div className='w-[90%] h-[14%] mx-auto flex justify-between items-center'>
                 <h1 className='section-heading'>Top vendors👏</h1>
 
-                <Link href='/' className='see-all-btn'>See all</Link>
+                <Link href='/see-all/top-vendors' className='see-all-btn'>See all</Link>
               </div>
 
               <div className="slider-container">
@@ -64,7 +64,7 @@ const Home = async () => {
               <div className='w-[90%] h-[14%] mx-auto flex justify-between items-center'>
                 <h1 className='section-heading'>Recently viewed</h1>
 
-                <Link href='/' className='see-all-btn'>See all</Link>
+                <Link href='/see-all/recently-viewed' className='see-all-btn'>See all</Link>
               </div>
 
               <div className="slider-container">

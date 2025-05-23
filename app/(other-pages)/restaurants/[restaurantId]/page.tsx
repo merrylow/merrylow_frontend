@@ -52,11 +52,11 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                          <FaChevronLeft className='size-5 fill-gray-pale' />
                     </Link>
 
-                    <button 
-                         title='more options' 
-                         className='navigation-btn'>
-                         <IoEllipsisHorizontal className='size-[1.4rem] fill-gray-pale' />
-                    </button>
+                    {/*<button */}
+                    {/*     title='more options' */}
+                    {/*     className='navigation-btn'>*/}
+                    {/*     <IoEllipsisHorizontal className='size-[1.4rem] fill-gray-pale' />*/}
+                    {/*</button>*/}
                </section>
 
               {/* Title + Favorite */}

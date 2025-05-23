@@ -207,7 +207,7 @@ const ProductModal = ({ productId }: { productId: string }) => {
      const [quantity, setQuantity] = useState<number>(1)
      const [selectedAddons, setSelectedAddons] = useState<SelectedAddons>({
           package: '',
-          compulsory: [] as string[],
+          compulsory: '',
           optional: [] as string[]
      })
      const [orderNote, setOrderNote] = useState('')
@@ -218,7 +218,23 @@ const ProductModal = ({ productId }: { productId: string }) => {
 
      const matchingProduct: Product | undefined = products.find(product => product.id === productId)
 
-     const toggleAddon = (type: 'compulsory' | 'optional', name: string) => {
+     const selectPackageOption = (name: string) => {
+          setSelectedAddons(prev => ({
+               ...prev,
+               package: name
+          }))
+     }
+
+
+     const selectCompulsoryAddon = (name: string) => {
+          setSelectedAddons(prev => ({
+               ...prev,
+               compulsory: name
+          }));
+     };
+
+
+     const toggleOptionalAddon = (type: 'optional', name: string) => {
           setSelectedAddons(prev => {
                const list = prev[type]
                const exists = list.includes(name)
@@ -229,12 +245,6 @@ const ProductModal = ({ productId }: { productId: string }) => {
           })
      }
 
-     const selectPackageOption = (name: string) => {
-          setSelectedAddons(prev => ({
-               ...prev,
-               package: name
-          }))
-     }
 
      return (
          <main className='w-full max-w-[450px] h-full mx-auto bg-white flex flex-col justify-start rounded-t-4xl overflow-hidden'>
@@ -297,27 +307,55 @@ const ProductModal = ({ productId }: { productId: string }) => {
                                       )
                                  }
 
-                                 <div className='space-y-4'>
-                                      <h2 className='text-md text-secondary-light font-semibold'>Add more</h2>
-                                      <RadioGroup>
-                                          {Object.entries(matchingProduct?.addOns.compulsory ?? {}).map(([name, price]) => (
-                                              <div className='flex justify-between items-center' key={name}>
-                                                   <div className='flex items-center gap-2'>
-                                                        <p className='text-sm text-black-soft'>{name}</p>
-                                                   </div>
-                                                   <div className='space-x-2.5 flex items-center'>
+                                 {/*<div className='space-y-4'>*/}
+                                      {/*<h2 className='text-md text-secondary-light font-semibold'>Add more</h2>*/}
+                                      {/*<RadioGroup>*/}
+                                      {/*    {Object.entries(matchingProduct?.addOns.compulsory ?? {}).map(([name, price]) => (*/}
+                                      {/*        <div className='flex justify-between items-center' key={name}>*/}
+                                      {/*             <div className='flex items-center gap-2'>*/}
+                                      {/*                  <p className='text-sm text-black-soft'>{name}</p>*/}
+                                      {/*             </div>*/}
+                                      {/*             <div className='space-x-2.5 flex items-center'>*/}
 
-                                                        <span className='text-base text-black-soft font-semibold'>+₵{formatCurrency(String(price))}</span>
-                                                        <RadioGroupItem
-                                                            className='border-primary-light'
-                                                            value={name}
-                                                            id={`option-${name}`}
-                                                        />
-                                                   </div>
-                                              </div>
-                                          ))}
-                                      </RadioGroup>
-                                 </div>
+                                      {/*                  <span className='text-base text-black-soft font-semibold'>+₵{formatCurrency(String(price))}</span>*/}
+                                      {/*                  <RadioGroupItem*/}
+                                      {/*                      className='border-primary-light'*/}
+                                      {/*                      value={name}*/}
+                                      {/*                      id={`option-${name}`}*/}
+                                      {/*                  />*/}
+                                      {/*             </div>*/}
+                                      {/*        </div>*/}
+                                      {/*    ))}*/}
+                                      {/*</RadioGroup>*/}
+                                 {/*</div>*/}
+
+                                      <div className='space-y-4'>
+                                           <h2 className='text-md text-secondary-light font-semibold'>Add more</h2>
+                                           <RadioGroup
+                                               value={selectedAddons.compulsory}
+                                               onValueChange={selectCompulsoryAddon}
+                                           >
+                                                {Object.entries(matchingProduct?.addOns.compulsory ?? {}).map(([name, price]) => (
+                                                    <div className='flex justify-between items-center' key={name}>
+                                                         <div className='flex items-center gap-2'>
+                                                              <Label htmlFor={`compulsory-${name}`} className='text-sm text-black-soft'>
+                                                                   {name}
+                                                              </Label>
+                                                         </div>
+                                                         <div className='space-x-2.5 flex items-center'>
+                                                              <span className='text-base text-black-soft font-semibold'>
+                                                                 +₵{formatCurrency(String(price))}
+                                                              </span>
+                                                              <RadioGroupItem
+                                                                  value={name}
+                                                                  id={`compulsory-${name}`}
+                                                                  className='border-primary-light'
+                                                              />
+                                                         </div>
+                                                    </div>
+                                                ))}
+                                           </RadioGroup>
+                                      </div>
 
                                  <div className='space-y-4'>
                                       <h2 className='text-md text-secondary-light font-semibold'>Addons</h2>
@@ -331,7 +369,7 @@ const ProductModal = ({ productId }: { productId: string }) => {
                                                     <Checkbox
                                                         className='border border-primary-light'
                                                         checked={selectedAddons.optional.includes(name)}
-                                                        onCheckedChange={() => toggleAddon('optional', name)}
+                                                        onCheckedChange={() => toggleOptionalAddon('optional', name)}
                                                         aria-label='optional-addon'
                                                     />
                                                </div>
