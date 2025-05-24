@@ -22,12 +22,21 @@ const CheckoutComponent = () => {
     const paymentMethod = useCartStore(state => state.paymentMethod)
     const setPaymentMethod = useCartStore(state => state.setPaymentMethod)
     const { user, fetchUser } = useUserStore()
-    const { cart, fetchCart, cartTotal } = useCartStore()
+    const fetchCart = useCartStore(state => state.fetchCart)
+    const cart = useCartStore(state => state.cart)
+    const cartTotal = useCartStore(state => state.cartTotal)
+    const updateCartCount = useCartStore(state => state.updateCartCount)
+    // const calculateCartTotals = useCartStore(state => state.calculateCartTotals)
+    const name = `${firstName} ${lastName}`
 
     useEffect(() => {
         fetchCart()
         fetchUser()
-    }, []);
+    }, [])
+
+    // useEffect(() => {
+    //     calculateCartTotals()
+    // }, [cart])
 
 
     const PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!
@@ -107,7 +116,7 @@ const CheckoutComponent = () => {
                                     />
                                 </div>
                                 <div>
-                                    <Label htmlFor='location' className='block text-base font-semibold text-secondary-soft mb-1'>Location</Label>
+                                    <Label htmlFor='location' className='block text-base font-semibold text-secondary-soft mb-1'>Address</Label>
                                     <Input
                                         id='location'
                                         type='text'
@@ -143,7 +152,7 @@ const CheckoutComponent = () => {
 
                             {/* Fixed bottom button */}
                             <section className='fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[90%] bg-transparent py-4 flex justify-between items-center'>
-                                <PlaceOrderButton />
+                                <PlaceOrderButton name={name} phone={phoneNumber} notes={deliveryNote} address={location} paymentMethod={paymentMethod}  />
                                 {/*<PaystackHookExample />*/}
                             </section>
                         </form>
@@ -164,7 +173,7 @@ const CheckoutComponent = () => {
                             <div className='flex justify-between py-2 border-b border-b-gray-pale'>
                                 <span className='font-medium'>Restaurant</span>
                                 <span className='font-medium'>Restaurant name</span>
-                                <span className='text-sm'>{cart[0].restaurant.name}</span>
+                                {/*<span className='text-sm'>{cart[0].restaurant.name}</span>*/}
                             </div>
                             <div className='flex justify-between text-md text-secondary-soft py-2 mt-3'>
                                 <span className='font-semibold'>Total</span>

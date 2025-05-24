@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
-// import { signIn, signOut } from 'next-auth/react'
+import { Eye, EyeOff } from 'lucide-react'
 import { toast } from 'sonner'
 import axios from 'axios'
 import { FaSignOutAlt } from 'react-icons/fa'
@@ -15,13 +15,11 @@ import useUserStore from '@/stores/useUserStore'
 import { storeTokens, clearTokens } from '@/lib/auth'
 
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
 
 const GoogleSignInButton = () => {
     const CLIENT_ID: string = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!
     const router = useRouter()
-    // const setUser = useUserStore(state => state.setUser)
     const setAuthenticated = useUserStore(state => state.setAuthenticated)
     const [loading, setLoading] = useState(false)
 
@@ -52,14 +50,10 @@ const GoogleSignInButton = () => {
             <GoogleLogin
                 onSuccess={async credentialResponse => {
                     const idToken = credentialResponse.credential
-                    // console.log(idToken)
 
                     try {
                         const response = await axios.post(`${API_URL}/api/auth/google`, { idToken })
 
-                        console.log(response.data)
-                        console.log(response.data.accessToken)
-                        // setUser(response.data.user)
                         setAuthenticated(true)
                         storeTokens(response.data.accessToken, response.data.refreshToken)
                         router.push('/')
@@ -98,8 +92,6 @@ const EmailSignUpForm = () => {
 
         try {
             const response = await axios.post(`${API_URL}/api/auth/signup`, { username, email, password })
-            console.log(response)
-            console.log(response.data)
             toast('Check your email to verify')
             router.push('/auth/sign-in')
         } catch (error) {
@@ -170,10 +162,10 @@ const EmailSignUpForm = () => {
                     onClick={handleSignUp}
                 >
                     {loading ? (
-                        <>
-                            <span className='loading loading-spinner loading-sm text-primary-main' />
+                        <div className='flex items-center justify-center text-white'>
+                            <span className='loading loading-spinner loading-sm' />
                             <span className='text-sm text-secondary-soft font-medium'>Wait...</span>
-                        </>
+                        </div>
                     ) : (
                         <>
                             Next
@@ -198,22 +190,20 @@ const EmailSignInForm = () => {
     const [loading, setLoading] = useState(false)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const handleSignIn = async (e: React.FormEvent) => {
         setLoading(true)
         e.preventDefault()
-        console.log(email)
 
         try {
             const response = await axios.post(`${API_URL}/api/auth/login`, { email, password })
             console.log(response)
             const accessToken: string = response.data.accessToken
-            const refreshToken = response.data.refreshToken
-            localStorage.setItem('accessToken', accessToken)
-            localStorage.setItem('refreshToken', refreshToken)
-            setAuthenticated(true)
+            storeTokens(accessToken, response.data.refreshToken)
 
             if(accessToken) {
+                setAuthenticated(true)
                 router.push('/')
             } else {
                 toast('An error occurred while signing you in. Please try again')
@@ -229,7 +219,7 @@ const EmailSignInForm = () => {
 
     return (
         <form className='flex flex-col space-y-5 mt-1'>
-            <div>
+            <div className='relative'>
                 <Label htmlFor='email' className='font-medium'>
                     Email
                 </Label>
@@ -240,7 +230,7 @@ const EmailSignInForm = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder='Enter your email...'
-                    className='mt-1 w-full px-4 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/50'
+                    className='mt-1 w-full px-4 py-2 border border-secondary-soft rounded-lg outline-none focus:outline-none focus:border-none focus:ring-1 focus:ring-primary-main/50'
                     autoComplete='email'
                     required
                 />
@@ -252,15 +242,26 @@ const EmailSignInForm = () => {
                 </Label>
                 <Input
                     id='password'
-                    type='password'
+                    type={showPassword ? 'text' : 'password'}
                     name='password'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder='Enter your paassword...'
-                    className='mt-1 w-full px-4 py-2 border border-gray rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/50'
-                    autoComplete='email'
+                    placeholder='Enter your password...'
+                    className='mt-1 w-full px-4 py-2 border border-secondary-soft rounded-lg outline-none focus:outline-none focus:border-none focus:ring-1 focus:ring-primary-main/50'
+                    autoComplete='current-password'
                     required
                 />
+                <button
+                    type='button'
+                    className='absolute right-3 top-9 p-1 text-gray-500 hover:text-gray-700'
+                    onClick={() => setShowPassword(!showPassword)}
+                >
+                    {showPassword ? (
+                        <EyeOff className='h-5 w-5' />
+                    ) : (
+                        <Eye className='h-5 w-5' />
+                    )}
+                </button>
             </div>
 
             <div className='space-y-2.5'>
@@ -271,10 +272,10 @@ const EmailSignInForm = () => {
                     onClick={handleSignIn}
                 >
                     {loading ? (
-                        <>
-                            <span className='loading loading-spinner loading-sm text-primary-main' />
-                            <span className='text-sm text-secondary-soft font-medium'>Wait...</span>
-                        </>
+                        <div className='flex items-center justify-center space-x-1.5 text-white'>
+                            <span className='loading loading-spinner loading-sm' />
+                            <span className='text-sm font-medium'>Wait...</span>
+                        </div>
                     ) : (
                         <>
                             Next
@@ -324,17 +325,16 @@ const SignOutButton = () => {
 
     return (
         <button
-            // onClick={}
             className='w-full h-11 flex items-center justify-center space-x-2.5 btn'
             disabled={loading}
             type='submit'
             onClick={handleSignOut}
         >
             {loading ? (
-                <>
-                    <span className="loading loading-spinner loading-sm text-primary-main" />
+                <div className='flex items-center justify-center text-white space-x-1.5'>
+                    <span className="loading loading-spinner loading-sm" />
                     <span className="text-sm font-medium">Logging you out...</span>
-                </>
+                </div>
             ) : (
                 <>
                     <FaSignOutAlt />

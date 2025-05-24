@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 const EmptyCart = () => {
     return (
-        <div className='flex flex-col items-center justify-center text-center h-[70vh] gap-6 px-6'>
+        <section className='w-[90%] mx-auto mt-6 flex flex-col items-center justify-center text-center gap-6 px-6'> {/* h-[70vh] */}
             <ShoppingCart className='size-16 text-primary-light' />
             <h2 className='text-lg font-semibold text-secondary-soft'>Oops! Your cart is empty</h2>
             <p className='text-secondary-pale text-sm max-w-sm'>
@@ -15,7 +15,7 @@ const EmptyCart = () => {
             >
                 Browse restaurants
             </Link>
-        </div>
+        </section>
     );
 }
 

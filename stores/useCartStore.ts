@@ -2,7 +2,7 @@ import axios from 'axios'
 import { create } from 'zustand'
 import { CartStore, Product, Restaurant, CartItem, PaymentMethod, CardDetails, SelectedAddons } from '@/lib/typeDefs'
 import { transformAddonsForBackend } from '@/lib/utilFunctions'
-import { useRouter } from 'next/navigation'
+import { getAccessToken } from '@/lib/auth'
 import { toast } from 'sonner'
 
 const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
@@ -19,27 +19,27 @@ const useCartStore = create<CartStore>((set, get) => ({
      fetchCart: async () => {
           try {
                set({ loading: true });
-               const accessToken = localStorage.getItem('accessToken');
+               const accessToken = getAccessToken()
 
                const response = await axios.post(`${API_URL}/api/cart`, {}, {
                     headers: {
                          Authorization: `Bearer ${accessToken}`
                     }
-               });
+               })
 
                if (response.status === 200) {
-                    const fetchedCart = response.data.data // Adjust if your API sends it differently
-                    set({ cart: fetchedCart });
-                    get().updateCartCount();
+                    const fetchedCart = response.data.data
+                    set({ cart: fetchedCart })
+                    get().updateCartCount()
                     // get().calculateCartTotals();
                } else {
                     console.log('Unexpected response', response);
                }
           } catch (error) {
-               console.error('Failed to fetch cart from server:', error);
-               set({ error: true });
+               console.error('Failed to fetch cart from server:', error)
+               set({ error: true })
           } finally {
-               set({ loading: false });
+               set({ loading: false })
           }
      },
 

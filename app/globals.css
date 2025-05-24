@@ -2,7 +2,7 @@
 @import "tw-animate-css";
 
 @plugin "daisyui" {
-     include: carousel, glass;
+     include: carousel, glass, loading;
      themes: false;
 }
 
