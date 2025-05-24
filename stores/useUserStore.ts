@@ -11,7 +11,8 @@ const useUserStore = create<UserState>((set, get) => ({
     user: null,
     fetchUser: async () => {
         set({ loading: true })
-        const accessToken = getAccessToken()
+        // const accessToken = getAccessToken()
+        const accessToken = localStorage.getItem('accessToken')
 
         try {
             const response = await axios.get(`${API_URL}/api/account`, {

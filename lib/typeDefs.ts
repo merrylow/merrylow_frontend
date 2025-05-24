@@ -43,27 +43,6 @@ interface Product {
      addOns: Addon;
 }
 
-// type Addon = {
-//      package: PackageAddOns;
-//      optional: OptionalAddOns;
-//      compulsory: CompulsoryAddOns;
-// }
-//
-// type PackageAddOns = {
-//      // pack: number;
-//      // rubber: number;
-//      name: number
-// };
-
-// type OptionalAddOns = Record<string, number>;
-// type CompulsoryAddOns = Record<string, number>;
-// type OptionalAddOns = {
-//      name: number;
-// }
-//
-// type CompulsoryAddOns = {
-//      name: number;
-// }
 
 type PackageAddOns = Record<string, number>;  // Changed from { name: number }
 type OptionalAddOns = Record<string, number>; // Changed from { name: number }
@@ -82,27 +61,32 @@ type SelectedAddon = {
      compulsory: CompulsoryAddOns;
 }
 
-
-
-// type SelectedAddon = {
-//      package: string
-//      compulsory: string[]
-//      optional: string[]
-// }
-
-// type SelectedAddons = SelectedAddon[]
-
-
 type SelectedAddons = {
      package: string;
      compulsory: string;
      optional: string[];
 }
 
+// type CartItemMenu = {
+//      name: string;
+//      price: string;
+// }
+
 interface CartItem extends Product {
      // order_status: string;
      quantity: number;
      productId: string;
+     menu?: {
+          id: string;
+          name: string;
+          price: number;
+          imageUrl?: string;
+          addOns?: {
+               package?: Record<string, string | number>;
+               compulsory?: Record<string, string | number>;
+               optional?: Record<string, string | number>;
+          }
+     };
      // selectedAddons: Record<string, boolean> | null;
      selectedAddons: SelectedAddons | null;
      // packageOption: PackageOption | null;
@@ -119,10 +103,11 @@ type CartStore = {
      addToCart: (product: Product, quantity: number, selectedAddons: SelectedAddons | null, orderNote: string | null) => void
      // removeFromCart: (productId: string) => void
      // clearCart: () => void
-     updateCartCount: () => void
-     // calculateCartTotals: () => void
+     updateCartCount: () => void;
+     calculateCartTotals: () => void;
+     calculateItemTotal: (product: Product, quantity: number, selectedAddons: SelectedAddons | null) => number;
      paymentMethod: PaymentMethod
-     setPaymentMethod: (method: PaymentMethod) => void
+     setPaymentMethod: (method: PaymentMethod) => void;
 }
 
 type PaymentMethod = string;

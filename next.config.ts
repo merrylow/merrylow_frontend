@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
+      },  {
+        protocol: 'https',
+        hostname: 'wp.merrylow.com',
+        pathname: 'wp-content/uploads/**',
+        search: ''
       },
       // {
       //   protocol: 'http',

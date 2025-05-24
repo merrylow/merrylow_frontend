@@ -85,6 +85,7 @@ const EmailSignUpForm = () => {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState<boolean>(false)
 
     const handleSignUp = async (e: React.FormEvent) => {
         setLoading(true)
@@ -92,8 +93,15 @@ const EmailSignUpForm = () => {
 
         try {
             const response = await axios.post(`${API_URL}/api/auth/signup`, { username, email, password })
-            toast('Check your email to verify')
-            router.push('/auth/sign-in')
+
+            if(response.status === 200) {
+                toast('Check your email to verify')
+                setTimeout(() => {
+                    router.push('/auth/sign-in')
+                }, 10000)
+            } else {
+                toast('Something happened. Please try again')
+            }
         } catch (error) {
             console.log(error)
             toast.error('Error signing up. Please try again')
@@ -137,7 +145,7 @@ const EmailSignUpForm = () => {
                 />
             </div>
 
-            <div>
+            <div className='relative'>
                 <Label htmlFor='password' className='font-medium'>
                     Password
                 </Label>
@@ -152,6 +160,17 @@ const EmailSignUpForm = () => {
                     autoComplete='email'
                     required
                 />
+                <button
+                    type='button'
+                    className='absolute right-3 top-5.5 p-1 text-gray-500 hover:text-gray-700'
+                    onClick={() => setShowPassword(!showPassword)}
+                >
+                    {showPassword ? (
+                        <EyeOff className='h-5 w-5' />
+                    ) : (
+                        <Eye className='h-5 w-5' />
+                    )}
+                </button>
             </div>
 
             <div className='space-y-2.5'>
@@ -190,7 +209,7 @@ const EmailSignInForm = () => {
     const [loading, setLoading] = useState(false)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [showPassword, setShowPassword] = useState<boolean>(false)
 
     const handleSignIn = async (e: React.FormEvent) => {
         setLoading(true)
@@ -219,7 +238,7 @@ const EmailSignInForm = () => {
 
     return (
         <form className='flex flex-col space-y-5 mt-1'>
-            <div className='relative'>
+            <div>
                 <Label htmlFor='email' className='font-medium'>
                     Email
                 </Label>
@@ -236,7 +255,7 @@ const EmailSignInForm = () => {
                 />
             </div>
 
-            <div>
+            <div className='relative'>
                 <Label htmlFor='password' className='font-medium'>
                     Password
                 </Label>
@@ -253,7 +272,7 @@ const EmailSignInForm = () => {
                 />
                 <button
                     type='button'
-                    className='absolute right-3 top-9 p-1 text-gray-500 hover:text-gray-700'
+                    className='absolute right-3 top-5.5 p-1 text-gray-500 hover:text-gray-700'
                     onClick={() => setShowPassword(!showPassword)}
                 >
                     {showPassword ? (

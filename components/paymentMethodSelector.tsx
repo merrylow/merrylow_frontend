@@ -11,29 +11,12 @@ import { usePaystackPayment } from 'react-paystack'
 type PaymentMethodProps = {
     paymentMethod: string;
     setPaymentMethod: (value: string) => void;
-    config: HookConfig;
-    onSuccess: (reference: any) => void;
-    onClose: () => void;
 }
 
-const PaymentMethodSelector = ({ paymentMethod, setPaymentMethod, config, onSuccess, onClose }: PaymentMethodProps) => {
+const PaymentMethodSelector = ({ paymentMethod, setPaymentMethod}: PaymentMethodProps) => {
     // const [selected, setSelected] = useState('')
     const selected = paymentMethod
 
-    const PaystackHookExample = () => {
-        const initializePayment: InitializePayment = usePaystackPayment(config)
-        return (
-            <button
-                className='w-full h-10 mt-2 px-7 font-light text-xs btn'
-                type='submit'
-                onClick={() => {
-                    initializePayment({onSuccess, onClose})
-                }}
-            >
-                Make payment
-            </button>
-        )
-    }
 
     return (
         <section className='w-full mt-6'>
@@ -82,7 +65,7 @@ const PaymentMethodSelector = ({ paymentMethod, setPaymentMethod, config, onSucc
                                 >
                                     Make payment using your mobile money wallet or debit/credit cards
 
-                                    <PaystackHookExample  />
+                                    {/*<PaystackHookExample  />*/}
                                 </motion.p>
                             )}
                         </AnimatePresence>

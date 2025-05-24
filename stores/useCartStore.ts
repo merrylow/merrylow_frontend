@@ -18,26 +18,28 @@ const useCartStore = create<CartStore>((set, get) => ({
 
      fetchCart: async () => {
           try {
-               set({ loading: true });
+               set({ loading: true })
                const accessToken = getAccessToken()
 
-               const response = await axios.post(`${API_URL}/api/cart`, {}, {
+
+               const response = await axios.get(`${API_URL}/api/cart`, {
                     headers: {
                          Authorization: `Bearer ${accessToken}`
                     }
                })
+               console.log(response.data.data.items)
 
                if (response.status === 200) {
-                    const fetchedCart = response.data.data
-                    set({ cart: fetchedCart })
+                    const fetchedCart = response.data.data.items || []
+                    set({ cart: Array.isArray(fetchedCart) ? fetchedCart : [] })
                     get().updateCartCount()
                     // get().calculateCartTotals();
                } else {
-                    console.log('Unexpected response', response);
+                    console.log('Unexpected response', response)
                }
           } catch (error) {
                console.error('Failed to fetch cart from server:', error)
-               set({ error: true })
+               set({ cart: [], error: true })
           } finally {
                set({ loading: false })
           }
@@ -105,37 +107,76 @@ const useCartStore = create<CartStore>((set, get) => ({
                          Authorization: `Bearer ${accessToken}`
                     }
                })
-               console.log(response)
-               if(response.status === 200) {
-                    toast('Added to cart')
-               } else if(response.status === 500) {
-                    console.log('Failed to sync with backend cart')
-               }
+               const isSuccess = response.status === 200
+               if (isSuccess) toast('Added to cart')
+               return isSuccess
           } catch (error) {
                console.log('Cart sync error', error)
-          }
+               return false
+          } finally {
+               get().updateCartCount()
+               get().calculateCartTotals()
+               set({ loading: false })
 
-          get().updateCartCount()
-          // get().calculateCartTotals()
-          set({ loading: false })
+          }
      },
 
      updateCartCount: () => {
           const totalCount = get().cart.reduce((acc, item) => acc + item.quantity, 0)
           set({ cartCount: totalCount })
      },
-     //
-     // calculateCartTotals: () => {
-     //      const total = get().cart.reduce((acc, cartItem: CartItem) => {
-     //           const basePrice = Number(cartItem.price)
-     //           const addonsTotal = cartItem.selectedAddons?.reduce((sum, addon) => sum + Number(addon.price), 0) || 0
-     //           const packagePrice = cartItem.packageOption?.price ? Number(cartItem.packageOption.price) : 0
-     //           const itemTotal = (basePrice + addonsTotal + packagePrice) * cartItem.quantity
-     //
-     //           return acc + itemTotal
-     //      }, 0)
-     //      set({ cartTotal: formatCurrency(total) })
-     // }
+
+
+     calculateCartTotals: () => {
+          const total = get().cart.reduce((acc, cartItem) => {
+               // Base price from menu
+               const basePrice = cartItem.menu?.price || 0;
+
+               // Calculate package addon price
+               const packagePrice = cartItem.selectedAddons?.package && cartItem.menu?.addOns?.package
+                   ? Number(cartItem.menu.addOns.package[cartItem.selectedAddons.package] || 0)
+                   : 0;
+
+               // Calculate compulsory addon price
+               const compulsoryPrice = cartItem.selectedAddons?.compulsory && cartItem.menu?.addOns?.compulsory
+                   ? Number(cartItem.menu.addOns.compulsory[cartItem.selectedAddons.compulsory] || 0)
+                   : 0;
+
+               // Calculate optional addons prices
+               const optionalPrices = cartItem.selectedAddons?.optional?.reduce((sum, addonName) => {
+                    return sum + (Number(cartItem.menu?.addOns?.optional?.[addonName] || 0));
+               }, 0) || 0;
+
+               // Calculate item total (base + all addons) * quantity
+               const itemTotal = (basePrice + packagePrice + compulsoryPrice + optionalPrices) * cartItem.quantity;
+
+               return acc + itemTotal;
+          }, 0);
+
+          set({ cartTotal: total });
+     },
+
+
+     calculateItemTotal: (product: Product | undefined, quantity: number, selectedAddons: SelectedAddons | null) => {
+          if (!product) return 0
+
+          const basePrice = Number(product.price) || 0
+
+          // Safely access nested properties
+          const packagePrice = selectedAddons?.package && product.addOns?.package
+              ? Number(product.addOns.package[selectedAddons.package] || 0)
+              : 0;
+
+          const compulsoryPrice = selectedAddons?.compulsory && product.addOns?.compulsory
+              ? Number(product.addOns.compulsory[selectedAddons.compulsory] || 0)
+              : 0;
+
+          const optionalPrices = selectedAddons?.optional?.reduce((sum, addonName) => {
+               return sum + (Number(product.addOns?.optional?.[addonName] || 0))
+          }, 0) || 0
+
+          return (basePrice + packagePrice + compulsoryPrice + optionalPrices) * quantity
+     },
 
 
      // removeFromCart: (mealId) => {

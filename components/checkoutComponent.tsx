@@ -8,9 +8,11 @@ import { PlaceOrderButton } from '@/components/orderButtons'
 import PaymentMethodSelector from '@/components/paymentMethodSelector'
 import { DeliveryNote } from '@/components/deliveryAndOrderNotes'
 import useCartStore from '@/stores/useCartStore'
-import { HookConfig } from 'react-paystack/libs/types'
+import { HookConfig, InitializePayment } from 'react-paystack/libs/types'
 import { toast } from 'sonner'
 import useUserStore from '@/stores/useUserStore'
+import { PaystackButton } from 'react-paystack';
+import { usePaystackPayment } from 'react-paystack'
 
 
 const CheckoutComponent = () => {
@@ -21,17 +23,19 @@ const CheckoutComponent = () => {
     const [deliveryNote, setDeliveryNote] = useState('')
     const paymentMethod = useCartStore(state => state.paymentMethod)
     const setPaymentMethod = useCartStore(state => state.setPaymentMethod)
-    const { user, fetchUser } = useUserStore()
+    const user = useUserStore(state => state.user)
     const fetchCart = useCartStore(state => state.fetchCart)
     const cart = useCartStore(state => state.cart)
     const cartTotal = useCartStore(state => state.cartTotal)
     const updateCartCount = useCartStore(state => state.updateCartCount)
+    const fetchUser = useUserStore(state => state.fetchUser)
     // const calculateCartTotals = useCartStore(state => state.calculateCartTotals)
     const name = `${firstName} ${lastName}`
 
     useEffect(() => {
         fetchCart()
         fetchUser()
+        // setPaymentMethod('mobile_money')
     }, [])
 
     // useEffect(() => {
@@ -54,16 +58,51 @@ const CheckoutComponent = () => {
         }
     };
 
-    const onSuccess = (reference: any) => {
+    // const onSuccess = (reference: any) => {
+    //     console.log(reference)
+    //     toast.success(reference)
+    //     // toast.success('Your payment was successful')
+    // };
+    //
+    // const onClose = () => {
+    //     // implementation for whatever you want to do when the Paystack dialog closed.
+    //     console.log('closed')
+    //     // toast('Your payment was cancelled')
+    // }
+    //
+    //
+    // const PaystackHookExample = () => {
+    //     const initializePayment: InitializePayment = usePaystackPayment(config)
+    //     return (
+    //         <button
+    //             className='w-full h-10 mt-2 px-7 font-light text-xs btn'
+    //             type='submit'
+    //             onClick={() => {
+    //                 initializePayment({onSuccess, onClose})
+    //             }}
+    //         >
+    //             Make payment
+    //         </button>
+    //     )
+    // }
+
+    const handlePaystackSuccessAction = (reference: any) => {
+        // Implementation for whatever you want to do with reference and after success call.
         console.log(reference)
-        toast.success(reference)
-        // toast.success('Your payment was successful')
+        //     toast.success(reference)
     };
 
-    const onClose = () => {
-        // implementation for whatever you want to do when the Paystack dialog closed.
+    // you can call this function anything
+    const handlePaystackCloseAction = () => {
+        // implementation for  whatever you want to do when the Paystack dialog closed.
         console.log('closed')
-        // toast('Your payment was cancelled')
+    }
+
+    const componentProps = {
+        ...config,
+        text: 'Make payment',
+        onSuccess: (reference: any) => handlePaystackSuccessAction(reference),
+        onClose: handlePaystackCloseAction,
     }
 
 
@@ -148,12 +187,20 @@ const CheckoutComponent = () => {
                                 </div>
                             </section>
 
-                            <PaymentMethodSelector paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} config={config} onSuccess={onSuccess} onClose={onClose} />
+                            <PaymentMethodSelector paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} />
 
                             {/* Fixed bottom button */}
                             <section className='fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[90%] bg-transparent py-4 flex justify-between items-center'>
-                                <PlaceOrderButton name={name} phone={phoneNumber} notes={deliveryNote} address={location} paymentMethod={paymentMethod}  />
-                                {/*<PaystackHookExample />*/}
+                                {
+                                    paymentMethod === 'mobile_money' ? (
+                                        <div className='max-w-[450px] w-full mx-auto'>
+                                            {/*<PaystackHookExample />*/}
+                                            {/*<PaystackButton {...componentProps} />*/}
+                                        </div>
+                                    ) : (
+                                        <PlaceOrderButton name={name} phone={phoneNumber} notes={deliveryNote} address={location} paymentMethod={paymentMethod}  />
+                                    )
+                                }
                             </section>
                         </form>
                     </div>

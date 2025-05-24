@@ -6,6 +6,7 @@ import { toast } from 'sonner'
 import { Product, SelectedAddons } from '@/lib/typeDefs'
 import useCartStore from '@/stores/useCartStore'
 import { getAccessToken } from '@/lib/auth'
+import { formatCurrency } from '@/lib/utilFunctions'
 import axios from 'axios'
 
 
@@ -17,20 +18,32 @@ const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote }: { pr
     const addToCart = useCartStore(state => state.addToCart)
     const fetchCart = useCartStore(state => state.fetchCart)
     const cart = useCartStore(state => state.cart)
-    //
+    const cartTotal = useCartStore(state => state.cartTotal)
+    const calculateItemTotal = useCartStore(state => state.calculateItemTotal)
+    const currentItemTotal = product
+        ? calculateItemTotal(product, quantity, selectedAddons)
+        : 0
+
     // useEffect(() => {
     //     fetchCart()
     // }, [])
 
     const handleClick = async () => {
         setLoading(true)
+        if (!product) {
+            toast.error('Product not loaded');
+            return;
+        }
+
         try {
             addToCart(product, quantity, selectedAddons, orderNote)
-            // router.push('/cart')
 
-            // if (cart.length !== 0) {
-            // } else {
-            //     toast('Something happened while adding to cart. Please try again')
+            // if (success) {
+            //     await new Promise(resolve => setTimeout(resolve, 200))
+            // setTimeout(() => {
+            //     router.push('/cart')
+            // }, 3000)
+
             // }
         } catch (error) {
             console.error('Add to cart error', error)
@@ -42,15 +55,17 @@ const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote }: { pr
 
     return (
         <button
-            onClick={async () => {
-                await handleClick()
-                router.push('/cart')
-            }}
-            className='w-[55%] max-w-[450px] h-[2.65rem] mx-auto flex items-center justify-center font-bold text-sm btn'
+            onClick={handleClick}
+            className='w-[55%] max-w-[450px] h-[2.65rem] mx-auto flex items-center justify-center gap-1.5 font-bold text-sm btn'
         >
-            Add to order
+            <span>Add to order</span>
+
             {
-                loading ? <span className='loading loading-spinner loading-sm'>Wait...</span> : ''
+                loading ? (
+                    <span className='loading loading-spinner loading-sm'></span>
+                ) : (
+                    <span>₵{formatCurrency(String(currentItemTotal))}</span>
+                )
             }
         </button>
     )
@@ -62,18 +77,23 @@ const GoToCheckoutButton = () => {
     const [loading, setLoading] = useState<boolean>(false)
     const router = useRouter()
     const cart = useCartStore(state => state.cart)
+    const fetchCart = useCartStore(state => state.fetchCart)
+
+    useEffect(() => {
+        fetchCart()
+    }, [])
 
     const handleCheckout = async () => {
         setLoading(true)
 
         try {
-            const formattedItems = cart.map(cartItem => ({
+            const cartItems = cart.map(cartItem => ({
                 id: cartItem.id,
                 quantity: cartItem.quantity
             }))
 
             const accessToken = getAccessToken()
-            const response = await axios.post(`${API_URL}/api/checkout`, { formattedItems }, {
+            const response = await axios.post(`${API_URL}/api/checkout`, cartItems , {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
@@ -119,30 +139,36 @@ const GoToCheckoutButton = () => {
 
 
 const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name: string; phone: string; notes: string; address: string; paymentMethod: string; }) => {
-    const router = useRouter()
+    // const router = useRouter()
+
     const [loading, setLoading] = useState<boolean>(false)
 
-    const handlePlaceOrder = async () => {
+    const handlePlaceOrder = async (e: React.FormEvent) => {
+        e.preventDefault()
         setLoading(true)
 
         try {
             const customerDetails = {
                 name,
+                address,
                 phone,
                 notes,
-                address,
                 paymentMethod
             }
 
+            // const accessToken = localStorage.getItem('accessToken')
             const accessToken = getAccessToken()
-            const response = await axios.post(`${API_URL}/api/order`, { customerDetails }, {
+            const response = await axios.post(`${API_URL}/api/order`, { name, address, phone, notes, paymentMethod }, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
             })
+            console.log(response)
 
             if(response.status === 200) {
-                router.push('/checkout')
+                // router.push('/')
+                toast('Order placed!')
+                console.log('Order placed')
             } else {
                 console.error('Checkout error: ', response.data?.message)
                 toast.error('Something happened. Please try that again')
@@ -163,10 +189,10 @@ const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name
                 type='submit'>
                 {
                     loading ? (
-                        <>
-                            <span>Processing...</span>
+                        <div className='flex item-center justify-center space-x-1.5'>
                             <span className='loading loading-spinner loading-sm'></span>
-                        </>
+                            <span>Processing...</span>
+                        </div>
                     ) : (
                             <span>Place Order</span>
                     )

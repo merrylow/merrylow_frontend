@@ -197,12 +197,15 @@ const ProductModal = ({ productId }: { productId: string }) => {
 
                             <section className='fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[88%] max-w-[450px] mx-auto bg-transparent sm:ml-2 py-4 flex justify-between items-center'>
                                  <QuantitySelector />
-                                 <AddToOrderButton
-                                     product={matchingProduct!}
-                                     quantity={quantity}
-                                     selectedAddons={selectedAddons}
-                                     orderNote={orderNote}
-                                 />
+
+                                 {matchingProduct ? (
+                                     <AddToOrderButton
+                                         product={matchingProduct}
+                                         quantity={quantity}
+                                         selectedAddons={selectedAddons}
+                                         orderNote={orderNote}
+                                     />
+                                 ) : null}
                             </section>
                        </>
                    )}
