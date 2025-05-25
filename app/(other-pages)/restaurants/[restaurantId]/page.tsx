@@ -94,6 +94,8 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                                         <h3 className='w-[96%] font-semibold text-md text-secondary-soft leading-5'>
                                              {menuItem.name}
                                         </h3>
+
+                                        {/* actual modal */}
                                         <Drawer>
                                              <DrawerTrigger asChild>
                                                   <button
@@ -103,7 +105,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                                                   </button>
 
                                              </DrawerTrigger>
-                                             <DrawerContent className='p-0 max-w-full h-[93vh] rounded-t-4xl'>
+                                             <DrawerContent className='p-0 max-w-[450px] mx-auto h-[93vh] rounded-t-4xl'>
                                                   <DrawerTitle></DrawerTitle>
                                                   <DrawerClose asChild>
                                                        <button
@@ -116,6 +118,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                                                   <ProductModal productId={menuItem.id} />
                                              </DrawerContent>
                                         </Drawer>
+
                                         <span className='text-base text-secondary-soft font-bold ml-2.5 pt-0.5'>
                                              ₵{formatCurrency(menuItem.price)}
                                         </span>

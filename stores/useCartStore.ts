@@ -134,31 +134,27 @@ const useCartStore = create<CartStore>((set, get) => ({
      },
 
 
+
      calculateCartTotals: () => {
           const total = get().cart.reduce((acc, cartItem) => {
-               // Base price from menu
-               const basePrice = cartItem.menu?.price || 0
+               const basePrice = (Number(cartItem.menu?.price) || 0)
 
-               // Calculate package addon price
                const packagePrice = cartItem.selectedAddons?.package && cartItem.menu?.addOns?.package
-                   ? Number(cartItem.menu.addOns.package[cartItem.selectedAddons.package] || 0)
+                   ? (Number(cartItem.menu.addOns.package[cartItem.selectedAddons.package]) || 0)
                    : 0
 
-               // Calculate compulsory addon price
                const compulsoryPrice = cartItem.selectedAddons?.compulsory && cartItem.menu?.addOns?.compulsory
-                   ? Number(cartItem.menu.addOns.compulsory[cartItem.selectedAddons.compulsory] || 0)
-                   : 0
+                   ? (Number(cartItem.menu.addOns.compulsory[cartItem.selectedAddons.compulsory]) || 0)
+                   : 0;
 
-               // Calculate optional addons prices
                const optionalPrices = cartItem.selectedAddons?.optional?.reduce((sum, addonName) => {
-                    return sum + (Number(cartItem.menu?.addOns?.optional?.[addonName] || 0))
+                    return sum + ((Number(cartItem.menu?.addOns?.optional?.[addonName]) || 0))
                }, 0) || 0
 
-               // Calculate item total (base + all addons) * quantity
                const itemTotal = (basePrice + packagePrice + compulsoryPrice + optionalPrices) * cartItem.quantity;
 
                return acc + itemTotal
-          }, 0);
+          }, 0)
 
           set({ cartTotal: total })
      },
@@ -167,19 +163,18 @@ const useCartStore = create<CartStore>((set, get) => ({
      calculateItemTotal: (product: Product | undefined, quantity: number, selectedAddons: SelectedAddons | null) => {
           if (!product) return 0
 
-          const basePrice = Number(product.price) || 0
+          const basePrice = (Number(product.price) || 0)
 
-          // Safely access nested properties
           const packagePrice = selectedAddons?.package && product.addOns?.package
-              ? Number(product.addOns.package[selectedAddons.package] || 0)
+              ? (Number(product.addOns.package[selectedAddons.package]) || 0)
               : 0;
 
           const compulsoryPrice = selectedAddons?.compulsory && product.addOns?.compulsory
-              ? Number(product.addOns.compulsory[selectedAddons.compulsory] || 0)
+              ? (Number(product.addOns.compulsory[selectedAddons.compulsory]) || 0)
               : 0;
 
           const optionalPrices = selectedAddons?.optional?.reduce((sum, addonName) => {
-               return sum + (Number(product.addOns?.optional?.[addonName] || 0))
+               return sum + ((Number(product.addOns?.optional?.[addonName]) || 0))
           }, 0) || 0
 
           return (basePrice + packagePrice + compulsoryPrice + optionalPrices) * quantity
@@ -190,7 +185,6 @@ const useCartStore = create<CartStore>((set, get) => ({
           set({ loading: true })
 
           try {
-               // Optimistic UI update - remove from local state first
                const updatedCart = get().cart
                    .map(item =>
                        item.id === productId
@@ -214,8 +208,8 @@ const useCartStore = create<CartStore>((set, get) => ({
                     throw new Error('Failed to remove item from server cart')
                }
 
-               // Update cart count after successful removal
-               get().updateCartCount();
+               // Update cart count after  removal
+               get().updateCartCount()
                toast.success('Item removed from cart')
 
           } catch (error) {
@@ -233,7 +227,6 @@ const useCartStore = create<CartStore>((set, get) => ({
           try {
                set({ cart: [], cartCount: 0 })
 
-               // Make API call to backend
                const accessToken = getAccessToken()
                const response = await axios.delete(`${API_URL}/api/cart`, {
                     headers: {

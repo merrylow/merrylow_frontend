@@ -6,6 +6,12 @@ const nextConfig: NextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
+  // modularizeImports: {
+  //   'react': {
+  //     transform: 'react',
+  //     skipDefaultConversion: true,
+  //   },
+  // },
   images: {
     remotePatterns: [
       {

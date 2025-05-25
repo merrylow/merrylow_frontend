@@ -67,6 +67,13 @@ type SelectedAddons = {
      optional: string[];
 }
 
+
+type SavedProductSelections = {
+     addons: SelectedAddons;
+     quantity: number;
+     orderNote: string;
+}
+
 // type CartItemMenu = {
 //      name: string;
 //      price: string;
@@ -74,6 +81,7 @@ type SelectedAddons = {
 
 interface CartItem extends Product {
      // order_status: string;
+     description?: string;
      quantity: number;
      productId: string;
      menu?: {
@@ -133,4 +141,4 @@ type ProductStore = {
 }
 
 
-export type { CardDetails, Restaurant, Product, CartItem, PaymentMethod, CartStore, ProductStore, SelectedAddons, User, UserState, Addon }
+export type { CardDetails, Restaurant, Product, CartItem, PaymentMethod, CartStore, ProductStore, SelectedAddons, User, UserState, Addon, SavedProductSelections }

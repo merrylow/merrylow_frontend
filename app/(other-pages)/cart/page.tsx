@@ -9,11 +9,20 @@ import BackButton from '@/components/backButton'
 import { GoToCheckoutButton } from '@/components/orderButtons'
 import EmptyCart from '@/components/emptyCart'
 import LoadingSpinner from '@/components/loadingSpinner'
-import { RemoveFromCartButton } from '@/components/cart/cartComponents'
+import { RemoveFromCartButton, ClearCartButton } from '@/components/cart/cartButtons'
 import BottomNav from '@/components/bottomNav'
 
 const CartPage = () => {
-     const { cart, fetchCart, cartTotal, updateCartCount } = useCartStore()
+    const parseAddons = (addonsString: string) => {
+        try {
+            return JSON.parse(addonsString)
+        } catch (error) {
+            console.error('Error parsing addons:', error)
+            return {}
+        }
+    }
+
+     const { cart, fetchCart, cartTotal, updateCartCount, calculateCartTotals } = useCartStore()
      const [loading, setLoading] = useState(true)
 
 
@@ -32,7 +41,7 @@ const CartPage = () => {
 
     useEffect(() => {
         updateCartCount()
-        // calculateCartTotals()
+        calculateCartTotals()
     }, [cart])
 
 
@@ -52,10 +61,11 @@ const CartPage = () => {
         )
     }
 
+
     const calculateItemTotal = (item: CartItem) => {
-        const basePrice = item.menu?.price || 0;
-        // add addon calculations here if needed later
-        return basePrice * item.quantity
+        const basePrice = (item.menu?.price || 0)
+        // If you need to include addons here, follow the same pattern as above
+        return basePrice * item.quantity;
     }
 
 
@@ -70,6 +80,16 @@ const CartPage = () => {
                              }
                          </h1>
                     </section>
+
+                   {
+                       cart.length > 0 ? (
+                           <section className='fixed flex justify-end items-center w-[90%] sm:max-w-[410px] h-10 top-3 right-1/2 translate-x-1/2 mx-auto z-50'>
+                               <ClearCartButton />
+                           </section>
+                       ) : (
+                           <></>
+                       )
+                   }
                     
                     <section className='fixed flex justify-start items-center w-[90%] sm:max-w-[410px] h-10 top-3 left-1/2 -translate-x-1/2 mx-auto z-50'>
                          <BackButton />
@@ -78,37 +98,55 @@ const CartPage = () => {
 
                     {/* Order Items */}
                         <section className='w-[90%] mx-auto mt-6'>
-                            {cart.map((cartItem: CartItem, i) => (
-                                <div className='flex justify-between items-start space-y-2 bg-white mb-3' key={i}>
-                                    <div className='flex gap-3'>
-                                        <div className='relative w-20 h-20 rounded-xl overflow-hidden'>
-                                            <Image
-                                                src='/Yam and palava sauce-marg-tee.jpg'
-                                                // src={cartItem?.menu?.imageUrl}
-                                                alt=''
-                                                fill
-                                                className='object-cover'
-                                            />
-                                        </div>
-                                        <div>
-                                            <h3 className='leading-none text-base font-semibold text-black-soft'>{cartItem?.menu?.name}</h3>
-                                            {/*<p className='text-xs text-secondary-soft'>+ Package option<br />+ Parmesan chicken</p>*/}
-                                            {/*{cartItem.selectedAddons?.map((addon, index) => (*/}
-                                            {cartItem.selectedAddons?.package && (
-                                                <p className="text-xs text-secondary-soft">
-                                                    + {cartItem.selectedAddons.package}
-                                                </p>
-                                            )}
-                                            <span className='text-primary-main font-bold text-[1rem] block mt-1'>
-                                                  ₵{formatCurrency(String(calculateItemTotal(cartItem)))}
-                                            </span>
-                                        </div>
-                                    </div>
+                            {cart.map((cartItem: CartItem, i) => {
+                                const addons = cartItem.description ? parseAddons(cartItem.description) : {}
 
-                                    {/*<QuantitySelector />*/}
-                                    <RemoveFromCartButton productId={cartItem.id} />
-                                </div>
-                            ))}
+                                return (
+                                    <div
+                                        className='flex justify-between items-start space-y-2 bg-white mb-3 border-b border-gray-100 z-10'
+                                        key={i}>
+                                        <div
+                                            className='flex gap-3'>
+                                            <div
+                                                className='relative w-20 h-20 rounded-xl overflow-hidden'>
+                                                <Image
+                                                    src='/Yam and palava sauce-marg-tee.jpg'
+                                                    // src={cartItem?.menu?.imageUrl}
+                                                    alt=''
+                                                    fill
+                                                    className='object-cover'
+                                                />
+                                            </div>
+                                            <div>
+                                                <h3 className='leading-none text-base font-semibold text-black-soft'>{cartItem?.menu?.name}</h3>
+                                                <div className='grid grid-cols-2 gap-x-2 mt-1'>
+                                                    {/*{cartItem.selectedAddons?.package && (*/}
+                                                    {/*    <p className='text-xs text-secondary-soft'>*/}
+                                                    {/*        + {cartItem.selectedAddons.package}*/}
+                                                    {/*    </p>*/}
+                                                    {/*)}*/}
+                                                    {Object.entries(addons).map(([addonName, addonPrice]) => (
+                                                        addonPrice !== 0 && (
+                                                            <p key={addonName} className="text-xs text-secondary-soft">
+                                                                + {addonName} (₵{formatCurrency(String(addonPrice))})
+                                                            </p>
+                                                        )
+                                                    ))}
+                                                </div>
+
+                                                <span
+                                                    className='text-primary-main font-bold text-[1rem] block mt-1'>
+                                                      ₵{formatCurrency(String(calculateItemTotal(cartItem)))}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        {/*<QuantitySelector />*/}
+                                        <RemoveFromCartButton
+                                            productId={cartItem.id}/>
+                                    </div>
+                                )
+                            })}
 
 
                              {/* Total */}
@@ -117,6 +155,23 @@ const CartPage = () => {
                                   <span className='text-primary-main text-md font-extrabold'>₵{formatCurrency(String(cartTotal))}</span>
                              </div>
                         </section>
+
+               </div>
+
+               {/* Checkout section */}
+               {cart.length > 0 && (
+
+                   <section className="fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[90%] bg-transparent py-4 flex justify-between items-center">
+                       <GoToCheckoutButton />
+                   </section>
+               )}
+         </main>
+     )
+}
+
+export default CartPage
+
+
 
                     {/* Recommendations */}
                {/*     <section className='w-[90%] mx-auto mt-12 mb-24'>*/}
@@ -138,17 +193,3 @@ const CartPage = () => {
 
                {/*          </div>       */}
                {/*     </section>*/}
-               </div>
-
-               {/* Checkout section */}
-               {cart.length > 0 && (
-
-                   <section className="fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[90%] bg-transparent py-4 flex justify-between items-center">
-                       <GoToCheckoutButton />
-                   </section>
-               )}
-         </main>
-     )
-}
-
-export default CartPage

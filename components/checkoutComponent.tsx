@@ -113,7 +113,7 @@ const CheckoutComponent = () => {
                 <div className='flex-1 text-center text-lg text-secondary-soft font-bold'>Checkout</div>
             </section>
 
-            <section className='fixed flex justify-start items-center w-[90%] h-10 top-3 left-1/2 -translate-x-1/2'>
+            <section className='fixed flex justify-start items-center w-[90%] max-w-[410px] h-10 top-3 left-1/2 -translate-x-1/2'>
                 <BackButton />
             </section>
 

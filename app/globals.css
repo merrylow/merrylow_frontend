@@ -169,3 +169,25 @@ p {
 .data-[state=closed] {
      animation: slideDown 0.3s ease-in forwards;
 }
+
+
+
+
+/* top position for Sonner toasts */
+.sonner-toast {
+     top: 20px !important;
+     bottom: auto !important;
+     z-index: 5000;
+     animation: slideDown 0.3s ease-out forwards;
+}
+
+@keyframes slideDown {
+     from {
+          transform: translateY(-100%);
+          opacity: 0;
+     }
+     to {
+          transform: translateY(0);
+          opacity: 1;
+     }
+}

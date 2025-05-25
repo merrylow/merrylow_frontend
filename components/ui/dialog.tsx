@@ -57,7 +57,7 @@ function DialogContent({
       <DialogPrimitive.Content
         data-slot="dialog-content"
         className={cn(
-          "fixed bottom-0 left-0 z-50 grid w-full rounded-t-4xl shadow-lg bg-white data-[state=open]:animate-slide-up data-[state=closed]:animate-slide-down",
+          "fixed bottom-0 left-0 z-50 grid w-full rounded-t-4xl shadow-lg bg-white data-[state=open]:animate-slide-up data-[state=closed]:animate-slide-down max-h-[90vh] top-[10vh]",
           className
         )}
         {...props}

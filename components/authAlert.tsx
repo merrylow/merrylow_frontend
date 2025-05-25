@@ -10,7 +10,7 @@ const AuthAlert = ({ onClose }: {
     const router = useRouter()
 
     return (
-        // <div className='absolute inset-0 bg-black/50 z-50 flex items-center justify-center p-4'>
+        <div className='absolute inset-0 bg-black/50 z-50 flex items-center justify-center p-4'>
             <div className='bg-white rounded-lg p-6 w-[80%] mx-auto relative'>
                 <button
                     onClick={onClose}
@@ -28,7 +28,7 @@ const AuthAlert = ({ onClose }: {
                 <div className='flex gap-4'>
                     <Button
                         onClick={() => router.push('/auth/sign-in')}
-                        className='flex-1 bg-primary-main hover:bg-primary-main/90'
+                        className='flex-1 bg-primary-main hover:bg-primary-main/90 text-white'
                     >
                         Sign In
                     </Button>
@@ -41,7 +41,7 @@ const AuthAlert = ({ onClose }: {
                     </Button>
                 </div>
             </div>
-        // </div>
+        </div>
     )
 }
 

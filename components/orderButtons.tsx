@@ -148,7 +148,7 @@ const GoToCheckoutButton = () => {
                     ) : (
                         <>
                             <span>Go to checkout</span>
-                            <span>₵{cartTotal}</span>
+                            <span>₵{formatCurrency(String(cartTotal))}</span>
                         </>
                     )
                 }
@@ -168,30 +168,21 @@ const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name
         setLoading(true)
 
         try {
-            const customerDetails = {
-                name,
-                address,
-                phone,
-                notes,
-                paymentMethod
-            }
-
-            // const accessToken = localStorage.getItem('accessToken')
             const accessToken = getAccessToken()
             const response = await axios.post(`${API_URL}/api/order`, { name, address, phone, notes, paymentMethod }, {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`
+                    Authorization: `Bearer ${accessToken}`,
+                    
                 }
             })
             console.log(response)
 
-            if(response.status === 200) {
-                // router.push('/')
-                toast('Order placed!')
-                console.log('Order placed')
+            if (response.status === 201) {
+                toast.success('Order placed successfully!')
+                console.log('Order placed', response.data)
+                // router.push('/profile/my-orders')
             } else {
-                console.error('Checkout error: ', response.data?.message)
-                toast.error('Something happened. Please try that again')
+                console.error(response.data?.message || 'Unexpected response')
             }
 
         } catch(error) {

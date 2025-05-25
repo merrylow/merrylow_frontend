@@ -11,20 +11,69 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { OrderNote } from '@/components/deliveryAndOrderNotes'
 import { formatCurrency } from '@/lib/utilFunctions'
-import { Product, SelectedAddons } from '@/lib/typeDefs'
+import { Product, SelectedAddons, SavedProductSelections } from '@/lib/typeDefs'
 import useProductStore from '@/stores/useProductStore'
 import useUserStore from '@/stores/useUserStore'
 import AuthAlert from '@/components/authAlert'
 
+
+const saveSelectionsToLocalStorage = (productId: string, selections: SavedProductSelections) => {
+     localStorage.setItem(`productSelections_${productId}`, JSON.stringify({
+          ...selections,
+          // Add timestamp for potential expiration
+          savedAt: Date.now()
+     }))
+}
+
+const loadSelectionsFromLocalStorage = (productId: string): SavedProductSelections | null => {
+     const saved = localStorage.getItem(`productSelections_${productId}`)
+     if (!saved) return null
+
+     const parsed = JSON.parse(saved)
+
+     // checks if stored data is expired (24 hours)
+     if (Date.now() - (parsed.savedAt || 0) > 24 * 60 * 60 * 1000) {
+          localStorage.removeItem(`productSelections_${productId}`)
+          return null
+     }
+
+     return {
+          addons: parsed.addons || {
+               package: '',
+               compulsory: '',
+               optional: []
+          },
+          quantity: parsed.quantity || 1,
+          orderNote: parsed.orderNote || ''
+     }
+}
+
+const clearSelectionsFromLocalStorage = (productId: string) => {
+     localStorage.removeItem(`productSelections_${productId}`)
+}
+
+
+
+
 const ProductModal = ({ productId }: { productId: string }) => {
      const { products, fetchProducts, loading } = useProductStore()
-     const [quantity, setQuantity] = useState<number>(1)
-     const [selectedAddons, setSelectedAddons] = useState<SelectedAddons>({
-          package: '',
-          compulsory: '',
-          optional: [] as string[]
-     })
-     const [orderNote, setOrderNote] = useState('')
+     // const [quantity, setQuantity] = useState<number>(1)
+     // const [selectedAddons, setSelectedAddons] = useState<SelectedAddons>({
+     //      package: '',
+     //      compulsory: '',
+     //      optional: [] as string[]
+     // })
+     // const [orderNote, setOrderNote] = useState('')
+     const savedSelections = loadSelectionsFromLocalStorage(productId)
+     const [quantity, setQuantity] = useState<number>(savedSelections?.quantity || 1);
+     const [orderNote, setOrderNote] = useState<string>(savedSelections?.orderNote || '')
+     const [selectedAddons, setSelectedAddons] = useState<SelectedAddons>(
+         savedSelections?.addons || {
+              package: '',
+              compulsory: '',
+              optional: [] as string[]
+         }
+     )
 
      const [showAuthAlert, setShowAuthAlert] = useState(false)
      const { isAuthenticated } = useUserStore()
@@ -34,12 +83,38 @@ const ProductModal = ({ productId }: { productId: string }) => {
                setShowAuthAlert(true)
                return false // prevents any further action
           }
+
+          clearSelectionsFromLocalStorage(productId)
           return true // proceeds with add to cart
      }
+
 
      useEffect(() => {
           fetchProducts().catch(error => console.log('Fetch products error', error))
      }, [])
+
+     // saves to localStorage whenever addons or product or quantity or orderNote change
+     useEffect(() => {
+          saveSelectionsToLocalStorage(productId, {
+               addons: selectedAddons,
+               quantity,
+               orderNote
+          });
+     }, [productId, selectedAddons, quantity, orderNote])
+
+
+
+     // Clean up saved selections when modal closes (if authenticated)
+     useEffect(() => {
+          return () => {
+               if (isAuthenticated) {
+                    clearSelectionsFromLocalStorage(productId)
+               }
+          };
+     }, [productId, isAuthenticated])
+
+
+
 
      const matchingProduct: Product | undefined = products.find(product => product.id === productId)
 
@@ -55,8 +130,8 @@ const ProductModal = ({ productId }: { productId: string }) => {
           setSelectedAddons(prev => ({
                ...prev,
                compulsory: name
-          }));
-     };
+          }))
+     }
 
 
      const toggleOptionalAddon = (type: 'optional', name: string) => {
@@ -72,7 +147,7 @@ const ProductModal = ({ productId }: { productId: string }) => {
 
 
      return (
-         <main className='w-full max-w-[450px] h-full mx-auto bg-white flex flex-col justify-start rounded-t-4xl overflow-hidden'>
+         <main className='w-full max-w-[450px] h-full mx-auto bg-white flex flex-col justify-start rounded-t-4xl'>
               <div className='relative flex-1 relative overflow-y-auto'>
                    {loading ? (
 
@@ -190,28 +265,31 @@ const ProductModal = ({ productId }: { productId: string }) => {
                                          </div>
                                  )}
 
-                                      <div className='space-y-2'>
+                                      <div className='space-y-2 sm:mb-10'>
                                            <h2 className='text-md text-secondary-light font-semibold'>Order note</h2>
                                            <OrderNote orderNote={orderNote} setOrderNote={setOrderNote} />
                                       </div>
                             </section>
 
-                            <section className='fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[88%] max-w-[450px] mx-auto bg-transparent sm:ml-2 py-4 flex justify-between items-center'>
-                                 <QuantitySelector />
-
-                                 {matchingProduct ? (
-                                     <AddToOrderButton
-                                         product={matchingProduct}
-                                         quantity={quantity}
-                                         selectedAddons={selectedAddons}
-                                         orderNote={orderNote}
-                                         onAuthCheck={handleAddToCart}
-                                     />
-                                 ) : null}
-                            </section>
                        </>
                    )}
               </div>
+
+             <section className='fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[88%] max-w-[450px] mx-auto bg-transparent sm:ml-2 py-4 flex justify-between items-center md:gap-10'>
+                  {matchingProduct ? (
+                      <QuantitySelector />
+                  ) : null}
+
+                  {matchingProduct ? (
+                      <AddToOrderButton
+                          product={matchingProduct}
+                          quantity={quantity}
+                          selectedAddons={selectedAddons}
+                          orderNote={orderNote}
+                          onAuthCheck={handleAddToCart}
+                      />
+                  ) : null}
+             </section>
 
               {showAuthAlert && (
                   <AuthAlert onClose={() => setShowAuthAlert(false)} />
