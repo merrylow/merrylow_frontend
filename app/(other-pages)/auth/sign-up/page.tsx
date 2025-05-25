@@ -3,14 +3,18 @@ import { GoogleSignInButton, EmailSignUpForm } from '@/components/authButtons'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import BackButton from '@/components/backButton'
 
 const SignUpPage = () => {
-    // add redirect
     const CLIENT_ID: string = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!
 
     return (
         <main className='min-h-screen h-screen flex flex-col items-center space
         -y-2.5'>
+            <section className='fixed flex justify-start items-center w-[90%] sm:max-w-[410px] h-10 top-3 left-1/2 -translate-x-1/2 mx-auto z-50'>
+                <BackButton />
+            </section>
+
             {/* Top Section */}
             <section
                 className='relative h-[30vh] w-full bg-no-repeat bg-cover bg-center rounded-b-3xl flex flex-col justify-end pb-13 text-white'

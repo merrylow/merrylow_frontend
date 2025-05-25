@@ -4,8 +4,15 @@ import { CartStore, Product, Restaurant, CartItem, PaymentMethod, CardDetails, S
 import { transformAddonsForBackend } from '@/lib/utilFunctions'
 import { getAccessToken } from '@/lib/auth'
 import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
+
+const handleRedirect = () => {
+     const router = useRouter()
+
+     router.push('/cart')
+}
 
 const useCartStore = create<CartStore>((set, get) => ({
      loading: false,
@@ -108,7 +115,7 @@ const useCartStore = create<CartStore>((set, get) => ({
                     }
                })
                const isSuccess = response.status === 200
-               if (isSuccess) toast('Added to cart')
+               if (isSuccess) toast.success('Added to cart')
                return isSuccess
           } catch (error) {
                console.log('Cart sync error', error)
@@ -130,30 +137,30 @@ const useCartStore = create<CartStore>((set, get) => ({
      calculateCartTotals: () => {
           const total = get().cart.reduce((acc, cartItem) => {
                // Base price from menu
-               const basePrice = cartItem.menu?.price || 0;
+               const basePrice = cartItem.menu?.price || 0
 
                // Calculate package addon price
                const packagePrice = cartItem.selectedAddons?.package && cartItem.menu?.addOns?.package
                    ? Number(cartItem.menu.addOns.package[cartItem.selectedAddons.package] || 0)
-                   : 0;
+                   : 0
 
                // Calculate compulsory addon price
                const compulsoryPrice = cartItem.selectedAddons?.compulsory && cartItem.menu?.addOns?.compulsory
                    ? Number(cartItem.menu.addOns.compulsory[cartItem.selectedAddons.compulsory] || 0)
-                   : 0;
+                   : 0
 
                // Calculate optional addons prices
                const optionalPrices = cartItem.selectedAddons?.optional?.reduce((sum, addonName) => {
-                    return sum + (Number(cartItem.menu?.addOns?.optional?.[addonName] || 0));
-               }, 0) || 0;
+                    return sum + (Number(cartItem.menu?.addOns?.optional?.[addonName] || 0))
+               }, 0) || 0
 
                // Calculate item total (base + all addons) * quantity
                const itemTotal = (basePrice + packagePrice + compulsoryPrice + optionalPrices) * cartItem.quantity;
 
-               return acc + itemTotal;
+               return acc + itemTotal
           }, 0);
 
-          set({ cartTotal: total });
+          set({ cartTotal: total })
      },
 
 
@@ -179,18 +186,75 @@ const useCartStore = create<CartStore>((set, get) => ({
      },
 
 
-     // removeFromCart: (mealId) => {
-     //      const updatedCart = get().cart
-     //          .map(item =>
-     //              item.id === mealId
-     //                  ? { ...item, quantity: item.quantity - 1 }
-     //                  : item
-     //          )
-     //          .filter(item => item.quantity > 0)
-     //      set({ cart: updatedCart })
-     // },
+     removeFromCart: async (productId: string) => {
+          set({ loading: true })
 
-     // clearCart: () => set({ cart: [], cartCount: 0 }),
+          try {
+               // Optimistic UI update - remove from local state first
+               const updatedCart = get().cart
+                   .map(item =>
+                       item.id === productId
+                           ? { ...item, quantity: item.quantity - 1 }
+                           : item
+                   )
+                   .filter(item => item.quantity > 0)
+
+               set({ cart: updatedCart })
+
+               const accessToken = getAccessToken()
+               const response = await axios.delete(`${API_URL}/api/cart/item/${productId}`, {
+                    headers: {
+                         Authorization: `Bearer ${accessToken}`
+                    }
+               })
+
+               if (response.status !== 200) {
+                    // If API fails, revert local state
+                    set({ cart: get().cart });
+                    throw new Error('Failed to remove item from server cart')
+               }
+
+               // Update cart count after successful removal
+               get().updateCartCount();
+               toast.success('Item removed from cart')
+
+          } catch (error) {
+               console.error('Remove from cart error:', error)
+               toast.error('Failed to remove item from cart')
+          } finally {
+               set({ loading: false })
+          }
+     },
+
+
+     clearCart: async () => {
+          set({ loading: true })
+
+          try {
+               set({ cart: [], cartCount: 0 })
+
+               // Make API call to backend
+               const accessToken = getAccessToken()
+               const response = await axios.delete(`${API_URL}/api/cart`, {
+                    headers: {
+                         Authorization: `Bearer ${accessToken}`
+                    }
+               })
+
+               if (response.status !== 200) {
+                    get().fetchCart()
+                    throw new Error('Failed to clear cart on server')
+               }
+
+               toast.success('Cart cleared successfully')
+
+          } catch (error) {
+               console.error('Clear cart error:', error)
+          } finally {
+               set({ loading: false })
+          }
+     },
+
 
      // checkout page
      paymentMethod: 'mobile_money',

@@ -8,15 +8,14 @@ import Image from 'next/image'
 import BackButton from '@/components/backButton'
 import { GoToCheckoutButton } from '@/components/orderButtons'
 import EmptyCart from '@/components/emptyCart'
+import LoadingSpinner from '@/components/loadingSpinner'
+import { RemoveFromCartButton } from '@/components/cart/cartComponents'
 import BottomNav from '@/components/bottomNav'
 
 const CartPage = () => {
      const { cart, fetchCart, cartTotal, updateCartCount } = useCartStore()
      const [loading, setLoading] = useState(true)
 
-    // useEffect(() => {
-    //     fetchCart()
-    // }, [])
 
     useEffect(() => {
         const loadCart = async () => {
@@ -39,25 +38,25 @@ const CartPage = () => {
 
     if (loading) {
         return (
-            <div className='w-full h-full flex justify-center items-center'>
-                <span className='loading loading-spinner loading-lg'></span>
+            <div className='w-[90%] h-screen flex items-center justify-center mx-auto'>
+                <LoadingSpinner />
             </div>
         );
     }
 
     if (!cart || cart.length === 0) {
         return (
-            <section className='w-[90%] mx-auto mt-6'>
+            <main className='w-[90%] h-screen flex items-center justify-center mx-auto'>
                 <EmptyCart />
-            </section>
+            </main>
         )
     }
 
     const calculateItemTotal = (item: CartItem) => {
         const basePrice = item.menu?.price || 0;
         // add addon calculations here if needed later
-        return basePrice * item.quantity;
-    };
+        return basePrice * item.quantity
+    }
 
 
      return (
@@ -72,7 +71,7 @@ const CartPage = () => {
                          </h1>
                     </section>
                     
-                    <section className='fixed flex justify-start items-center w-[90%] h-10 top-3 left-1/2 -translate-x-1/2 z-50'>
+                    <section className='fixed flex justify-start items-center w-[90%] sm:max-w-[410px] h-10 top-3 left-1/2 -translate-x-1/2 mx-auto z-50'>
                          <BackButton />
                     </section>
 
@@ -107,12 +106,13 @@ const CartPage = () => {
                                     </div>
 
                                     {/*<QuantitySelector />*/}
+                                    <RemoveFromCartButton productId={cartItem.id} />
                                 </div>
                             ))}
 
 
                              {/* Total */}
-                             <div className='flex justify-between items-center mt-4'>
+                             <div className='flex justify-between items-center mt-4 sm:mb-24'>
                                   <span className='text-md text-black-soft font-bold'>Total</span>
                                   <span className='text-primary-main text-md font-extrabold'>₵{formatCurrency(String(cartTotal))}</span>
                              </div>

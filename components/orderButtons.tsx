@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import axios from 'axios'
 import { toast } from 'sonner'
 import { Product, SelectedAddons } from '@/lib/typeDefs'
-import useCartStore from '@/stores/useCartStore'
 import { getAccessToken } from '@/lib/auth'
 import { formatCurrency } from '@/lib/utilFunctions'
-import axios from 'axios'
+import useCartStore from '@/stores/useCartStore'
 import useUserStore from '@/stores/useUserStore'
+import { IoMdClose } from 'react-icons/io'
 
 
 const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
@@ -26,7 +27,7 @@ const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote, onAuth
         : 0
 
     const fetchUser = useUserStore(state => state.fetchUser)
-    const { user, isAuthenticated, setAuthenticated } = useUserStore()
+    // const { user, isAuthenticated, setAuthenticated } = useUserStore()
 
 
     // useEffect(() => {
@@ -53,6 +54,9 @@ const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote, onAuth
 
         try {
             addToCart(product, quantity, selectedAddons, orderNote)
+            setTimeout(() => {
+                router.push('/cart')
+            }, 3500)
 
             // if (success) {
             //     await new Promise(resolve => setTimeout(resolve, 200))
@@ -133,7 +137,7 @@ const GoToCheckoutButton = () => {
         <>
             <button
                 onClick={handleCheckout}
-                className='w-full h-11 max-w-[450px] mx-auto px-7 flex items-center justify-between font-bold text-[15px] btn'
+                className='w-full h-11 sm:max-w-[450px] mx-auto px-7 flex items-center justify-between font-bold text-[15px] btn'
             >
                 {
                     loading ? (
