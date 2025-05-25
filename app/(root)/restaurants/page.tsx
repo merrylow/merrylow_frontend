@@ -5,15 +5,13 @@ import fetchRestaurantsAndProducts from '@/lib/api'
 import { Suspense } from 'react'
 
 
-// wrap in suspense
 export const revalidate = 864000
 
 const RestaurantsPage = async () => {
     const { restaurants } = await fetchRestaurantsAndProducts()
-    // console.log(restaurants)
 
      return (
-          <main className="min-h-screen flex flex-col items-center space-y-5">
+          <main className="min-h-screen h-screen flex flex-col items-center space-y-5">
                <section className="w-[90%]">
                     <h1 className="page-heading text-xl font-bold text-secondary-soft -mt-1">Restaurants</h1>
                </section>
@@ -38,7 +36,7 @@ const RestaurantsPage = async () => {
                     </div>
                </section>
 
-               <div className='mb-48' />
+              <div className='mb-48' />
           </main>
      )
 }

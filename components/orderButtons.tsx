@@ -8,11 +8,12 @@ import useCartStore from '@/stores/useCartStore'
 import { getAccessToken } from '@/lib/auth'
 import { formatCurrency } from '@/lib/utilFunctions'
 import axios from 'axios'
+import useUserStore from '@/stores/useUserStore'
 
 
 const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
 
-const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote }: { product: Product, quantity: number, selectedAddons: SelectedAddons | null, orderNote: string | null }) => {
+const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote, onAuthCheck }: { product: Product, quantity: number, selectedAddons: SelectedAddons | null, orderNote: string | null,  onAuthCheck: () => boolean }) => {
     const router = useRouter()
     const [loading, setLoading] = useState<boolean>(false)
     const addToCart = useCartStore(state => state.addToCart)
@@ -24,15 +25,30 @@ const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote }: { pr
         ? calculateItemTotal(product, quantity, selectedAddons)
         : 0
 
+    const fetchUser = useUserStore(state => state.fetchUser)
+    const { user, isAuthenticated, setAuthenticated } = useUserStore()
+
+
     // useEffect(() => {
     //     fetchCart()
     // }, [])
 
+
+    useEffect(() => {
+        fetchUser()
+    }, [])
+
     const handleClick = async () => {
         setLoading(true)
-        if (!product) {
-            toast.error('Product not loaded');
+
+        if (!onAuthCheck()) {
+            setLoading(false)
             return;
+        }
+
+        if (!product) {
+            toast.error('Product not loaded')
+            return
         }
 
         try {

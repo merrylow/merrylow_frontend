@@ -30,7 +30,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
     )
 
     return (
-          <main className='w-full h-full min-h-screen relative space-y-5'>
+          <main className='relative w-full h-full min-h-screen relative space-y-5'>
                {/* Restaurant Banner */}
                <section className='w-full h-64 relative rounded-b-3xl overflow-hidden'>
                     <div className="bg-overlay"></div>

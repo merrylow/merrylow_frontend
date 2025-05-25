@@ -223,7 +223,7 @@ const EmailSignInForm = () => {
 
             if(accessToken) {
                 setAuthenticated(true)
-                router.push('/')
+                router.back()
             } else {
                 toast('An error occurred while signing you in. Please try again')
             }

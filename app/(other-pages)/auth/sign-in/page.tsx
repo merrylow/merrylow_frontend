@@ -37,4 +37,4 @@ const SignInPage = async () => {
     )
 }
 
-export default SignInPage;
+export default SignInPage

@@ -13,6 +13,8 @@ import { OrderNote } from '@/components/deliveryAndOrderNotes'
 import { formatCurrency } from '@/lib/utilFunctions'
 import { Product, SelectedAddons } from '@/lib/typeDefs'
 import useProductStore from '@/stores/useProductStore'
+import useUserStore from '@/stores/useUserStore'
+import AuthAlert from '@/components/authAlert'
 
 const ProductModal = ({ productId }: { productId: string }) => {
      const { products, fetchProducts, loading } = useProductStore()
@@ -24,8 +26,19 @@ const ProductModal = ({ productId }: { productId: string }) => {
      })
      const [orderNote, setOrderNote] = useState('')
 
+     const [showAuthAlert, setShowAuthAlert] = useState(false)
+     const { isAuthenticated } = useUserStore()
+
+     const handleAddToCart = () => {
+          if (!isAuthenticated) {
+               setShowAuthAlert(true)
+               return false // prevents any further action
+          }
+          return true // proceeds with add to cart
+     }
+
      useEffect(() => {
-          fetchProducts().catch(error => console.log(error))
+          fetchProducts().catch(error => console.log('Fetch products error', error))
      }, [])
 
      const matchingProduct: Product | undefined = products.find(product => product.id === productId)
@@ -60,7 +73,7 @@ const ProductModal = ({ productId }: { productId: string }) => {
 
      return (
          <main className='w-full max-w-[450px] h-full mx-auto bg-white flex flex-col justify-start rounded-t-4xl overflow-hidden'>
-              <div className='flex-1 relative overflow-y-auto'>
+              <div className='relative flex-1 relative overflow-y-auto'>
                    {loading ? (
 
                        <div className='w-full h-full flex justify-center items-center'>
@@ -93,7 +106,8 @@ const ProductModal = ({ productId }: { productId: string }) => {
                                  </div>
 
                                  {
-                                      matchingProduct?.addOns.package ? (
+                                      matchingProduct?.addOns?.package &&
+                                      Object.keys(matchingProduct.addOns.package).length > 0 ? (
                                            <div className='space-y-4'>
                                                 <h2 className='text-md text-secondary-light font-semibold'>Packaging</h2>
                                                 <RadioGroup value={selectedAddons.package} onValueChange={selectPackageOption}>
@@ -115,84 +129,71 @@ const ProductModal = ({ productId }: { productId: string }) => {
                                                 </RadioGroup>
                                            </div>
                                       ) : (
-                                          <></>
+                                          <></> // {/*maybe render just the heading with a no extras paragraph */}
                                       )
                                  }
 
-                                 {/*<div className='space-y-4'>*/}
-                                      {/*<h2 className='text-md text-secondary-light font-semibold'>Add more</h2>*/}
-                                      {/*<RadioGroup>*/}
-                                      {/*    {Object.entries(matchingProduct?.addOns.compulsory ?? {}).map(([name, price]) => (*/}
-                                      {/*        <div className='flex justify-between items-center' key={name}>*/}
-                                      {/*             <div className='flex items-center gap-2'>*/}
-                                      {/*                  <p className='text-sm text-black-soft'>{name}</p>*/}
-                                      {/*             </div>*/}
-                                      {/*             <div className='space-x-2.5 flex items-center'>*/}
 
-                                      {/*                  <span className='text-base text-black-soft font-semibold'>+₵{formatCurrency(String(price))}</span>*/}
-                                      {/*                  <RadioGroupItem*/}
-                                      {/*                      className='border-primary-light'*/}
-                                      {/*                      value={name}*/}
-                                      {/*                      id={`option-${name}`}*/}
-                                      {/*                  />*/}
-                                      {/*             </div>*/}
-                                      {/*        </div>*/}
-                                      {/*    ))}*/}
-                                      {/*</RadioGroup>*/}
-                                 {/*</div>*/}
+                                 {matchingProduct?.addOns?.compulsory &&
+                                     Object.keys(matchingProduct.addOns.compulsory).length > 0 && (
+                                         <div className='space-y-4'>
+                                              <h2 className='text-md text-secondary-light font-semibold'>Add more</h2>
+                                              <RadioGroup
+                                                  value={selectedAddons.compulsory}
+                                                  onValueChange={selectCompulsoryAddon}
+                                              >
+                                                   {Object.entries(matchingProduct.addOns.compulsory).map(([name, price]) => (
+                                                       <div className='flex justify-between items-center' key={name}>
+                                                            <div className='flex items-center gap-2'>
+                                                                 <Label htmlFor={`compulsory-${name}`} className='text-sm text-black-soft'>
+                                                                      {name}
+                                                                 </Label>
+                                                            </div>
+                                                            <div className='space-x-2.5 flex items-center'>
+                                                                 <span className='text-base text-black-soft font-semibold'>
+                                                                     +₵{formatCurrency(String(price))}
+                                                                 </span>
+                                                                 <RadioGroupItem
+                                                                     value={name}
+                                                                     id={`compulsory-${name}`}
+                                                                     className='border-primary-light'
+                                                                 />
+                                                            </div>
+                                                       </div>
+                                                   ))}
+                                              </RadioGroup>
+                                         </div>
+                                 )}
 
-                                      <div className='space-y-4'>
-                                           <h2 className='text-md text-secondary-light font-semibold'>Add more</h2>
-                                           <RadioGroup
-                                               value={selectedAddons.compulsory}
-                                               onValueChange={selectCompulsoryAddon}
-                                           >
-                                                {Object.entries(matchingProduct?.addOns.compulsory ?? {}).map(([name, price]) => (
-                                                    <div className='flex justify-between items-center' key={name}>
-                                                         <div className='flex items-center gap-2'>
-                                                              <Label htmlFor={`compulsory-${name}`} className='text-sm text-black-soft'>
-                                                                   {name}
-                                                              </Label>
-                                                         </div>
-                                                         <div className='space-x-2.5 flex items-center'>
-                                                              <span className='text-base text-black-soft font-semibold'>
-                                                                 +₵{formatCurrency(String(price))}
-                                                              </span>
-                                                              <RadioGroupItem
-                                                                  value={name}
-                                                                  id={`compulsory-${name}`}
-                                                                  className='border-primary-light'
-                                                              />
-                                                         </div>
-                                                    </div>
-                                                ))}
-                                           </RadioGroup>
+                                 {matchingProduct?.addOns?.optional &&
+                                     Object.keys(matchingProduct.addOns.optional).length > 0 && (
+                                         <div className='space-y-4'>
+                                              <h2 className='text-md text-secondary-light font-semibold'>Addons</h2>
+                                              {Object.entries(matchingProduct.addOns.optional).map(([name, price]) => (
+                                                  <div className='flex justify-between items-center' key={name}>
+                                                       <div className='flex items-center gap-2'>
+                                                            <p className='text-sm text-black-soft'>{name}</p>
+                                                       </div>
+                                                       <div className='space-x-2.5 flex items-center'>
+                                                            <span className='text-base text-black-soft font-semibold'>
+                                                                +₵{formatCurrency(String(price))}
+                                                            </span>
+                                                            <Checkbox
+                                                                className='border border-primary-light'
+                                                                checked={selectedAddons.optional.includes(name)}
+                                                                onCheckedChange={() => toggleOptionalAddon('optional', name)}
+                                                                aria-label='optional-addon'
+                                                            />
+                                                       </div>
+                                                  </div>
+                                              ))}
+                                         </div>
+                                 )}
+
+                                      <div className='space-y-2'>
+                                           <h2 className='text-md text-secondary-light font-semibold'>Order note</h2>
+                                           <OrderNote orderNote={orderNote} setOrderNote={setOrderNote} />
                                       </div>
-
-                                 <div className='space-y-4'>
-                                      <h2 className='text-md text-secondary-light font-semibold'>Addons</h2>
-                                      {Object.entries(matchingProduct?.addOns.optional ?? {}).map(([name, price]) => (
-                                          <div className='flex justify-between items-center' key={name}>
-                                               <div className='flex items-center gap-2'>
-                                                    <p className='text-sm text-black-soft'>{name}</p>
-                                               </div>
-                                               <div className='space-x-2.5 flex items-center'>
-                                                    <span className='text-base text-black-soft font-semibold'>+₵{formatCurrency(String(price))}</span>
-                                                    <Checkbox
-                                                        className='border border-primary-light'
-                                                        checked={selectedAddons.optional.includes(name)}
-                                                        onCheckedChange={() => toggleOptionalAddon('optional', name)}
-                                                        aria-label='optional-addon'
-                                                    />
-                                               </div>
-                                          </div>
-                                      ))}
-                                 </div>
-
-                                 <div className='space-y-2'>
-                                      <h2 className='text-md text-secondary-light font-semibold'>Order note</h2>
-                                      <OrderNote orderNote={orderNote} setOrderNote={setOrderNote} />
-                                 </div>
                             </section>
 
                             <section className='fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[88%] max-w-[450px] mx-auto bg-transparent sm:ml-2 py-4 flex justify-between items-center'>
@@ -204,12 +205,17 @@ const ProductModal = ({ productId }: { productId: string }) => {
                                          quantity={quantity}
                                          selectedAddons={selectedAddons}
                                          orderNote={orderNote}
+                                         onAuthCheck={handleAddToCart}
                                      />
                                  ) : null}
                             </section>
                        </>
                    )}
               </div>
+
+              {showAuthAlert && (
+                  <AuthAlert onClose={() => setShowAuthAlert(false)} />
+              )}
          </main>
      )
 }
