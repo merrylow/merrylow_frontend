@@ -28,7 +28,7 @@ const nextConfig: NextConfig = {
       },  {
         protocol: 'https',
         hostname: 'wp.merrylow.com',
-        pathname: '/wp-content/uploads/**',
+        pathname: '/wp-content/**',
         search: ''
       },
       // {

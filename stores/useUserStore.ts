@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { UserState } from '@/lib/typeDefs'
 import { storeTokens, getAccessToken } from '@/lib/auth'
-import axios from 'axios'
+import axios from '@/lib/interceptors/axiosApi'
 
 
 // const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
@@ -12,8 +12,7 @@ const useUserStore = create<UserState>((set, get) => ({
     user: null,
     fetchUser: async () => {
         set({ loading: true })
-        // const accessToken = getAccessToken()
-        const accessToken = localStorage.getItem('accessToken')
+        const accessToken = getAccessToken()
 
         try {
             const response = await axios.get(`${API_URL}/api/account`, {
@@ -22,9 +21,8 @@ const useUserStore = create<UserState>((set, get) => ({
                 }
             })
             const userDetails = response.data.user
-            console.log(response)
-            console.log(response.data)
-            // set({ user: userDetails })
+            // console.log(response)
+            // console.log(response.data)
 
             if (userDetails) {
                 set({

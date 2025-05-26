@@ -14,8 +14,8 @@ const WhatOthersAreOrderingPage = async () => {
 
     return (
         <main className='w-full flex flex-col items-center gap-6 mb-14'>
-            <section className='w-[90%] flex items-center mt-4'>
-                <div className='flex-1 text-center text-lg text-secondary-soft font-bold'>What Others Are Ordering</div>
+            <section className='w-[90%] flex items-center mt-4.5'>
+                <div className='flex-1 text-center text-[1.2rem] text-secondary-soft font-bold'>What Others Are Ordering</div>
             </section>
 
             <section className='fixed flex justify-start items-center w-[90%] md:max-w-[410px] h-10 top-3 left-1/2 -translate-x-1/2'>
@@ -32,7 +32,7 @@ const WhatOthersAreOrderingPage = async () => {
                             className='w-full block'
                         >
                             <Card
-                                cardClass='w-full h-56' //h-[14.6rem]
+                                cardClass={'w-full h-56'} //h-[14.6rem]
                                 cardDetails={{
                                     imgSrc: product.imageUrl,
                                     name: product.name,

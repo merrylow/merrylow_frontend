@@ -10,9 +10,9 @@ import {
 
 const AdCarousel = () => {
      const sliderImages = [
-          { src: '/merrylow.png', alt: 'image 1' },
-          { src: '/slider-images/Free-Delivery.png', alt: 'image 2' },
-          { src: '/slider-images/How-to-order.png', alt: 'image 3' }
+          { src: '/merrylow.png', alt: '' },
+          { src: '/slider-images/Free-Delivery.png', alt: '' },
+          { src: '/slider-images/How-to-order.png', alt: '' }
      ]
 
      return (

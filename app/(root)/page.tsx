@@ -17,6 +17,7 @@ const Home = async () => {
             <section className='w-[90%] mx-auto'>
                 <Greeting />
             </section>
+
             {/* ad carousel */}
             <section className="w-[90%] h-[15rem] min-h-[15rem] mx-auto mb-12 rounded-[18px]">
                 <AdCarousel />
@@ -40,7 +41,8 @@ const Home = async () => {
                       <Card
                         key={i}
                         cardClass={'w-[271px] h-full shrink-0'}
-                        cardDetails={{ imgSrc: product.imageUrl, name: product.name }}  />
+                        cardDetails={{ imgSrc: product.imageUrl, name: product.name }}
+                      />
                     ))}
                 </Link>
             </section>

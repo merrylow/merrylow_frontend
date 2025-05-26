@@ -7,15 +7,15 @@ import LoadingSpinner from '@/components/loadingSpinner'
 import Link from 'next/link'
 import { Restaurant } from '@/lib/typeDefs'
 
-export const revalidate = 864000
+// export const revalidate = 864000
 
 const TopRestaurantsPage = async () => {
     const topRestaurants: Restaurant[] = await fetchTopRestaurants()
 
     return (
         <main className='w-full flex flex-col items-center gap-6 mb-14'>
-            <section className='w-[90%] flex items-center mt-4'>
-                <div className='flex-1 text-center text-lg text-secondary-soft font-bold'>Top Vendors</div>
+            <section className='w-[90%] flex items-center mt-4.5'>
+                <div className='flex-1 text-center text-[1.2rem] text-secondary-soft font-bold'>Top Vendors</div>
             </section>
 
             <section className='fixed flex justify-start items-center w-[90%] md:max-w-[412px] h-10 top-3 left-1/2 -translate-x-1/2'>
@@ -29,12 +29,12 @@ const TopRestaurantsPage = async () => {
                             key={restaurant.id}
                             // id={restaurant.id
                             href={`/restaurants/${restaurant.id}`}
-                            // className='w-full block'
+                            className='w-full block'
                         >
                             <Card
-                                cardClass='w-full h-56' //h-[14.6rem]
+                                cardClass={'w-full h-58'}
                                 cardDetails={{
-                                    imgSrc: '/Yam and palava sauce-marg-tee.jpg',
+                                    imgSrc: restaurant.imageUrl,
                                     name: restaurant.name,
                                 }}
                             />

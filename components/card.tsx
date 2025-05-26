@@ -17,7 +17,7 @@ const Card = ({ cardClass, cardDetails }: {
 
      return (
           <div className={`card shadow-[0_4px_10px_rgba(0,0,0,0.2)] snap-center rounded-[15px] overflow-hidden whitespace-nowrap text-ellipsis ${cardClass}`}>
-               <figure className={clsx('relative w-full rounded-t-[15px]', {'h-[65%]': pathname === '/', 'h-[70%]': pathname === '/restaurants'})}
+               <figure className={clsx('relative w-full rounded-t-[15px]', {'h-[65%]': pathname === '/', 'h-[70%]': pathname === '/restaurants', 'h-[72%]' : pathname === '/see-all/top-restaurants', 'h-[72.9%]' : pathname === '/see-all/what-others-are-ordering'})}
                >
                     <Image
                          src={imgSrc}
@@ -26,7 +26,7 @@ const Card = ({ cardClass, cardDetails }: {
                          fill
                     />
                </figure>
-               <div className={clsx('card-body flex flex-1 flex-col justify-center rounded-b-[15px] space-y-0.5', {'h-[35%] gap=[0.01rem] px-5': pathname === '/', 'h-[30%] gap-[0.05rem] px-6': pathname === '/restaurants'})}>
+               <div className={clsx('card-body flex flex-1 flex-col justify-center rounded-b-[15px] space-y-0.5', {'h-[35%] gap=[0.01rem] px-5': pathname === '/', 'h-[30%] gap-[0.011rem] px-6': pathname === '/restaurants', 'h-[28%] gap-[0.010rem] px-6': pathname === '/see-all/top-restaurants', 'h-[27.1%] gap-[0.012rem] px-6': pathname === '/see-all/what-others-are-ordering'})}>
                     <h3 className={
                          pathname === '/'
                          ? 'card-title'

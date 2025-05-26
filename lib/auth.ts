@@ -3,7 +3,13 @@
     document.cookie = `refreshToken=${refreshToken}; Path=/; Secure; SameSite=Strict; ${process.env.NODE_ENV === 'production' ? 'HttpOnly' : ''}`
 }
 
-const getAccessToken = () => localStorage.getItem('accessToken')
+// const getAccessToken = () => localStorage.getItem('accessToken')
+ const getAccessToken = () => {
+     if (typeof window !== 'undefined') {
+         return localStorage.getItem('accessToken')
+     }
+     return null
+ }
 
 const getRefreshToken = () => {
     const cookie = document.cookie.split('; ').find(row => row.startsWith('refreshToken='))

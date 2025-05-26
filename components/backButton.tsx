@@ -79,7 +79,9 @@ const BackButton = () => {
         'w-8 h-8 flex items-center justify-center rounded-full bg-transparent z-50 cursor-pointer',
         {
             '-ml-1 text-primary-main/80': pathname === '/checkout',
-            '-ml-2 text-primary-main/80': pathname === '/cart'
+            '-ml-2 text-primary-main/80': pathname === '/cart',
+            '-pl-4 text-primary-main/90': pathname === '/see-all/top-restaurantss',
+            '-ml-2 text-primary-main/90 gap-1': pathname === '/see-all/what-others-are-ordering'
         }
     )
 
