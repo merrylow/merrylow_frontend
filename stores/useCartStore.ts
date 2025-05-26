@@ -6,7 +6,8 @@ import { getAccessToken } from '@/lib/auth'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 
-const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
+// const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const handleRedirect = () => {
      const router = useRouter()

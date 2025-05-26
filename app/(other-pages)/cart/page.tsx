@@ -120,11 +120,6 @@ const CartPage = () => {
                                             <div>
                                                 <h3 className='leading-none text-base font-semibold text-black-soft'>{cartItem?.menu?.name}</h3>
                                                 <div className='grid grid-cols-2 gap-x-2 mt-1'>
-                                                    {/*{cartItem.selectedAddons?.package && (*/}
-                                                    {/*    <p className='text-xs text-secondary-soft'>*/}
-                                                    {/*        + {cartItem.selectedAddons.package}*/}
-                                                    {/*    </p>*/}
-                                                    {/*)}*/}
                                                     {Object.entries(addons).map(([addonName, addonPrice]) => (
                                                         addonPrice !== 0 && (
                                                             <p key={addonName} className="text-xs text-secondary-soft">

@@ -4,7 +4,8 @@ import { storeTokens, getAccessToken } from '@/lib/auth'
 import axios from 'axios'
 
 
-const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
+// const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const useUserStore = create<UserState>((set, get) => ({
     loading: false,

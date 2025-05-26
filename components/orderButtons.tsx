@@ -76,7 +76,7 @@ const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote, onAuth
     return (
         <button
             onClick={handleClick}
-            className='w-[55%] max-w-[450px] h-[2.65rem] mx-auto flex items-center justify-center gap-1.5 font-bold text-sm btn'
+            className='w-[58%] md:w-[55%] md:max-w-[450px] h-[2.65rem] mx-auto flex items-center justify-center gap-1.5 font-bold text-sm btn'
         >
             <span>Add to order</span>
 
@@ -94,6 +94,7 @@ const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote, onAuth
 
 const GoToCheckoutButton = () => {
     const cartTotal = useCartStore(state => state.cartTotal)
+    const calculateCartTotals = useCartStore(state => state.calculateCartTotals)
     const [loading, setLoading] = useState<boolean>(false)
     const router = useRouter()
     const cart = useCartStore(state => state.cart)
@@ -101,6 +102,7 @@ const GoToCheckoutButton = () => {
 
     useEffect(() => {
         fetchCart()
+        calculateCartTotals()
     }, [])
 
     const handleCheckout = async () => {

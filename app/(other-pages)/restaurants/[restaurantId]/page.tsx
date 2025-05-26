@@ -6,7 +6,7 @@ import { IoAlarm, IoClose, IoEllipsisHorizontal, IoStar, IoTimer } from 'react-i
 import { Drawer, DrawerClose, DrawerContent, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer'
 import ProductModal from '@/components/productModal'
 import { MdDeliveryDining, MdLocationPin } from 'react-icons/md'
-import fetchRestaurantsAndProducts from '@/lib/api'
+import { fetchRestaurantsAndProducts } from '@/lib/api'
 import { Restaurant, Product } from '@/lib/typeDefs'
 import { formatCurrency } from '@/lib/utilFunctions'
 import { BiSolidStopwatch } from 'react-icons/bi'
@@ -15,8 +15,10 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
     const { restaurantId, productId } = await params
     const { restaurants, products } = await fetchRestaurantsAndProducts()
 
+    // const matchingProduct = products.find((product) => product.id === productId)
+
     // Find the matching store
-    const matchingRestaurant: Restaurant | undefined = restaurants.find((restaurant) => restaurant.id === restaurantId);
+    const matchingRestaurant: Restaurant | undefined = restaurants.find((restaurant: Restaurant) => restaurant.id === restaurantId);
 
 
     if (!matchingRestaurant) {
@@ -26,7 +28,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
 
     // drafts a menu
     const menuItems = products.filter(
-        product => product.restaurant?.id === matchingRestaurant.id
+        (product: Product) => product.restaurant?.id === matchingRestaurant.id
     )
 
     return (
@@ -88,56 +90,74 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                     <h2 className='text-[1.6rem] font-bold text-secondary-light'>Our Menu</h2>
 
                     <div className='space-y-3'>
-                         {menuItems.map((menuItem, i: number) => (
-                              <div key={i} className='flex border-b border-gray-100 pb-3'>
-                                   <div className='flex-1 self-center space-y-1.5 relative'>
-                                        <h3 className='w-[96%] font-semibold text-md text-secondary-soft leading-5'>
-                                             {menuItem.name}
-                                        </h3>
+                         {menuItems.map((menuItem, i: number) => {
+                             const matchingProduct: Product | undefined = menuItems.find((product: Product) => product.id === menuItem.id)
+                             console.log(matchingProduct)
 
-                                        {/* actual modal */}
-                                        <Drawer>
-                                             <DrawerTrigger asChild>
-                                                  <button
-                                                      className='text-xs py-1.5 px-6 bg-primary-main text-white see-all-btn'
-                                                  >
-                                                       Add
-                                                  </button>
+                             return (
+                                 <div
+                                     key={i}
+                                     className='flex border-b border-gray-100 pb-3'>
+                                     <div
+                                         className='flex-1 self-center space-y-1.5 relative'>
+                                         <h3 className='w-[96%] font-semibold text-md text-secondary-soft leading-5'>
+                                             {menuItem.name}
+                                         </h3>
+
+                                         {/* actual modal */}
+                                         <Drawer>
+                                             <DrawerTrigger
+                                                 asChild>
+                                                 <button
+                                                     className='text-xs py-1.5 px-6 bg-primary-main text-white see-all-btn'
+                                                 >
+                                                     Add
+                                                 </button>
 
                                              </DrawerTrigger>
-                                             <DrawerContent className='p-0 max-w-[450px] mx-auto h-[93vh] rounded-t-4xl'>
-                                                  <DrawerTitle></DrawerTitle>
-                                                  <DrawerClose asChild>
-                                                       <button
-                                                           className='navigation-btn absolute top-6 right-5 z-50'
-                                                           aria-label='close modal'
-                                                       >
-                                                            <IoClose className='size-6 fill-gray-pale' />
-                                                       </button>
-                                                  </DrawerClose>
-                                                  <ProductModal productId={menuItem.id} />
+                                             <DrawerContent
+                                                 className='p-0 max-w-[450px] mx-auto h-[93vh] rounded-t-4xl'>
+                                                 <DrawerTitle></DrawerTitle>
+                                                 <DrawerClose
+                                                     asChild>
+                                                     <button
+                                                         className='navigation-btn absolute top-6 right-5 z-50'
+                                                         aria-label='close modal'
+                                                     >
+                                                         <IoClose
+                                                             className='size-6 fill-gray-pale'/>
+                                                     </button>
+                                                 </DrawerClose>
+                                                 {/*<ProductModal productId={menuItem.id}/>*/}
+                                                 <ProductModal product={matchingProduct!} />
                                              </DrawerContent>
-                                        </Drawer>
+                                         </Drawer>
 
-                                        <span className='text-base text-secondary-soft font-bold ml-2.5 pt-0.5'>
-                                             ₵{formatCurrency(menuItem.price)}
-                                        </span>
-                                   </div>
-                                   <div className='w-24 h-22 relative rounded-xl overflow-hidden'>
-                                        <Image 
+                                         <span
+                                             className='text-base text-secondary-soft font-bold ml-2.5 pt-0.5'>
+                                                 ₵{formatCurrency(menuItem.price)}
+                                            </span>
+                                     </div>
+                                     <div
+                                         className='w-24 h-22 relative rounded-xl overflow-hidden'>
+                                         <Image
                                              src='/Yam and palava sauce-marg-tee.jpg'
                                              alt={menuItem.name}
-                                             fill 
-                                             className='object-cover' />
-                                   </div>
-                              </div>
-                         ))}
+                                             fill
+                                             className='object-cover'/>
+                                     </div>
+                                 </div>
+
+                             )
+
+
+                         })}
                     </div>
                </section>
 
                <section className='mb-16' />
           </main>
-     );
-};
+     )
+}
 
 export default RestaurantPage

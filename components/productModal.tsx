@@ -55,15 +55,11 @@ const clearSelectionsFromLocalStorage = (productId: string) => {
 
 
 
-const ProductModal = ({ productId }: { productId: string }) => {
-     const { products, fetchProducts, loading } = useProductStore()
-     // const [quantity, setQuantity] = useState<number>(1)
-     // const [selectedAddons, setSelectedAddons] = useState<SelectedAddons>({
-     //      package: '',
-     //      compulsory: '',
-     //      optional: [] as string[]
-     // })
-     // const [orderNote, setOrderNote] = useState('')
+const ProductModal = ({ product }: { product: Product }) => {
+     const [loading, setLoading] = useState(false)
+
+     const productId = product.id
+
      const savedSelections = loadSelectionsFromLocalStorage(productId)
      const [quantity, setQuantity] = useState<number>(savedSelections?.quantity || 1);
      const [orderNote, setOrderNote] = useState<string>(savedSelections?.orderNote || '')
@@ -88,11 +84,6 @@ const ProductModal = ({ productId }: { productId: string }) => {
           return true // proceeds with add to cart
      }
 
-
-     useEffect(() => {
-          fetchProducts().catch(error => console.log('Fetch products error', error))
-     }, [])
-
      // saves to localStorage whenever addons or product or quantity or orderNote change
      useEffect(() => {
           saveSelectionsToLocalStorage(productId, {
@@ -116,7 +107,7 @@ const ProductModal = ({ productId }: { productId: string }) => {
 
 
 
-     const matchingProduct: Product | undefined = products.find(product => product.id === productId)
+     // const matchingProduct: Product | undefined = products.find(product => product.id === productId)
 
      const selectPackageOption = (name: string) => {
           setSelectedAddons(prev => ({
@@ -169,11 +160,11 @@ const ProductModal = ({ productId }: { productId: string }) => {
                             <section className='flex-1 w-[88%] mx-auto mt-5 space-y-7 pb-32'>
                                  <div className='flex justify-between items-start'>
                                       <div>
-                                           <h1 className='text-lg text-secondary-light font-extrabold'>{matchingProduct?.name}</h1>
+                                           <h1 className='text-lg text-secondary-light font-extrabold'>{product?.name}</h1>
                                            <div className='flex items-center gap-2 mt-2'>
-                                                {matchingProduct && (
+                                                {product && (
                                                     <span className='text-lg font-extrabold text-primary-main'>
-                                                       ₵{formatCurrency(matchingProduct.price)}
+                                                       ₵{formatCurrency(product.price)}
                                                     </span>
                                                 )}
                                            </div>
@@ -181,12 +172,12 @@ const ProductModal = ({ productId }: { productId: string }) => {
                                  </div>
 
                                  {
-                                      matchingProduct?.addOns?.package &&
-                                      Object.keys(matchingProduct.addOns.package).length > 0 ? (
+                                      product?.addOns?.package &&
+                                      Object.keys(product.addOns.package).length > 0 ? (
                                            <div className='space-y-4'>
                                                 <h2 className='text-md text-secondary-light font-semibold'>Packaging</h2>
                                                 <RadioGroup value={selectedAddons.package} onValueChange={selectPackageOption}>
-                                                     {Object.entries(matchingProduct?.addOns.package ?? {}).map(([name, price]) => (
+                                                     {Object.entries(product?.addOns.package ?? {}).map(([name, price]) => (
                                                          <div className='flex justify-between items-center' key={name}>
                                                               <div className='flex items-center gap-2'>
                                                                    <p className='text-sm text-black-soft'>{name}</p>
@@ -209,15 +200,15 @@ const ProductModal = ({ productId }: { productId: string }) => {
                                  }
 
 
-                                 {matchingProduct?.addOns?.compulsory &&
-                                     Object.keys(matchingProduct.addOns.compulsory).length > 0 && (
+                                 {product?.addOns?.compulsory &&
+                                     Object.keys(product.addOns.compulsory).length > 0 && (
                                          <div className='space-y-4'>
                                               <h2 className='text-md text-secondary-light font-semibold'>Add more</h2>
                                               <RadioGroup
                                                   value={selectedAddons.compulsory}
                                                   onValueChange={selectCompulsoryAddon}
                                               >
-                                                   {Object.entries(matchingProduct.addOns.compulsory).map(([name, price]) => (
+                                                   {Object.entries(product.addOns.compulsory).map(([name, price]) => (
                                                        <div className='flex justify-between items-center' key={name}>
                                                             <div className='flex items-center gap-2'>
                                                                  <Label htmlFor={`compulsory-${name}`} className='text-sm text-black-soft'>
@@ -240,11 +231,11 @@ const ProductModal = ({ productId }: { productId: string }) => {
                                          </div>
                                  )}
 
-                                 {matchingProduct?.addOns?.optional &&
-                                     Object.keys(matchingProduct.addOns.optional).length > 0 && (
+                                 {product?.addOns?.optional &&
+                                     Object.keys(product.addOns.optional).length > 0 && (
                                          <div className='space-y-4'>
                                               <h2 className='text-md text-secondary-light font-semibold'>Addons</h2>
-                                              {Object.entries(matchingProduct.addOns.optional).map(([name, price]) => (
+                                              {Object.entries(product.addOns.optional).map(([name, price]) => (
                                                   <div className='flex justify-between items-center' key={name}>
                                                        <div className='flex items-center gap-2'>
                                                             <p className='text-sm text-black-soft'>{name}</p>
@@ -276,13 +267,13 @@ const ProductModal = ({ productId }: { productId: string }) => {
               </div>
 
              <section className='fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[88%] max-w-[450px] mx-auto bg-transparent sm:ml-2 py-4 flex justify-between items-center md:gap-10'>
-                  {matchingProduct ? (
+                  {product ? (
                       <QuantitySelector />
                   ) : null}
 
-                  {matchingProduct ? (
+                  {product ? (
                       <AddToOrderButton
-                          product={matchingProduct}
+                          product={product}
                           quantity={quantity}
                           selectedAddons={selectedAddons}
                           orderNote={orderNote}

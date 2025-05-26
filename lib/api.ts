@@ -2,11 +2,13 @@ import axios from 'axios'
 import { Product, Restaurant } from '@/lib/typeDefs'
 
 
+// const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL
+
 const fetchRestaurantsAndProducts = async (): Promise<{
     restaurants: Restaurant[]
     products: Product[]
 }> => {
-    const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
 
     try {
         const restaurantsResponse = await axios.get<
@@ -54,6 +56,33 @@ const fetchRestaurantsAndProducts = async (): Promise<{
         console.error('Error fetching stores and products:', error.message)
         return { restaurants: [], products: [] }
     }
-};
+}
 
-export default fetchRestaurantsAndProducts
+
+
+const fetchTopRestaurants = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/api/top-vendors`)
+        const restaurantsResponse: Restaurant[] = response.data.data
+
+        return restaurantsResponse
+    } catch (error) {
+        console.error('Error fetching top vendors:', error)
+        throw new Error('Failed to fetch top restaurants')
+    }
+}
+
+
+const fetchTopProducts = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/api/top-products`)
+        const productsResponse: Product[] = response.data.data
+
+        return productsResponse
+    } catch(error) {
+        console.error('Error fetching top products', error)
+        throw new Error('Failed to fetch top products')
+    }
+}
+
+export { fetchRestaurantsAndProducts, fetchTopRestaurants, fetchTopProducts }

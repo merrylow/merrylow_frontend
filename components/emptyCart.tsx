@@ -21,6 +21,8 @@ const EmptyCart = () => {
             >
                 Browse restaurants
             </Link>
+
+            {/*add bottom nav here*/}
         </section>
     );
 }

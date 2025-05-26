@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
   //   },
   // },
   images: {
+    // domains: ['wp.merrylow.com'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -27,7 +28,7 @@ const nextConfig: NextConfig = {
       },  {
         protocol: 'https',
         hostname: 'wp.merrylow.com',
-        pathname: 'wp-content/uploads/**',
+        pathname: '/wp-content/uploads/**',
         search: ''
       },
       // {

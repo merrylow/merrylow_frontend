@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import Card from '@/components/card'
 import LoadingSpinner from '@/components/loadingSpinner'
-import fetchRestaurantsAndProducts from '@/lib/api'
+import { fetchRestaurantsAndProducts } from '@/lib/api'
 import { Suspense } from 'react'
+import { Restaurant } from '@/lib/typeDefs'
 
 
 export const revalidate = 864000
@@ -21,7 +22,7 @@ const RestaurantsPage = async () => {
 
                     <div className='flex flex-col gap-9'> {/* h-[169rem] */}
                         <Suspense fallback={<LoadingSpinner />}>
-                             {restaurants.map((restaurant) => (
+                             {restaurants.map((restaurant: Restaurant) => (
                                   <Link
                                       href={`/restaurants/${restaurant.id}`}
                                       className='w-full block'
@@ -30,7 +31,7 @@ const RestaurantsPage = async () => {
                                        <Card
                                             cardClass='w-full h-56' //h-[14.6rem]
                                             cardDetails={{
-                                                 imgSrc: '/Yam and palava sauce-marg-tee.jpg',
+                                                 imgSrc: restaurant.imageUrl || '/Yam and palava sauce-marg-tee.jpg',
                                                  name: restaurant.name,
                                             }}
                                        />

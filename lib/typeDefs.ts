@@ -23,6 +23,7 @@ type CardDetails = {
 interface Restaurant {
      name: string;
      id: string;
+     imageUrl: string;
      phone: string;
      location: string;
      startTime: string;
@@ -44,9 +45,9 @@ interface Product {
 }
 
 
-type PackageAddOns = Record<string, number>;  // Changed from { name: number }
-type OptionalAddOns = Record<string, number>; // Changed from { name: number }
-type CompulsoryAddOns = Record<string, number>; // Changed from { name: number }
+type PackageAddOns = Record<string, number>;
+type OptionalAddOns = Record<string, number>;
+type CompulsoryAddOns = Record<string, number>; // { name: number }
 
 interface Addon {
      package: PackageAddOns;
@@ -95,9 +96,7 @@ interface CartItem extends Product {
                optional?: Record<string, string | number>;
           }
      };
-     // selectedAddons: Record<string, boolean> | null;
      selectedAddons: SelectedAddons | null;
-     // packageOption: PackageOption | null;
      orderNote: string | null;
 }
 
