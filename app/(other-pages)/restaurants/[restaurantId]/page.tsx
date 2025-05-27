@@ -128,7 +128,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                                                              className='size-6 fill-gray-pale'/>
                                                      </button>
                                                  </DrawerClose>
-                                                 {/*<ProductModal productId={menuItem.id}/>*/}
+
                                                  <ProductModal product={matchingProduct!} />
                                              </DrawerContent>
                                          </Drawer>

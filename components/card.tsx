@@ -27,11 +27,9 @@ const Card = ({ cardClass, cardDetails }: {
                     />
                </figure>
                <div className={clsx('card-body flex flex-1 flex-col justify-center rounded-b-[15px] space-y-0.5', {'h-[35%] gap=[0.01rem] px-5': pathname === '/', 'h-[30%] gap-[0.011rem] px-6': pathname === '/restaurants', 'h-[28%] gap-[0.010rem] px-6': pathname === '/see-all/top-restaurants', 'h-[27.1%] gap-[0.012rem] px-6': pathname === '/see-all/what-others-are-ordering'})}>
-                    <h3 className={
-                         pathname === '/'
-                         ? 'card-title'
-                         : 'text-[1rem] font-semibold text-secondary-soft'
-                    }>{name}</h3>
+                    <h3
+                        className={clsx('text-left text-[1rem] font-semibold text-secondary-soft', { 'card-title': pathname === '/'})}
+                    >{name}</h3>
 
                     <div className='flex items-center space-x-2.5'>
                         <span className='flex items-center space-x-1'>

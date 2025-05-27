@@ -80,7 +80,7 @@ const BackButton = () => {
         {
             '-ml-1 text-primary-main/80': pathname === '/checkout',
             '-ml-2 text-primary-main/80': pathname === '/cart',
-            '-pl-4 text-primary-main/90': pathname === '/see-all/top-restaurantss',
+            '-pl-4 text-primary-main/90': pathname === '/see-all/top-restaurants',
             '-ml-2 text-primary-main/90 gap-1': pathname === '/see-all/what-others-are-ordering'
         }
     )

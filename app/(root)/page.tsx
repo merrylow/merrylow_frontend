@@ -1,9 +1,21 @@
+import { Suspense } from 'react'
 import AdCarousel from '@/components/adCarousel'
 import Link from 'next/link'
 import Card from '@/components/card'
 import Greeting from '@/components/greeting'
 import { fetchTopRestaurants, fetchTopProducts } from '@/lib/api'
 import { Product, Restaurant } from '@/lib/typeDefs'
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerTitle,
+    DrawerTrigger
+} from '@/components/ui/drawer'
+import { IoClose } from 'react-icons/io5'
+import ProductModal
+    from '@/components/productModal'
+import LoadingSpinner from '@/components/loadingSpinner'
 
 export const revalidate = 864000
 
@@ -34,18 +46,54 @@ const Home = async () => {
                     <Link href='/see-all/what-others-are-ordering' className='see-all-btn px-5'>See all</Link>
                 </div>
 
-                <Link href='/see-all/what-others-are-ordering' className='slider-container'>
+                <div className='slider-container'>
                     <div className="shrink-0 w-[0.5px] ml-[-9px] snap-start" />
 
-                    {topProducts.map((product: Product, i) => (
-                      <Card
-                        key={i}
-                        cardClass={'w-[271px] h-full shrink-0'}
-                        cardDetails={{ imgSrc: product.imageUrl, name: product.name }}
-                      />
-                    ))}
-                </Link>
+                    <Suspense fallback={<LoadingSpinner />}>
+                        {topProducts.map((product: Product, i) => (
+                            <div key={i}>
+                                <Drawer>
+                                    <DrawerTrigger
+                                        asChild>
+                                        <button
+                                            className=''
+                                        >
+                                            <Card
+                                                key={i}
+                                                cardClass={'w-[271px] h-45 shrink-0'}
+                                                cardDetails={{ imgSrc: product.imageUrl, name: product.name }}
+                                            />
+                                        </button>
+                                    </DrawerTrigger>
+                                    <DrawerContent
+                                        className='p-0 max-w-[450px] mx-auto h-[93vh] rounded-t-4xl'>
+                                        <DrawerTitle></DrawerTitle>
+                                        <DrawerClose
+                                            asChild>
+                                            <button
+                                                className='navigation-btn absolute top-6 right-5 z-50'
+                                                aria-label='close modal'
+                                            >
+                                                <IoClose
+                                                    className='size-6 fill-gray-pale'/>
+                                            </button>
+                                        </DrawerClose>
+
+                                        <ProductModal product={product!} />
+                                    </DrawerContent>
+                                </Drawer>
+                            </div>
+                        ))}
+                    </Suspense>
+
+                </div>
             </section>
+                      {/*// <Card*/}
+                      {/*//   key={i}*/}
+                      {/*//   cardClass={'w-[271px] h-full shrink-0'}*/}
+                      {/*//   cardDetails={{ imgSrc: product.imageUrl, name: product.name }}*/}
+                      {/*// />*/}
+
 
 
             {/* top vendors */}
