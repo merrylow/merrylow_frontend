@@ -12,7 +12,7 @@ import useUserStore from '@/stores/useUserStore'
 import { IoMdClose } from 'react-icons/io'
 
 
-const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote, onAuthCheck }: { product: Product, quantity: number, selectedAddons: SelectedAddons | null, orderNote: string | null,  onAuthCheck: () => boolean }) => {
     const router = useRouter()

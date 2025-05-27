@@ -150,7 +150,7 @@ const ProductModal = ({ product }: { product: Product }) => {
                             <section className='w-full h-64 rounded-t-4xl relative overflow-hidden'>
                                  <div className='bg-overlay' />
                                  <Image
-                                     src='/Yam and palava sauce-marg-tee.jpg'
+                                     src={product.imageUrl}
                                      alt=''
                                      fill
                                      className='object-cover'

@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import axios from '@/lib/interceptors/axiosApi'
+import axios from 'axios'
 import { Product, Restaurant, ProductStore } from '@/lib/typeDefs'
 
 

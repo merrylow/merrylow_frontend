@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { Eye, EyeOff } from 'lucide-react'
 import { toast } from 'sonner'
-import axios from '@/lib/interceptors/axiosApi'
+import axios from 'axios'
 import { FaSignOutAlt } from 'react-icons/fa'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { GoogleOAuthProvider, GoogleLogin, useGoogleLogin, googleLogout } from '@react-oauth/google'
@@ -15,7 +15,7 @@ import useUserStore from '@/stores/useUserStore'
 import { storeTokens, clearTokens } from '@/lib/auth'
 
 
-const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const GoogleSignInButton = () => {
     const CLIENT_ID: string = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!

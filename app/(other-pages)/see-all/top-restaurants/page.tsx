@@ -7,7 +7,7 @@ import LoadingSpinner from '@/components/loadingSpinner'
 import Link from 'next/link'
 import { Restaurant } from '@/lib/typeDefs'
 
-// export const revalidate = 864000
+export const revalidate = 864000
 
 const TopRestaurantsPage = async () => {
     const topRestaurants: Restaurant[] = await fetchTopRestaurants()

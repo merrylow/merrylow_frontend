@@ -1,4 +1,4 @@
-import axios from '@/lib/interceptors/axiosApi'
+import axios from 'axios'
 import { Product, Restaurant } from '@/lib/typeDefs'
 
 

@@ -37,7 +37,7 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                <section className='w-full h-64 relative rounded-b-3xl overflow-hidden'>
                     <div className="bg-overlay"></div>
                     <Image
-                         src='/Yam and palava sauce-marg-tee.jpg'
+                         src={matchingRestaurant.imageUrl}
                          alt="restaurant banner"
                          fill
                          className='object-cover'

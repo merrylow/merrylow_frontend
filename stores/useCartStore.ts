@@ -1,4 +1,4 @@
-import axios from '@/lib/interceptors/axiosApi'
+import axios from 'axios'
 import { create } from 'zustand'
 import { CartStore, Product, Restaurant, CartItem, PaymentMethod, CardDetails, SelectedAddons } from '@/lib/typeDefs'
 import { transformAddonsForBackend } from '@/lib/utilFunctions'
