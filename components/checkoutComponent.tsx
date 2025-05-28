@@ -155,7 +155,7 @@ const CheckoutComponent = () => {
                                     />
                                 </div>
                                 <div>
-                                    <Label htmlFor='location' className='block text-base font-semibold text-secondary-soft mb-1'>Address</Label>
+                                    <Label htmlFor='location' className='block text-base font-semibold text-secondary-soft mb-1'>Location</Label>
                                     <Input
                                         id='location'
                                         type='text'

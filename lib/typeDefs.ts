@@ -107,7 +107,7 @@ type CartStore = {
      cartCount: number;
      cartTotal: number;
      fetchCart: () => void;
-     addToCart: (product: Product, quantity: number, selectedAddons: SelectedAddons | null, orderNote: string | null) => void
+     addToCart: (product: Product, quantity: number, selectedAddons: SelectedAddons | null, orderNote: string | null) => Promise<boolean>
      removeFromCart: (productId: string) => Promise<void>
      clearCart: () => Promise<void>
      updateCartCount: () => void;

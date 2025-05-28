@@ -5,9 +5,6 @@ import { fetchRestaurantsAndProducts } from '@/lib/api'
 import { Suspense } from 'react'
 import { Restaurant } from '@/lib/typeDefs'
 
-
-export const revalidate = 864000
-
 const RestaurantsPage = async () => {
     const { restaurants } = await fetchRestaurantsAndProducts()
 

@@ -173,13 +173,55 @@ p {
 
 
 
-/* top position for Sonner toasts */
-.sonner-toast {
-     top: 20px !important;
-     bottom: auto !important;
+/* toast container */
+.custom-sonner {
+     /*bottom: auto !important;*/
+     /*--blue-black-900: hsl(220, 78%, 10%);*/
+     /*--blue-black-800: hsl(220, 78%, 15%);*/
+
+     /*background: var(--blue-black-900) !important;*/
+     /*border: 1px solid var(--blue-black-800) !important;*/
+     color: white !important;
+     top: 20px !important; /* spacing from the top */
      z-index: 5000;
      animation: slideDown 0.3s ease-out forwards;
+     gap: 12px !important; /* for stacked toasts */
+     --toast-width: 88vw;
+     --toast-height: 60px;
+     left: 50% !important;
+     transform: translateX(-50%) !important;
+     width: 100vw !important;
+     max-width: 100% !important;
+     display: flex !important;
+     flex-direction: column !important;
+     align-items: center !important;
+     padding: 0 !important;
+     margin: 0 auto !important;
+     pointer-events: none !important;
 }
+
+
+
+/* Individual toast */
+.custom-toast {
+     width: var(--toast-width) !important;
+     min-height: var(--toast-height) !important;
+     max-width: min(400px, 90vw) !important;
+     margin: 0 !important;
+     left: auto !important;
+     right: auto !important;
+     transform: none !important;
+     animation: slideDown 0.3s ease-out forwards !important;
+}
+
+/* Toast content area */
+.custom-toast [data-sonner-toast] {
+     width: 100% !important;
+     height: 100% !important;
+     padding: 12px 16px !important;
+     margin: 0 !important;
+}
+
 
 @keyframes slideDown {
      from {

@@ -16,7 +16,7 @@ const fetchRestaurantsAndProducts = async (): Promise<{
                 success: boolean;
                 data: Restaurant[]
             }
-        >(`${API_URL}/api/restaurant`)
+        >(`${API_URL}/api/restaurants`)
 
         if (!restaurantsResponse.data.success) {
             throw new Error(`Failed to fetch restaurants: ${restaurantsResponse.status}`)

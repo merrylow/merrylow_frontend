@@ -53,18 +53,13 @@ const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote, onAuth
         }
 
         try {
-            addToCart(product, quantity, selectedAddons, orderNote)
-            setTimeout(() => {
+            const success = await addToCart(product, quantity, selectedAddons, orderNote)
+            console.log(success)
+
+            if(success) {
                 router.push('/cart')
-            }, 3500)
+            }
 
-            // if (success) {
-            //     await new Promise(resolve => setTimeout(resolve, 200))
-            // setTimeout(() => {
-            //     router.push('/cart')
-            // }, 3000)
-
-            // }
         } catch (error) {
             console.error('Add to cart error', error)
             toast.error('Try again')
@@ -76,15 +71,16 @@ const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote, onAuth
     return (
         <button
             onClick={handleClick}
-            className='w-[58%] md:w-[55%] md:max-w-[450px] h-[2.65rem] mx-auto flex items-center justify-center gap-1.5 font-bold text-sm btn'
+            className='w-[58%] md:w-[55%] md:max-w-[450px] h-[2.65rem] mx-auto flex items-center justify-center font-bold text-sm btn'
         >
-            <span>Add to order</span>
-
             {
                 loading ? (
                     <span className='loading loading-spinner loading-sm'></span>
                 ) : (
-                    <span>₵{formatCurrency(String(currentItemTotal))}</span>
+                    <div className='w-full flex justify-center items-center gap-x-1.5'>
+                        <span>Add to order</span>
+                        <span>₵{formatCurrency(String(currentItemTotal))}</span>
+                    </div>
                 )
             }
         </button>

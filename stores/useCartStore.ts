@@ -6,14 +6,7 @@ import { getAccessToken } from '@/lib/auth'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 
-// const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
 const API_URL = process.env.NEXT_PUBLIC_API_URL
-
-const handleRedirect = () => {
-     const router = useRouter()
-
-     router.push('/cart')
-}
 
 const useCartStore = create<CartStore>((set, get) => ({
      loading: false,
@@ -41,7 +34,7 @@ const useCartStore = create<CartStore>((set, get) => ({
                     const fetchedCart = response.data.data.items || []
                     set({ cart: Array.isArray(fetchedCart) ? fetchedCart : [] })
                     get().updateCartCount()
-                    // get().calculateCartTotals();
+                    get().calculateCartTotals()
                } else {
                     console.log('Unexpected response', response)
                }
@@ -53,7 +46,7 @@ const useCartStore = create<CartStore>((set, get) => ({
           }
      },
 
-     addToCart: async (product: Product, quantity, selectedAddons: SelectedAddons | null, orderNote) => {
+     addToCart: async (product: Product, quantity, selectedAddons: SelectedAddons | null, orderNote): Promise<boolean> => {
           set({ loading: true })
 
           const newCartItem: CartItem = {
@@ -109,15 +102,23 @@ const useCartStore = create<CartStore>((set, get) => ({
 
           // sync with backend cart
           try {
-               const accessToken = localStorage.getItem('accessToken')
+               const accessToken = getAccessToken()
                const response = await axios.post(`${API_URL}/api/cart`, cartItemForBackend, {
                     headers: {
                          Authorization: `Bearer ${accessToken}`
                     }
                })
-               const isSuccess = response.status === 200
-               if (isSuccess) toast.success('Added to cart')
-               return isSuccess
+
+               if (response.status === 201) {
+                    toast.success('Added to cart')
+                    get().updateCartCount()
+                    get().calculateCartTotals()
+                    return true
+               } else {
+                    toast.error('Failed to add to cart. Please try again')
+                    return false
+               }
+
           } catch (error) {
                console.log('Cart sync error', error)
                return false

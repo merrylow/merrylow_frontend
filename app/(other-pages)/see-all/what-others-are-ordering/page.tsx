@@ -42,7 +42,7 @@ const WhatOthersAreOrderingPage = async () => {
                                 <DrawerTrigger
                                     asChild>
                                     <button
-                                        className='w-full'
+                                        className='w-full outline-none border-none'
                                     >
                                         <Card
                                             key={i}

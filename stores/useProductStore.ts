@@ -80,7 +80,7 @@ const useProductStore = create<ProductStore>((set, get) => ({
         set({ loading: true })
 
         try {
-            const response = await axios.get(`${API_URL}/api/restaurant`)
+            const response = await axios.get(`${API_URL}/api/restaurants`)
             console.log('Fetched restaurants: ', response.data);
             set({ restaurants: response.data.data, error: null }) // one 'data' is coming from axios, the other from our api
         } catch (err: any) {

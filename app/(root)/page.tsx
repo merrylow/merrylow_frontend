@@ -5,19 +5,11 @@ import Card from '@/components/card'
 import Greeting from '@/components/greeting'
 import { fetchTopRestaurants, fetchTopProducts } from '@/lib/api'
 import { Product, Restaurant } from '@/lib/typeDefs'
-import {
-    Drawer,
-    DrawerClose,
-    DrawerContent,
-    DrawerTitle,
-    DrawerTrigger
-} from '@/components/ui/drawer'
+import { Drawer, DrawerClose, DrawerContent, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer'
 import { IoClose } from 'react-icons/io5'
 import ProductModal
     from '@/components/productModal'
 import LoadingSpinner from '@/components/loadingSpinner'
-
-export const revalidate = 864000
 
 const Home = async () => {
     const topRestaurants: Restaurant[] = await fetchTopRestaurants()
@@ -56,7 +48,7 @@ const Home = async () => {
                                     <DrawerTrigger
                                         asChild>
                                         <button
-                                            className=''
+                                            className='outline-none border-none'
                                         >
                                             <Card
                                                 key={i}
@@ -88,13 +80,6 @@ const Home = async () => {
 
                 </div>
             </section>
-                      {/*// <Card*/}
-                      {/*//   key={i}*/}
-                      {/*//   cardClass={'w-[271px] h-full shrink-0'}*/}
-                      {/*//   cardDetails={{ imgSrc: product.imageUrl, name: product.name }}*/}
-                      {/*// />*/}
-
-
 
             {/* top vendors */}
             <section className='card-section'>

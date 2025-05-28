@@ -136,12 +136,12 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                                          <span
                                              className='text-base text-secondary-soft font-bold ml-2.5 pt-0.5'>
                                                  ₵{formatCurrency(menuItem.price)}
-                                            </span>
+                                         </span>
                                      </div>
                                      <div
                                          className='w-24 h-22 relative rounded-xl overflow-hidden'>
                                          <Image
-                                             src='/Yam and palava sauce-marg-tee.jpg'
+                                             src={menuItem.imageUrl}
                                              alt={menuItem.name}
                                              fill
                                              className='object-cover'/>
@@ -149,8 +149,6 @@ const RestaurantPage = async ({ params }: { params: Promise<{ restaurantId: stri
                                  </div>
 
                              )
-
-
                          })}
                     </div>
                </section>

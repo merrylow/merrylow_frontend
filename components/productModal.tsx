@@ -176,7 +176,11 @@ const ProductModal = ({ product }: { product: Product }) => {
                                       Object.keys(product.addOns.package).length > 0 ? (
                                            <div className='space-y-4'>
                                                 <h2 className='text-md text-secondary-light font-semibold'>Packaging</h2>
-                                                <RadioGroup value={selectedAddons.package} onValueChange={selectPackageOption} defaultValue={Object.keys(product.addOns.package)[1]}>
+                                                <RadioGroup
+                                                    value={selectedAddons.package}
+                                                    onValueChange={selectPackageOption}
+                                                    defaultValue={Object.keys(product.addOns.package)[1]}
+                                                >
                                                      {Object.entries(product?.addOns.package ?? {}).map(([name, price]) => (
                                                          <div className='flex justify-between items-center' key={name}>
                                                               <div className='flex items-center gap-2'>

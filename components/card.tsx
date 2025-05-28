@@ -17,11 +17,11 @@ const Card = ({ cardClass, cardDetails }: {
 
      return (
           <div className={`card shadow-[0_4px_10px_rgba(0,0,0,0.2)] snap-center rounded-[15px] overflow-hidden whitespace-nowrap text-ellipsis ${cardClass}`}>
-               <figure className={clsx('relative w-full rounded-t-[15px]', {'h-[65%]': pathname === '/', 'h-[70%]': pathname === '/restaurants', 'h-[72%]' : pathname === '/see-all/top-restaurants', 'h-[72.9%]' : pathname === '/see-all/what-others-are-ordering'})}
+               <figure className={clsx('relative w-full rounded-t-[15px] z-0', {'h-[65%]': pathname === '/', 'h-[70%]': pathname === '/restaurants', 'h-[72%]' : pathname === '/see-all/top-restaurants', 'h-[72.9%]' : pathname === '/see-all/what-others-are-ordering'})}
                >
                     <Image
                          src={imgSrc}
-                         className='object-cover rounded-t-[15px]'
+                         className='object-cover rounded-t-[15px] z-0'
                          alt=''
                          fill
                     />
