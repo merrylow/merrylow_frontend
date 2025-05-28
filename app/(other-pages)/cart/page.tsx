@@ -10,7 +10,6 @@ import { GoToCheckoutButton } from '@/components/orderButtons'
 import EmptyCart from '@/components/emptyCart'
 import LoadingSpinner from '@/components/loadingSpinner'
 import { RemoveFromCartButton, ClearCartButton } from '@/components/cart/cartButtons'
-import BottomNav from '@/components/bottomNav'
 
 const CartPage = () => {
     const parseAddons = (addonsString: string) => {
@@ -63,12 +62,12 @@ const CartPage = () => {
 
 
     const calculateItemTotal = (item: CartItem) => {
-        // if unitPrice is available from backend, use that directly
+        // if unitPrice is available from backend, use that
         if (item.unitPrice) {
             return Number(item.unitPrice) * item.quantity;
         }
 
-        // fallback calculation if unitPrice isn't available
+        // fallback calculation if unitPrice isnt available
         if (!item.menu) return 0;
 
         const basePrice = Number(item.menu.price) || 0;

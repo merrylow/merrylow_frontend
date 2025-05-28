@@ -164,6 +164,10 @@ const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name
     const handlePlaceOrder = async (e: React.FormEvent) => {
         e.preventDefault()
 
+        const normalizedPaymentMethod = paymentMethod === 'cash_on_delivery'
+            ? 'CASH_ON_DELIVERY'
+            : paymentMethod.toUpperCase()
+
         if (!name || !phone || !address || !paymentMethod) {
             toast.error('Please fill all required fields')
             return
@@ -178,7 +182,7 @@ const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name
                 address,
                 phone,
                 notes: notes || null,
-                paymentMethod 
+                paymentMethod: normalizedPaymentMethod // sending normalised value
             }, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -203,8 +207,15 @@ const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name
                 console.error(response.data?.message || 'Unexpected response');
             }
 
-        } catch(error) {
+        } catch(error: any) {
             console.error('Checkout error', error)
+            // Display actual error message from backend if available
+            const errorMessage = error.response?.data?.message ||
+                error.message ||
+                'From server: Failed to place order';
+            toast.error(errorMessage);
+            console.error(errorMessage)
+
         } finally {
             setLoading(false)
         }
