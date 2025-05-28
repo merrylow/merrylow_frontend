@@ -63,9 +63,24 @@ const CartPage = () => {
 
 
     const calculateItemTotal = (item: CartItem) => {
-        const basePrice = (item.menu?.price || 0)
-        // If you need to include addons here, follow the same pattern as above
-        return basePrice * item.quantity;
+        // if unitPrice is available from backend, use that directly
+        if (item.unitPrice) {
+            return Number(item.unitPrice) * item.quantity;
+        }
+
+        // fallback calculation if unitPrice isn't available
+        if (!item.menu) return 0;
+
+        const basePrice = Number(item.menu.price) || 0;
+
+        const addons = item.description ? parseAddons(item.description) : {};
+
+        // sums up all addon prices
+        const addonsTotal = Object.values(addons).reduce((sum: number, price) => {
+            return sum + (Number(price) || 0);
+        }, 0);
+
+        return (basePrice + addonsTotal) * item.quantity;
     }
 
 
@@ -83,7 +98,7 @@ const CartPage = () => {
 
                    {
                        cart.length > 0 ? (
-                           <section className='fixed flex justify-end items-center w-[90%] sm:max-w-[410px] h-10 top-3 right-1/2 translate-x-1/2 mx-auto z-50'>
+                           <section className='fixed flex justify-end items-center w-[90%] md:max-w-[410px] h-10 top-3 right-1/2 translate-x-1/2 mx-auto z-50'>
                                <ClearCartButton />
                            </section>
                        ) : (

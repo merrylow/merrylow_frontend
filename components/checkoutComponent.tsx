@@ -27,9 +27,9 @@ const CheckoutComponent = () => {
     const fetchCart = useCartStore(state => state.fetchCart)
     const cart = useCartStore(state => state.cart)
     const cartTotal = useCartStore(state => state.cartTotal)
-    const updateCartCount = useCartStore(state => state.updateCartCount)
     const fetchUser = useUserStore(state => state.fetchUser)
-    // const calculateCartTotals = useCartStore(state => state.calculateCartTotals)
+    const updateCartCount = useCartStore(state => state.updateCartCount)
+    const calculateCartTotals = useCartStore(state => state.calculateCartTotals)
     const name = `${firstName} ${lastName}`
 
     useEffect(() => {
@@ -38,9 +38,10 @@ const CheckoutComponent = () => {
         // setPaymentMethod('mobile_money')
     }, [])
 
-    // useEffect(() => {
-    //     calculateCartTotals()
-    // }, [cart])
+    useEffect(() => {
+        updateCartCount()
+        calculateCartTotals()
+    }, [cart])
 
 
     const PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!

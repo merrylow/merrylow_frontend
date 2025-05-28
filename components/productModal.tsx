@@ -272,7 +272,7 @@ const ProductModal = ({ product }: { product: Product }) => {
 
              <section className='fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[88%] max-w-[450px] mx-auto bg-transparent sm:ml-2 py-4 flex justify-between items-center md:gap-10'>
                   {product ? (
-                      <QuantitySelector />
+                      <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
                   ) : null}
 
                   {product ? (

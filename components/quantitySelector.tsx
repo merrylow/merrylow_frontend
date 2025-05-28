@@ -3,10 +3,15 @@
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 
-const QuantitySelector = () => {
+type quantitySelectorProps = {
+     quantity: number;
+     setQuantity: (quantity: number) => void;
+}
+
+const QuantitySelector = ({ quantity, setQuantity }: quantitySelectorProps) => {
      const pathname = usePathname()
 
-     const [quantity, setQuantity] = useState(1)
+     // const [quantity, setQuantity] = useState(1)
 
      const addValue = () => {
           setQuantity(quantity + 1)

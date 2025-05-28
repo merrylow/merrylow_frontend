@@ -157,17 +157,29 @@ const GoToCheckoutButton = () => {
 
 
 const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name: string; phone: string; notes: string; address: string; paymentMethod: string; }) => {
-    // const router = useRouter()
+    const router = useRouter()
 
     const [loading, setLoading] = useState<boolean>(false)
 
     const handlePlaceOrder = async (e: React.FormEvent) => {
         e.preventDefault()
+
+        if (!name || !phone || !address || !paymentMethod) {
+            toast.error('Please fill all required fields')
+            return
+        }
+
         setLoading(true)
 
         try {
             const accessToken = getAccessToken()
-            const response = await axios.post(`${API_URL}/api/order`, { name, address, phone, notes, paymentMethod }, {
+            const response = await axios.post(`${API_URL}/api/order`, {
+                name,
+                address,
+                phone,
+                notes: notes || null,
+                paymentMethod 
+            }, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                     
@@ -175,12 +187,20 @@ const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name
             })
             console.log(response)
 
-            if (response.status === 201) {
+            if (response.status === 201 || response.status === 200) {
                 toast.success('Order placed successfully!')
                 console.log('Order placed', response.data)
-                // router.push('/profile/my-orders')
+
+                // handle Paystack/momo redirect
+                if (response.data.paymentUrl) {
+                    console.log(response.data.paymentUrl)
+                    window.location.href = response.data.paymentUrl
+                } else {
+                    // for cash on delivery option
+                    router.push('/profile/my-orders')
+                }
             } else {
-                console.error(response.data?.message || 'Unexpected response')
+                console.error(response.data?.message || 'Unexpected response');
             }
 
         } catch(error) {

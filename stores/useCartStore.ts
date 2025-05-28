@@ -136,33 +136,29 @@ const useCartStore = create<CartStore>((set, get) => ({
      },
 
 
-
      calculateCartTotals: () => {
           const total = get().cart.reduce((acc, cartItem) => {
-               const basePrice = (Number(cartItem.menu?.price) || 0)
+               // unit price is pre-calculated by backend
+               if (cartItem.unitPrice) {
+                    return acc + (Number(cartItem.unitPrice) * cartItem.quantity)
+               }
 
-               const packagePrice = cartItem.selectedAddons?.package && cartItem.menu?.addOns?.package
-                   ? (Number(cartItem.menu.addOns.package[cartItem.selectedAddons.package]) || 0)
-                   : 0
+               const basePrice = Number(cartItem.menu?.price) || 0
 
-               const compulsoryPrice = cartItem.selectedAddons?.compulsory && cartItem.menu?.addOns?.compulsory
-                   ? (Number(cartItem.menu.addOns.compulsory[cartItem.selectedAddons.compulsory]) || 0)
-                   : 0;
+               const addons = cartItem.description ? JSON.parse(cartItem.description) : {}
 
-               const optionalPrices = cartItem.selectedAddons?.optional?.reduce((sum, addonName) => {
-                    return sum + ((Number(cartItem.menu?.addOns?.optional?.[addonName]) || 0))
-               }, 0) || 0
+               const addonsTotal = Object.values(addons).reduce((sum: number, price) => {
+                    return sum + (Number(price) || 0)
+               }, 0)
 
-               const itemTotal = (basePrice + packagePrice + compulsoryPrice + optionalPrices) * cartItem.quantity;
-
-               return acc + itemTotal
+               return acc + (basePrice + addonsTotal) * cartItem.quantity
           }, 0)
 
           set({ cartTotal: total })
      },
 
 
-     calculateItemTotal: (product: Product | undefined, quantity: number, selectedAddons: SelectedAddons | null) => {
+     calculateItemTotal: (product: Product, quantity: number, selectedAddons: SelectedAddons | null) => {
           if (!product) return 0
 
           const basePrice = (Number(product.price) || 0)

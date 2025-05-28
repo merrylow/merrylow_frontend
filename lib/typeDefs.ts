@@ -75,16 +75,15 @@ type SavedProductSelections = {
      orderNote: string;
 }
 
-// type CartItemMenu = {
-//      name: string;
-//      price: string;
-// }
-
 interface CartItem extends Product {
      // order_status: string;
      description?: string;
+     cartId?: string;
+     createdAt?: string;
      quantity: number;
      productId: string;
+     unitPrice?: string;
+     totalPrice?: string;
      menu?: {
           id: string;
           name: string;
@@ -96,7 +95,7 @@ interface CartItem extends Product {
                optional?: Record<string, string | number>;
           }
      };
-     selectedAddons: SelectedAddons | null;
+     selectedAddons?: SelectedAddons | null;
      orderNote: string | null;
 }
 
