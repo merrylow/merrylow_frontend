@@ -122,12 +122,12 @@ const CartPage = () => {
                                         <div
                                             className='flex gap-3'>
                                             <div
-                                                className='relative w-20 h-20 rounded-xl overflow-hidden'>
+                                                className='relative flex-shrink-0 w-22 h-20 rounded-xl overflow-hidden'>
                                                 <Image
-                                                    src='/Yam and palava sauce-marg-tee.jpg'
-                                                    // src={cartItem?.menu?.imageUrl}
+                                                    src={cartItem?.menu?.imageUrl!}
                                                     alt=''
-                                                    fill
+                                                    width={90}
+                                                    height={80}
                                                     className='object-cover'
                                                 />
                                             </div>

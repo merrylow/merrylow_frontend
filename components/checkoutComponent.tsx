@@ -6,14 +6,15 @@ import { Label } from '@/components/ui/label';
 import BackButton from '@/components/backButton'
 import { PlaceOrderButton } from '@/components/orderButtons'
 import PaymentMethodSelector from '@/components/paymentMethodSelector'
+import { CartItem, Restaurant } from '@/lib/typeDefs'
 import { DeliveryNote } from '@/components/deliveryAndOrderNotes'
+import useProductStore from '@/stores/useProductStore'
 import useCartStore from '@/stores/useCartStore'
 import { HookConfig, InitializePayment } from 'react-paystack/libs/types'
-import { toast } from 'sonner'
 import useUserStore from '@/stores/useUserStore'
 import { PaystackButton } from 'react-paystack';
 import { usePaystackPayment } from 'react-paystack'
-
+import { toast } from 'sonner'
 
 const CheckoutComponent = () => {
     const [firstName, setFirstName] = useState('') // get session.user.name
@@ -27,6 +28,7 @@ const CheckoutComponent = () => {
     const fetchCart = useCartStore(state => state.fetchCart)
     const cart = useCartStore(state => state.cart)
     const cartTotal = useCartStore(state => state.cartTotal)
+    const { restaurants, fetchRestaurants } = useProductStore()
     const fetchUser = useUserStore(state => state.fetchUser)
     const updateCartCount = useCartStore(state => state.updateCartCount)
     const calculateCartTotals = useCartStore(state => state.calculateCartTotals)
@@ -35,7 +37,8 @@ const CheckoutComponent = () => {
     useEffect(() => {
         fetchCart()
         fetchUser()
-        // setPaymentMethod('mobile_money')
+        fetchRestaurants().then(result => console.log(result))
+        // setPaymentMethod()
     }, [])
 
     useEffect(() => {
@@ -43,14 +46,16 @@ const CheckoutComponent = () => {
         calculateCartTotals()
     }, [cart])
 
+    const userEmail = user?.email || ''
 
-    const PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!
+
+    const PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY
 
     const config: HookConfig = {
         reference: (new Date()).getTime().toString(),
-        email: user?.email, // get user's email
+        email: userEmail,
         amount: cartTotal * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200 (amount * 10ps)
-        publicKey: PUBLIC_KEY,
+        publicKey: PUBLIC_KEY!,
         currency: 'GHS',
         metadata: {
             name: `${firstName} ${lastName}`,
@@ -59,51 +64,34 @@ const CheckoutComponent = () => {
         }
     };
 
-    // const onSuccess = (reference: any) => {
-    //     console.log(reference)
-    //     toast.success(reference)
-    //     // toast.success('Your payment was successful')
-    // };
-    //
-    // const onClose = () => {
-    //     // implementation for whatever you want to do when the Paystack dialog closed.
-    //     console.log('closed')
-    //     // toast('Your payment was cancelled')
-    // }
-    //
-    //
-    // const PaystackHookExample = () => {
-    //     const initializePayment: InitializePayment = usePaystackPayment(config)
-    //     return (
-    //         <button
-    //             className='w-full h-10 mt-2 px-7 font-light text-xs btn'
-    //             type='submit'
-    //             onClick={() => {
-    //                 initializePayment({onSuccess, onClose})
-    //             }}
-    //         >
-    //             Make payment
-    //         </button>
-    //     )
-    // }
-
-    const handlePaystackSuccessAction = (reference: any) => {
-        // Implementation for whatever you want to do with reference and after success call.
+    const onSuccess = (reference: any) => {
         console.log(reference)
-        //     toast.success(reference)
+        toast.success(reference)
+        // toast.success('Your payment was successful')
     };
 
-    // you can call this function anything
-    const handlePaystackCloseAction = () => {
-        // implementation for  whatever you want to do when the Paystack dialog closed.
+    const onClose = () => {
+        // implementation for whatever you want to do when the Paystack dialog closed.
         console.log('closed')
+        // toast('Your payment was cancelled')
     }
 
-    const componentProps = {
-        ...config,
-        text: 'Make payment',
-        onSuccess: (reference: any) => handlePaystackSuccessAction(reference),
-        onClose: handlePaystackCloseAction,
+
+    const PaystackHookExample = () => {
+        const initializePayment: InitializePayment = usePaystackPayment(config)
+
+        return (
+            <button
+                className='w-full h-11 mt-2 px-7 font-light text-xs btn'
+                type='submit'
+                onClick={(e) => {
+                    e.preventDefault()
+                    initializePayment({onSuccess, onClose})
+                }}
+            >
+                Make payment
+            </button>
+        )
     }
 
 
@@ -193,10 +181,9 @@ const CheckoutComponent = () => {
                             {/* Fixed bottom button */}
                             <section className='fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[90%] bg-transparent py-4 flex justify-between items-center'>
                                 {
-                                    paymentMethod === 'mobile_money' ? (
+                                    paymentMethod === 'mobile_money' && userEmail ? (
                                         <div className='max-w-[450px] w-full mx-auto'>
-                                            {/*<PaystackHookExample />*/}
-                                            {/*<PaystackButton {...componentProps} />*/}
+                                            <PaystackHookExample />
                                         </div>
                                     ) : (
                                         <PlaceOrderButton name={name} phone={phoneNumber} notes={deliveryNote} address={location} paymentMethod={paymentMethod}  />
@@ -212,16 +199,35 @@ const CheckoutComponent = () => {
                         <h2 className='text-md font-semibold mb-3.5'>Your Order</h2>
                         <div className='text-base text-secondary-soft space-y-3'>
                             <div className='flex justify-between py-2 border-b border-b-gray-pale'>
-                                <span className='font-medium'>Product</span>
+                                <span className='font-medium'>Product:</span>
 
-                                <span className='text-sm'>Meal name - Regular x 1</span>
-                                {/*<span className='text-sm'>{cart[0].name} - Regular x 1</span> /!* replace 1 with product quantity from quantity selector component *!/*/}
-                                {/* if more than one product, conditionally render another span with the product. same for vendor section*/}
+                                {/*<span className='text-sm'>Meal name - Regular x 1</span>*/}
+                                <div className='flex flex-col'>
+                                    {
+                                        cart.length > 0 ? cart.map((cartItem: CartItem, i) => (
+                                            <span key={i} className='text-sm text-right'>{cartItem?.menu?.name} x {cartItem?.quantity} </span>
+                                        )) : (
+                                            <></>
+                                        )
+                                    }
+                                </div>
                             </div>
                             <div className='flex justify-between py-2 border-b border-b-gray-pale'>
-                                <span className='font-medium'>Restaurant</span>
-                                <span className='font-medium'>Restaurant name</span>
-                                {/*<span className='text-sm'>{cart[0].restaurant.name}</span>*/}
+                                <span className='font-medium'>Restaurant:</span>
+
+                                <div className='flex flex-col'>
+                                    {
+                                        cart.length > 0 ? cart.map((cartItem: CartItem, i) => {
+                                            const matchingRestaurant = restaurants.find((restaurant: Restaurant) => restaurant.id === cartItem?.menu?.restaurantId)
+
+                                            return (
+                                                <span key={i} className='font-sm'>{matchingRestaurant?.name}</span>
+                                            )
+                                        }) : (
+                                            <></>
+                                        )
+                                    }
+                                </div>
                             </div>
                             <div className='flex justify-between text-md text-secondary-soft py-2 mt-3'>
                                 <span className='font-semibold'>Total</span>

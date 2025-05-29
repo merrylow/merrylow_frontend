@@ -94,6 +94,7 @@ interface CartItem extends Product {
                compulsory?: Record<string, string | number>;
                optional?: Record<string, string | number>;
           }
+          restaurantId?: string;
      };
      selectedAddons?: SelectedAddons | null;
      orderNote: string | null;
