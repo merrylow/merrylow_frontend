@@ -66,12 +66,10 @@ const CheckoutComponent = () => {
 
     const onSuccess = (reference: any) => {
         console.log(reference)
-        toast.success(reference)
-        // toast.success('Your payment was successful')
+        toast.success('Your payment was successful!')
     };
 
     const onClose = () => {
-        // implementation for whatever you want to do when the Paystack dialog closed.
         console.log('closed')
         // toast('Your payment was cancelled')
     }
@@ -82,11 +80,15 @@ const CheckoutComponent = () => {
 
         return (
             <button
-                className='w-full h-11 mt-2 px-7 font-light text-xs btn'
+                className='w-full h-11 mt-2 px-7 text-xs btn'
                 type='submit'
                 onClick={(e) => {
                     e.preventDefault()
-                    initializePayment({onSuccess, onClose})
+                    if (!userEmail || !phoneNumber) {
+                        toast('Please fill all required fields')
+                    } else {
+                        initializePayment({onSuccess, onClose})
+                    }
                 }}
             >
                 Make payment

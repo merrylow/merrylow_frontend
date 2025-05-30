@@ -192,10 +192,10 @@ const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name
             console.log(response)
 
             if (response.status === 201 || response.status === 200) {
-                toast.success('Order placed successfully!')
+                toast.success('Order placed successfully! Please check your mail for confirmation. Check your spam if you\'re not seeing anything')
                 console.log('Order placed', response.data)
 
-                // handle Paystack/momo redirect
+                // handles Paystack/momo redirect
                 if (response.data.paymentUrl) {
                     console.log(response.data.paymentUrl)
                     window.location.href = response.data.paymentUrl

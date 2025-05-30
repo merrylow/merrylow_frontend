@@ -80,8 +80,13 @@ const BackButton = () => {
         {
             '-ml-1 text-primary-main/80': pathname === '/checkout',
             '-ml-2 text-primary-main/80': pathname === '/cart',
+            '-ml-2 text-white': pathname === '/auth/sign-in',
+            '-ml-2 text-white/90': pathname === '/auth/sign-up',
             '-pl-4 text-primary-main/90': pathname === '/see-all/top-restaurants',
-            '-ml-2 text-primary-main/90 gap-1': pathname === '/see-all/what-others-are-ordering'
+            '-ml-2 text-primary-main/90 gap-1': pathname === '/see-all/what-others-are-ordering',
+            '-ml-1.5 text-primary-main/90': pathname === '/profile/privacy-policy',
+            '-ml-1 text-primary-main/90': pathname === '/profile/terms-of-service',
+            '-ml-1.5 text-primary-main/80': pathname === '/profile/help-faq',
         }
     )
 

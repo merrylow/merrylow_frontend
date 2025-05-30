@@ -1,3 +1,5 @@
-const MyOrdersPage = () => {}
+const MyOrdersPage = () => {
+    
+}
 
 export default MyOrdersPage
