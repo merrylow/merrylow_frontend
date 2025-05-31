@@ -9,12 +9,14 @@ const MyOrdersContent = () => {
 
     useEffect(() => {
         // const paymentSuccess = searchParams.get('payment_success')
-        const paymentRef = searchParams.get('ref')
-        console.log(paymentRef)
+        const transactionRef = searchParams.get('trxref')
+        const reference = searchParams.get('refernce')
+        console.log(transactionRef)
+        console.log(reference)
 
         // check if an item's status is processing instead
         // if (paymentSuccess === 'true') {
-        if (paymentRef) {
+        if (transactionRef && reference) {
             toast.success('Payment successful! Your order has been placed.', {
                 description: 'You will receive a confirmation email shortly.',
                 duration: 5000
