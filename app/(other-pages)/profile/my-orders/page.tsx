@@ -10,7 +10,7 @@ const MyOrdersContent = () => {
     useEffect(() => {
         // const paymentSuccess = searchParams.get('payment_success')
         const transactionRef = searchParams.get('trxref')
-        const reference = searchParams.get('refernce')
+        const reference = searchParams.get('reference')
         console.log(transactionRef)
         console.log(reference)
 
@@ -21,10 +21,11 @@ const MyOrdersContent = () => {
                 description: 'You will receive a confirmation email shortly.',
                 duration: 5000
             })
+            console.log('toast!!')
 
             // cleans the url to prevent toast from showing again on refresh
-            const cleanUrl = window.location.pathname
-            window.history.replaceState(null, '', cleanUrl)
+            // const cleanUrl = window.location.pathname
+            // window.history.replaceState(null, '', cleanUrl)
         }
     }, [searchParams])
 
