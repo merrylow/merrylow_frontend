@@ -141,7 +141,7 @@ const CheckoutComponent = () => {
                     <div className='w-[88%]'>
                         <h2 className='text-md font-semibold mb-3.5'>Your Order</h2>
                         <div className='text-base text-secondary-soft space-y-3'>
-                            <div className='flex justify-between py-2 border-b border-b-gray-pale'>
+                            <div className='flex justify-between'> {/* py-2 border-b border-gray-pale */}
                                 <span className='font-medium'>Product:</span>
 
                                 {/*<span className='text-sm'>Meal name - Regular x 1</span>*/}
@@ -155,7 +155,7 @@ const CheckoutComponent = () => {
                                     }
                                 </div>
                             </div>
-                            <div className='flex justify-between py-2 border-b border-b-gray-pale'>
+                            <div className='flex justify-between'>
                                 <span className='font-medium'>Restaurant:</span>
 
                                 <div className='flex flex-col'>
