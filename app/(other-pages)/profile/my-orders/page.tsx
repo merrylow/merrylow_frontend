@@ -1,15 +1,20 @@
 'use client'
-import { useEffect } from 'react'
+import { useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
+import LoadingSpinner from '@/components/loadingSpinner'
 
-const MyOrdersPage = () => {
+const MyOrdersContent = () => {
     const searchParams = useSearchParams()
 
     useEffect(() => {
-        const paymentSuccess = searchParams.get('payment_success')
+        // const paymentSuccess = searchParams.get('payment_success')
+        const paymentRef = searchParams.get('ref')
+        console.log(paymentRef)
 
-        if (paymentSuccess === 'true') {
+        // check if an item's status is processing instead
+        // if (paymentSuccess === 'true') {
+        if (paymentRef) {
             toast.success('Payment successful! Your order has been placed.', {
                 description: 'You will receive a confirmation email shortly.',
                 duration: 5000
@@ -23,6 +28,15 @@ const MyOrdersPage = () => {
 
     return (
         <h1>My orders page</h1>
+    )
+}
+
+
+const MyOrdersPage = () => {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <MyOrdersContent />
+        </Suspense>
     )
 }
 
