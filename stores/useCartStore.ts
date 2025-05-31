@@ -17,6 +17,21 @@ const useCartStore = create<CartStore>((set, get) => ({
      cartCount: 0,
      cartTotal: 0,
 
+     initializeCart: () => {
+          const savedCart = typeof window !== 'undefined' ? localStorage.getItem('cart') : null;
+          if (savedCart) {
+               try {
+                    const parsedCart = JSON.parse(savedCart)
+                    set({ cart: parsedCart })
+                    get().updateCartCount();
+                    get().calculateCartTotals()
+               } catch (error) {
+                    console.error('Failed to parse saved cart', error)
+                    localStorage.removeItem('cart')
+               }
+          }
+     },
+
      fetchCart: async () => {
           try {
                set({ loading: true })
@@ -85,7 +100,6 @@ const useCartStore = create<CartStore>((set, get) => ({
           }
           set({ cart: updatedCart })
 
-          // localStorage.setItem('cart', JSON.stringify(updatedCart))
 
           const backendAddons = transformAddonsForBackend(selectedAddons, newCartItem.addOns);
 
@@ -113,6 +127,7 @@ const useCartStore = create<CartStore>((set, get) => ({
                     toast.success('Added to cart')
                     get().updateCartCount()
                     get().calculateCartTotals()
+                    localStorage.setItem('cart', JSON.stringify(updatedCart))
                     return true
                } else {
                     toast.error('Failed to add to cart. Please try again')
@@ -121,6 +136,7 @@ const useCartStore = create<CartStore>((set, get) => ({
 
           } catch (error) {
                console.log('Cart sync error', error)
+               set({ cart: get().cart })
                return false
           } finally {
                get().updateCartCount()
@@ -136,19 +152,73 @@ const useCartStore = create<CartStore>((set, get) => ({
      },
 
 
+     // calculateCartTotals: () => {
+     //      const total = get().cart.reduce((acc, cartItem) => {
+     //           // unit price is pre-calculated by backend
+     //           if (cartItem.unitPrice) {
+     //                return acc + (Number(cartItem.unitPrice) * cartItem.quantity)
+     //           }
+     //
+     //           const basePrice = Number(cartItem.menu?.price) || 0
+     //
+     //           const addons = cartItem.description ? JSON.parse(cartItem.description) : {}
+     //
+     //           const addonsTotal = Object.values(addons).reduce((sum: number, price) => {
+     //                return sum + (Number(price) || 0)
+     //           }, 0)
+     //
+     //           return acc + (basePrice + addonsTotal) * cartItem.quantity
+     //      }, 0)
+     //
+     //      set({ cartTotal: total })
+     // },
      calculateCartTotals: () => {
+          const parseAddons = (description: string) => {
+               try {
+                    // Clean up the string if it contains escape characters
+                    const cleanedString = description.replace(/\\/g, '')
+
+                    // Parse the JSON string
+                    const parsed = JSON.parse(cleanedString)
+
+                    // Handle different possible formats
+                    if (Array.isArray(parsed)) {
+                         // If it's an array, convert to object format
+                         const result: Record<string, number> = {}
+                         for (let i = 0; i < parsed.length; i += 2) {
+                              if (i + 1 < parsed.length) {
+                                   result[parsed[i]] = parsed[i + 1]
+                              }
+                         }
+                         return result
+                    } else if (typeof parsed === 'object' && parsed !== null) {
+                         // If it's already an object, return it
+                         return parsed
+                    }
+
+                    return {}
+               } catch (error) {
+                    console.error('Error parsing addons:', error)
+                    return {}
+               }
+          }
+
           const total = get().cart.reduce((acc, cartItem) => {
-               // unit price is pre-calculated by backend
+               // If unitPrice is available from backend, use that
                if (cartItem.unitPrice) {
                     return acc + (Number(cartItem.unitPrice) * cartItem.quantity)
                }
 
+               // Fallback calculation if unitPrice isn't available
                const basePrice = Number(cartItem.menu?.price) || 0
 
-               const addons = cartItem.description ? JSON.parse(cartItem.description) : {}
+               // Parse addons using the same method as in the CartPage
+               const addons = cartItem.description ? parseAddons(cartItem.description) : {}
 
-               const addonsTotal = Object.values(addons).reduce((sum: number, price) => {
-                    return sum + (Number(price) || 0)
+               // Sum up all addon prices (excluding special keys like 'name')
+               const addonsTotal = Object.entries(addons).reduce((sum: number, [key, value]) => {
+                    if (key === 'name' || typeof value !== 'number') return sum
+                    return sum + (Number(value) || 0)
                }, 0)
 
                return acc + (basePrice + addonsTotal) * cartItem.quantity
@@ -232,12 +302,13 @@ const useCartStore = create<CartStore>((set, get) => ({
                     }
                })
 
-               if (response.status !== 200) {
+               if (response.status === 200 || response.status === 201) {
+                    localStorage.removeItem('cart')
+                    toast.success('Cart cleared successfully')
+               } else {
                     get().fetchCart()
                     throw new Error('Failed to clear cart on server')
                }
-
-               toast.success('Cart cleared successfully')
 
           } catch (error) {
                console.error('Clear cart error:', error)

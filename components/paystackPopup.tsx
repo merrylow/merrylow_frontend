@@ -12,11 +12,11 @@ const PaystackPopup = ({  paymentUrl, setPaymentUrl }: PaystackPopupProps) => {
     return (
         <AnimatePresence>
             <Portal>
-                <motion.div className='md:w-[80%] md:h-[95%] m-auto fixed inset-0 bg-black/50 z-[1000] flex items-center justify-center'>
+                <motion.div className='md:w-[100%] md:h-[100%] m-auto fixed inset-0 bg-black/50 z-[1000] flex items-center justify-center'>
                     <motion.div className='bg-white p-4 rounded-lg w-full max-w-md overflow-hidden shadow-xl'>
                         <iframe
                             src={paymentUrl}
-                            className='w-full h-[50vh] md:[70vh] border-0'
+                            className='w-[90%] md:w-full h-[55vh] md:h-[70vh] border-0'
                             allow='payment'
                             title='Paystack Payment'
                         />

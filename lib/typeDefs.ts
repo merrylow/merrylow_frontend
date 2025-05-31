@@ -103,7 +103,8 @@ interface CartItem extends Product {
 type CartStore = {
      loading: boolean;
      error: boolean;
-     cart: CartItem[];
+     cart: CartItem[] | [];
+     initializeCart: () => void;
      cartCount: number;
      cartTotal: number;
      fetchCart: () => void;

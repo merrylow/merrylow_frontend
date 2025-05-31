@@ -195,8 +195,10 @@ const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name
                 setPaymentUrl(paymentUrl)
                 // window.location.href = paymentUrl
 
-            } else if (response.data.success && !paymentUrl) {
+            // } else if (response.data.success && !paymentUrl) {
+            } else {
                 toast.success('Order placed successfully! Please check your mail for confirmation. Check your spam if you\'re not seeing anything')
+                router.push('/profile/my-orders')
                 console.log('Order placed', response.data)
             }
 
@@ -248,7 +250,6 @@ const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name
                     )
                 }
             </button>
-
             {paymentUrl && (
                <PaystackPopup paymentUrl={paymentUrl} setPaymentUrl={setPaymentUrl} />
             )}

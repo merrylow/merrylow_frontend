@@ -11,6 +11,8 @@ import ProductModal
     from '@/components/productModal'
 import LoadingSpinner from '@/components/loadingSpinner'
 
+export const revalidate = 43200
+
 const Home = async () => {
     const topRestaurants: Restaurant[] = await fetchTopRestaurants()
     const topProducts: Product[] = await fetchTopProducts()

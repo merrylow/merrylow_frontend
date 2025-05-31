@@ -249,7 +249,7 @@ const EmailSignInForm = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder='Enter your email...'
-                    className='mt-1 w-full px-4 py-2 border border-secondary-soft rounded-lg outline-none focus:outline-none focus:border-none focus:ring-1 focus:ring-primary-main/50'
+                    className='mt-1 w-full px-4 py-2 border border-secondary-soft rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/50'
                     autoComplete='email'
                     required
                 />
@@ -266,7 +266,7 @@ const EmailSignInForm = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder='Enter your password...'
-                    className='mt-1 w-full px-4 py-2 border border-secondary-soft rounded-lg outline-none focus:outline-none focus:border-none focus:ring-1 focus:ring-primary-main/50'
+                    className='mt-1 w-full px-4 py-2 border border-secondary-soft rounded-lg outline-none focus:outline-none focus:ring-1 focus:ring-primary-main/50'
                     autoComplete='current-password'
                     required
                 />

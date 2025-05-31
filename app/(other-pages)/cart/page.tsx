@@ -12,22 +12,55 @@ import LoadingSpinner from '@/components/loadingSpinner'
 import { RemoveFromCartButton, ClearCartButton } from '@/components/cart/cartButtons'
 
 const CartPage = () => {
-    const parseAddons = (addonsString: string) => {
+    // const parseAddons = (addonsString: string) => {
+    //     try {
+    //         return JSON.parse(addonsString)
+    //     } catch (error) {
+    //         console.error('Error parsing addons:', error)
+    //         return {}
+    //     }
+    // }
+
+    const parseAddons = (description: string) => {
         try {
-            return JSON.parse(addonsString)
+            // Clean up the string if it contains escape characters
+            const cleanedString = description.replace(/\\/g, '')
+
+            // Parse the JSON string
+            const parsed = JSON.parse(cleanedString)
+
+            // Handle different possible formats
+            if (Array.isArray(parsed)) {
+                // If it's an array, convert to object format
+                const result: Record<string, number> = {}
+                for (let i = 0; i < parsed.length; i += 2) {
+                    if (i + 1 < parsed.length) {
+                        result[parsed[i]] = parsed[i + 1]
+                    }
+                }
+                return result
+            } else if (typeof parsed === 'object' && parsed !== null) {
+                // If it's already an object, return it
+                return parsed
+            }
+
+            return {}
         } catch (error) {
             console.error('Error parsing addons:', error)
             return {}
         }
     }
 
-     const { cart, fetchCart, cartTotal, updateCartCount, calculateCartTotals } = useCartStore()
+
+    const { cart, fetchCart, initializeCart, cartTotal, updateCartCount, calculateCartTotals } = useCartStore()
      const [loading, setLoading] = useState(true)
 
 
     useEffect(() => {
         const loadCart = async () => {
             try {
+                initializeCart()
+
                 await fetchCart()
             } catch (error) {
                 console.error('Failed to load cart:', error)
@@ -64,22 +97,36 @@ const CartPage = () => {
     const calculateItemTotal = (item: CartItem) => {
         // if unitPrice is available from backend, use that
         if (item.unitPrice) {
-            return Number(item.unitPrice) * item.quantity;
+            return Number(item.unitPrice) * item.quantity
         }
 
         // fallback calculation if unitPrice isnt available
-        if (!item.menu) return 0;
+        if (!item.menu) return 0
 
-        const basePrice = Number(item.menu.price) || 0;
+        const basePrice = Number(item.menu.price) || 0
 
-        const addons = item.description ? parseAddons(item.description) : {};
+        const addons = item.description ? parseAddons(item.description) : {}
 
         // sums up all addon prices
         const addonsTotal = Object.values(addons).reduce((sum: number, price) => {
-            return sum + (Number(price) || 0);
-        }, 0);
+            return sum + (Number(price) || 0)
+        }, 0)
 
-        return (basePrice + addonsTotal) * item.quantity;
+        return (basePrice + addonsTotal) * item.quantity
+    }
+
+
+    const renderAddons = (addons: Record<string, any>) => {
+        return Object.entries(addons).map(([key, value]) => {
+            // skip special keys or non-addon items
+            if (key === 'name' || typeof value !== 'number') return null
+
+            return (
+                <p key={key} className="text-xs text-secondary-soft">
+                    + {key} (₵{formatCurrency(String(value))})
+                </p>
+            )
+        })
     }
 
 
@@ -122,25 +169,26 @@ const CartPage = () => {
                                         <div
                                             className='flex gap-3'>
                                             <div
-                                                className='relative flex-shrink-0 w-22 h-20 rounded-xl overflow-hidden'>
+                                                className='relative flex-shrink-0 w-21 h-20 rounded-xl overflow-hidden'>
                                                 <Image
                                                     src={cartItem?.menu?.imageUrl!}
                                                     alt=''
-                                                    width={90}
-                                                    height={85}
+                                                    width={85}
+                                                    height={80}
                                                     className='object-cover'
                                                 />
                                             </div>
                                             <div>
                                                 <h3 className='leading-none text-base font-semibold text-black-soft'>{cartItem?.menu?.name}</h3>
                                                 <div className='grid grid-cols-2 gap-x-2 mt-1'>
-                                                    {Object.entries(addons).map(([addonName, addonPrice]) => (
-                                                        addonPrice !== 0 && (
-                                                            <p key={addonName} className="text-xs text-secondary-soft">
-                                                                + {addonName} (₵{formatCurrency(String(addonPrice))})
-                                                            </p>
-                                                        )
-                                                    ))}
+                                                    {/*{Object.entries(addons).map(([addonName, addonPrice]) => (*/}
+                                                    {/*    addonPrice !== 0 && (*/}
+                                                    {/*        <p key={addonName} className="text-xs text-secondary-soft">*/}
+                                                    {/*            + {addonName} (₵{formatCurrency(String(addonPrice))})*/}
+                                                    {/*        </p>*/}
+                                                    {/*    )*/}
+                                                    {/*))}*/}
+                                                    {renderAddons(addons)}
                                                 </div>
 
                                                 <span
