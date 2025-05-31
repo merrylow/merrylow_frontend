@@ -10,6 +10,7 @@ import { formatCurrency } from '@/lib/utilFunctions'
 import useCartStore from '@/stores/useCartStore'
 import useUserStore from '@/stores/useUserStore'
 import { IoMdClose } from 'react-icons/io'
+import PaystackPopup from '@/components/paystackPopup'
 
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
@@ -27,13 +28,6 @@ const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote, onAuth
         : 0
 
     const fetchUser = useUserStore(state => state.fetchUser)
-    // const { user, isAuthenticated, setAuthenticated } = useUserStore()
-
-
-    // useEffect(() => {
-    //     fetchCart()
-    // }, [])
-
 
     useEffect(() => {
         fetchUser()
@@ -71,6 +65,7 @@ const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote, onAuth
     return (
         <button
             onClick={handleClick}
+            disabled={loading}
             className='w-[58%] md:w-[55%] md:max-w-[450px] h-[2.65rem] mx-auto flex items-center justify-center font-bold text-sm btn'
         >
             {
@@ -135,6 +130,7 @@ const GoToCheckoutButton = () => {
         <>
             <button
                 onClick={handleCheckout}
+                disabled={loading}
                 className='w-full h-11 sm:max-w-[450px] mx-auto px-7 flex items-center justify-between font-bold text-[15px] btn'
             >
                 {
@@ -156,10 +152,12 @@ const GoToCheckoutButton = () => {
 }
 
 
+
 const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name: string; phone: string; notes: string; address: string; paymentMethod: string; }) => {
     const router = useRouter()
 
     const [loading, setLoading] = useState<boolean>(false)
+    const [paymentUrl, setPaymentUrl] = useState('')
 
     const handlePlaceOrder = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -190,30 +188,40 @@ const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name
                 }
             })
             console.log(response)
+            
+            const { paymentUrl } = response.data
 
-            if (response.status === 201 || response.status === 200) {
+            if (paymentUrl) {
+                setPaymentUrl(paymentUrl)
+                // window.location.href = paymentUrl
+
+            } else if (response.data.success && !paymentUrl) {
                 toast.success('Order placed successfully! Please check your mail for confirmation. Check your spam if you\'re not seeing anything')
                 console.log('Order placed', response.data)
-
-                // handles Paystack/momo redirect
-                if (response.data.paymentUrl) {
-                    console.log(response.data.paymentUrl)
-                    window.location.href = response.data.paymentUrl
-                } else {
-                    // for cash on delivery option
-                    router.push('/profile/my-orders')
-                }
-            } else {
-                console.error(response.data?.message || 'Unexpected response');
             }
+
+            // if (response.status === 201 || response.status === 200) {
+            //     toast.success('Order placed successfully! Please check your mail for confirmation. Check your spam if you\'re not seeing anything')
+            //     console.log('Order placed', response.data)
+            //
+            //     // handles Paystack/momo redirect
+            //     if (response.data.paymentUrl) {
+            //         console.log(response.data.paymentUrl)
+            //         window.location.href = response.data.paymentUrl
+            //     } else {
+            //         // for cash on delivery option
+            //         // router.push('/profile/my-orders')
+            //     }
+            // } else {
+            //     console.error(response.data?.message || 'Unexpected response');
+            // }
 
         } catch(error: any) {
             console.error('Checkout error', error)
-            // Display actual error message from backend if available
             const errorMessage = error.response?.data?.message ||
                 error.message ||
-                'From server: Failed to place order';
-            toast.error(errorMessage);
+                'From server: Failed to place order'
+            toast.error('Something happened. Please try again')
             console.error(errorMessage)
 
         } finally {
@@ -226,7 +234,9 @@ const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name
             <button
                 onClick={handlePlaceOrder}
                 className='w-full max-w-[450px] mx-auto h-11 px-7 font-bold text-[15px] btn'
-                type='submit'>
+                type='submit'
+                disabled={loading}
+            >
                 {
                     loading ? (
                         <div className='flex item-center justify-center space-x-1.5'>
@@ -238,6 +248,10 @@ const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name
                     )
                 }
             </button>
+
+            {paymentUrl && (
+               <PaystackPopup paymentUrl={paymentUrl} setPaymentUrl={setPaymentUrl} />
+            )}
         </>
     )
 }

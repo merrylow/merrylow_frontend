@@ -46,57 +46,6 @@ const CheckoutComponent = () => {
         calculateCartTotals()
     }, [cart])
 
-    const userEmail = user?.email || ''
-
-
-    const PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY
-
-    const config: HookConfig = {
-        reference: (new Date()).getTime().toString(),
-        email: userEmail,
-        amount: cartTotal * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200 (amount * 10ps)
-        publicKey: PUBLIC_KEY!,
-        currency: 'GHS',
-        metadata: {
-            name: `${firstName} ${lastName}`,
-            phoneNumber,
-            custom_fields: []
-        }
-    };
-
-    const onSuccess = (reference: any) => {
-        console.log(reference)
-        toast.success('Your payment was successful!')
-    };
-
-    const onClose = () => {
-        console.log('closed')
-        // toast('Your payment was cancelled')
-    }
-
-
-    const PaystackHookExample = () => {
-        const initializePayment: InitializePayment = usePaystackPayment(config)
-
-        return (
-            <button
-                className='w-full h-11 mt-2 px-7 text-xs btn'
-                type='submit'
-                onClick={(e) => {
-                    e.preventDefault()
-                    if (!userEmail || !phoneNumber) {
-                        toast('Please fill all required fields')
-                    } else {
-                        initializePayment({onSuccess, onClose})
-                    }
-                }}
-            >
-                Make payment
-            </button>
-        )
-    }
-
-
     return (
         <main className='w-full flex flex-col items-center min-h-screen'>
             {/* Header section */}
@@ -182,15 +131,7 @@ const CheckoutComponent = () => {
 
                             {/* Fixed bottom button */}
                             <section className='fixed bottom-1.5 left-1/2 -translate-x-1/2 w-[90%] bg-transparent py-4 flex justify-between items-center'>
-                                {
-                                    paymentMethod === 'mobile_money' && userEmail ? (
-                                        <div className='max-w-[450px] w-full mx-auto'>
-                                            <PaystackHookExample />
-                                        </div>
-                                    ) : (
                                         <PlaceOrderButton name={name} phone={phoneNumber} notes={deliveryNote} address={location} paymentMethod={paymentMethod}  />
-                                    )
-                                }
                             </section>
                         </form>
                     </div>

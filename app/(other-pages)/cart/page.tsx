@@ -127,7 +127,7 @@ const CartPage = () => {
                                                     src={cartItem?.menu?.imageUrl!}
                                                     alt=''
                                                     width={90}
-                                                    height={80}
+                                                    height={85}
                                                     className='object-cover'
                                                 />
                                             </div>
