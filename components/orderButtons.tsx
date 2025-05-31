@@ -193,7 +193,7 @@ const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name
 
             if (paymentUrl) {
                 setPaymentUrl(paymentUrl)
-                // window.location.href = paymentUrl
+                window.location.href = paymentUrl
 
             // } else if (response.data.success && !paymentUrl) {
             } else {
@@ -250,9 +250,9 @@ const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name
                     )
                 }
             </button>
-            {paymentUrl && (
-               <PaystackPopup paymentUrl={paymentUrl} setPaymentUrl={setPaymentUrl} />
-            )}
+            {/*{paymentUrl && (*/}
+            {/*   <PaystackPopup paymentUrl={paymentUrl} setPaymentUrl={setPaymentUrl} />*/}
+            {/*)}*/}
         </>
     )
 }
