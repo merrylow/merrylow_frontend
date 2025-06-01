@@ -3,11 +3,11 @@ import { getAccessToken, getRefreshToken, storeTokens, clearTokens } from '../au
 
 const axiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
+    // withCredentials: true, // only if using cookies
     headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
     },
-    withCredentials: true, // only if using cookies
 })
 
 // request interceptor: attach access token

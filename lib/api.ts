@@ -1,4 +1,5 @@
-import axios from 'axios'
+// import axios from 'axios'
+import axiosInstance from '@/lib/interceptors/axios'
 import { Product, Restaurant, Order } from '@/lib/typeDefs'
 import { getAccessToken } from '@/lib/auth'
 
@@ -12,7 +13,7 @@ const fetchRestaurantsAndProducts = async (): Promise<{
 }> => {
 
     try {
-        const restaurantsResponse = await axios.get<
+        const restaurantsResponse = await axiosInstance.get<
             {
                 success: boolean;
                 data: Restaurant[]
@@ -31,7 +32,7 @@ const fetchRestaurantsAndProducts = async (): Promise<{
         let keepFetching = true
 
         while (keepFetching) {
-            const productsResponse = await axios.get<{
+            const productsResponse = await axiosInstance.get<{
                 page: number
                 limit: number
                 products: Product[]
@@ -63,7 +64,7 @@ const fetchRestaurantsAndProducts = async (): Promise<{
 
 const fetchTopRestaurants = async () => {
     try {
-        const response = await axios.get(`${API_URL}/api/top-vendors`)
+        const response = await axiosInstance.get(`${API_URL}/api/top-vendors`)
         const restaurantsResponse: Restaurant[] = response.data.data
 
         return restaurantsResponse
@@ -76,7 +77,7 @@ const fetchTopRestaurants = async () => {
 
 const fetchTopProducts = async () => {
     try {
-        const response = await axios.get(`${API_URL}/api/top-products`)
+        const response = await axiosInstance.get(`${API_URL}/api/top-products`)
         const productsResponse: Product[] = response.data.data
 
         return productsResponse
@@ -89,16 +90,17 @@ const fetchTopProducts = async () => {
 
 const fetchOrders = async (): Promise<Order[]> => {
     try {
-        const accessToken = getAccessToken()
+        // const accessToken = getAccessToken()
 
-        const response = await axios.get<{
+        const response = await axiosInstance.get<{
             success: boolean;
-            data: Order[] | { orderItems: Order[] };
-        }>(`${API_URL}/api/orders`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        })
+            data: Order[] | { orderItems: Order[] }
+        }>(`${API_URL}/api/order`
+            // {
+            // headers: {
+            //     Authorization: `Bearer ${accessToken}`
+            // }}
+        )
 
         if (!response.data.success) {
             throw new Error(`Failed to fetch orders: ${response.status}`)
@@ -108,8 +110,14 @@ const fetchOrders = async (): Promise<Order[]> => {
         let orders: Order[] = []
         if (Array.isArray(response.data.data)) {
             orders = response.data.data
+            
+            console.log(response)
+            console.log(response.data)
+            console.log(response.data.data)
+            console.log(orders)
         } else if (response.data.data?.orderItems) {
-            orders = response.data.data.orderItems;
+            orders = response.data.data.orderItems
+            console.log(orders)
         }
 
         return orders

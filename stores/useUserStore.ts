@@ -1,8 +1,8 @@
 import { create } from 'zustand'
 import { UserState } from '@/lib/typeDefs'
 import { storeTokens, getAccessToken } from '@/lib/auth'
-import axios from 'axios'
-// import axiosInstance from '@/lib/interceptors/axios'
+// import axios from 'axios'
+import axiosInstance from '@/lib/interceptors/axios'
 
 
 // const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
@@ -16,11 +16,7 @@ const useUserStore = create<UserState>((set, get) => ({
         const accessToken = getAccessToken()
 
         try {
-            const response = await axios.get(`${API_URL}/api/account`, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            })
+            const response = await axiosInstance.get(`${API_URL}/api/account`)
             const userDetails = response.data.user
             // console.log(response)
             // console.log(response.data)

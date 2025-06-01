@@ -91,7 +91,7 @@ const Home = async () => {
                     <Link href='/see-all/top-restaurants' className='see-all-btn'>See all</Link>
                 </div>
 
-                <Link href='/see-all/top-restaurants' className='slider-container'>
+                <div className='slider-container'>
                     <div className='shrink-0 w-[0.5px] ml-[-9px] snap-start' />
 
                     {topRestaurants.map((restaurant: Restaurant , i) => (
@@ -106,7 +106,7 @@ const Home = async () => {
                           />
                         </Link>
                     ))}
-                </Link>
+                </div>
             </section>
 
 

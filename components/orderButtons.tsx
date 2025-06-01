@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import axios from 'axios'
+// import axios from 'axios'
 import { toast } from 'sonner'
 import { Product, SelectedAddons } from '@/lib/typeDefs'
 import { getAccessToken } from '@/lib/auth'
 import { formatCurrency } from '@/lib/utilFunctions'
 import useCartStore from '@/stores/useCartStore'
 import useUserStore from '@/stores/useUserStore'
+import axiosInstance from '@/lib/interceptors/axios'
 import { IoMdClose } from 'react-icons/io'
 import PaystackPopup from '@/components/paystackPopup'
 
@@ -106,7 +107,7 @@ const GoToCheckoutButton = () => {
             }))
 
             const accessToken = getAccessToken()
-            const response = await axios.post(`${API_URL}/api/checkout`, cartItems , {
+            const response = await axiosInstance.post(`${API_URL}/api/checkout`, cartItems , {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
@@ -175,7 +176,7 @@ const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name
 
         try {
             const accessToken = getAccessToken()
-            const response = await axios.post(`${API_URL}/api/order`, {
+            const response = await axiosInstance.post(`${API_URL}/api/order`, {
                 name,
                 address,
                 phone,

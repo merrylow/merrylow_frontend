@@ -1,4 +1,5 @@
-import axios from 'axios'
+// import axios from 'axios'
+import axiosInstance from '@/lib/interceptors/axios'
 import { create } from 'zustand'
 import { CartStore, Product, Restaurant, CartItem, PaymentMethod, CardDetails, SelectedAddons } from '@/lib/typeDefs'
 import { transformAddonsForBackend } from '@/lib/utilFunctions'
@@ -38,7 +39,7 @@ const useCartStore = create<CartStore>((set, get) => ({
                const accessToken = getAccessToken()
 
 
-               const response = await axios.get(`${API_URL}/api/cart`, {
+               const response = await axiosInstance.get(`${API_URL}/api/cart`, {
                     headers: {
                          Authorization: `Bearer ${accessToken}`
                     }
@@ -117,7 +118,7 @@ const useCartStore = create<CartStore>((set, get) => ({
           // sync with backend cart
           try {
                const accessToken = getAccessToken()
-               const response = await axios.post(`${API_URL}/api/cart`, cartItemForBackend, {
+               const response = await axiosInstance.post(`${API_URL}/api/cart`, cartItemForBackend, {
                     headers: {
                          Authorization: `Bearer ${accessToken}`
                     }
@@ -264,7 +265,7 @@ const useCartStore = create<CartStore>((set, get) => ({
                set({ cart: updatedCart })
 
                const accessToken = getAccessToken()
-               const response = await axios.delete(`${API_URL}/api/cart/item/${productId}`, {
+               const response = await axiosInstance.delete(`${API_URL}/api/cart/item/${productId}`, {
                     headers: {
                          Authorization: `Bearer ${accessToken}`
                     }
@@ -296,7 +297,7 @@ const useCartStore = create<CartStore>((set, get) => ({
                set({ cart: [], cartCount: 0 })
 
                const accessToken = getAccessToken()
-               const response = await axios.delete(`${API_URL}/api/cart`, {
+               const response = await axiosInstance.delete(`${API_URL}/api/cart`, {
                     headers: {
                          Authorization: `Bearer ${accessToken}`
                     }

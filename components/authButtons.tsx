@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { Eye, EyeOff } from 'lucide-react'
 import { toast } from 'sonner'
-import axios from 'axios'
+// import axios from 'axios'
 import { FaSignOutAlt } from 'react-icons/fa'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { GoogleOAuthProvider, GoogleLogin, useGoogleLogin, googleLogout } from '@react-oauth/google'
@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input'
 import Link from 'next/link'
 import useUserStore from '@/stores/useUserStore'
 import { storeTokens, clearTokens } from '@/lib/auth'
-// import axiosInstance from '@/lib/interceptors/axios'
+import axiosInstance from '@/lib/interceptors/axios'
 
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
@@ -53,7 +53,7 @@ const GoogleSignInButton = () => {
                     const idToken = credentialResponse.credential
 
                     try {
-                        const response = await axios.post(`${API_URL}/api/auth/google`, { idToken })
+                        const response = await axiosInstance.post(`${API_URL}/api/auth/google`, { idToken })
 
                         setAuthenticated(true)
                         storeTokens(response.data.accessToken, response.data.refreshToken)
@@ -93,7 +93,7 @@ const EmailSignUpForm = () => {
         e.preventDefault()
 
         try {
-            const response = await axios.post(`${API_URL}/api/auth/signup`, { username, email, password })
+            const response = await axiosInstance.post(`${API_URL}/api/auth/signup`, { username, email, password })
 
             if(response.status === 200) {
                 toast('Check your email to verify')
@@ -217,7 +217,7 @@ const EmailSignInForm = () => {
         e.preventDefault()
 
         try {
-            const response = await axios.post(`${API_URL}/api/auth/login`, { email, password })
+            const response = await axiosInstance.post(`${API_URL}/api/auth/login`, { email, password })
             console.log(response)
             const accessToken: string = response.data.accessToken
             storeTokens(accessToken, response.data.refreshToken)
@@ -322,7 +322,7 @@ const SignOutButton = () => {
         setLoading(true)
 
         try {
-            await axios.post(`${API_URL}/api/auth/logout`,
+            await axiosInstance.post(`${API_URL}/api/auth/logout`,
                 {},
                 { withCredentials: true }
             )

@@ -1,4 +1,5 @@
-import axios from 'axios'
+// import axios from 'axios'
+import axiosInstance from '@/lib/interceptors/axios'
 import { create } from 'zustand'
 import { Order, OrderStore } from '@/lib/typeDefs'
 import { toast } from 'sonner'

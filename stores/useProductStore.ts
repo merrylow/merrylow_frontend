@@ -1,5 +1,6 @@
 import { create } from 'zustand'
-import axios from 'axios'
+// import axios from 'axios'
+import axiosInstance from '@/lib/interceptors/axios'
 import { Product, Restaurant, ProductStore } from '@/lib/typeDefs'
 
 
@@ -24,7 +25,7 @@ const useProductStore = create<ProductStore>((set, get) => ({
             let keepFetching = true
 
             while (keepFetching) {
-                const productsResponse = await axios.get<{
+                const productsResponse = await axiosInstance.get<{
                     page: number
                     limit: number
                     products: Product[]
@@ -80,7 +81,7 @@ const useProductStore = create<ProductStore>((set, get) => ({
         set({ loading: true })
 
         try {
-            const response = await axios.get(`${API_URL}/api/restaurants`)
+            const response = await axiosInstance.get(`${API_URL}/api/restaurants`)
             console.log('Fetched restaurants: ', response.data);
             set({ restaurants: response.data.data, error: null }) // one 'data' is coming from axios, the other from our api
         } catch (err: any) {
