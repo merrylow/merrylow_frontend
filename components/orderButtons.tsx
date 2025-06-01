@@ -196,7 +196,8 @@ const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name
             // } else if (response.data.success && !paymentUrl) {
             } else {
                 toast.success('Order placed successfully! Please check your mail for confirmation. Check your spam if you\'re not seeing anything')
-                router.push('/profile/my-orders')
+                // router.push('/profile/my-orders')
+                router.push('/')
                 console.log('Order placed', response.data)
             }
 

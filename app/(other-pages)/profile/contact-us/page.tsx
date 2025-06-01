@@ -80,24 +80,24 @@ const ContactUsPage = () => {
             <section className='w-[90%] mx-auto mt-8'>
                 <h2 className='font-semibold text-gray-800 mb-3'>Common Questions</h2>
                 <div className='space-y-2'>
-                    <a
-                        href='/profile/help-faq#refund'
-                        className='block text-primary-main text-sm'
-                    >
-                        How do I request a refund?
-                    </a>
+                    {/*<a*/}
+                    {/*    href='/profile/help-faq#refund'*/}
+                    {/*    className='block text-primary-main text-sm'*/}
+                    {/*>*/}
+                    {/*    How do I request a refund?*/}
+                    {/*</a>*/}
                     <a
                         href='/profile/help-faq#delivery'
                         className='block text-primary-main text-sm'
                     >
                         My food is late - what can I do?
                     </a>
-                    <a
-                        href='/profile/help-faq#partner'
-                        className='block text-primary-main text-sm'
-                    >
-                        How can my restaurant join MerryLow?
-                    </a>
+                    {/*<a*/}
+                    {/*    href='/profile/help-faq#partner'*/}
+                    {/*    className='block text-primary-main text-sm'*/}
+                    {/*>*/}
+                    {/*    How can my restaurant join MerryLow?*/}
+                    {/*</a>*/}
                 </div>
             </section>
         </main>
