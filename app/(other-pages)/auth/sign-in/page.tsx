@@ -28,15 +28,15 @@ const SignInPage = async () => {
             <section className='h-[45vh] w-[88%] max-w-md flex flex-col justify-evenly'>
                 <EmailSignInForm />
 
-                <div className='flex items-center justify-center text-sm text-gray-400'>
-                    <span className="px-2">or Sign in with Google</span>
-                </div>
+                {/*<div className='flex items-center justify-center text-sm text-gray-400'>*/}
+                {/*    <span className="px-2">or Sign in with Google</span>*/}
+                {/*</div>*/}
 
-                <div className='flex items-center justify-center'>
-                    <GoogleOAuthProvider clientId={CLIENT_ID!}>
-                        <GoogleSignInButton />
-                    </GoogleOAuthProvider>
-                </div>
+                {/*<div className='flex items-center justify-center'>*/}
+                {/*    <GoogleOAuthProvider clientId={CLIENT_ID!}>*/}
+                {/*        <GoogleSignInButton />*/}
+                {/*    </GoogleOAuthProvider>*/}
+                {/*</div>*/}
             </section>
         </main>
     )

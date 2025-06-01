@@ -31,18 +31,15 @@ const SignUpPage = () => {
             <section className='h-[50vh] w-[88%] max-w-md flex flex-col justify-evenly'>
                 <EmailSignUpForm />
 
-                <div className='flex items-center justify-center text-sm text-gray-400'>
-                    <span className="px-2">or Sign up with Google</span>
-                </div>
+                {/*<div className='flex items-center justify-center text-sm text-gray-400'>*/}
+                {/*    <span className="px-2">or Sign up with Google</span>*/}
+                {/*</div>*/}
 
-                {/*when user signs in with this for the first time, their details are automatically recorded
-                 in db*/}
-                <div className='flex items-center justify-center'>
-                    <GoogleOAuthProvider clientId={CLIENT_ID!}>
-                        <GoogleSignInButton />
-                    </GoogleOAuthProvider>
-                </div>
-
+                {/*<div className='flex items-center justify-center'>*/}
+                {/*    <GoogleOAuthProvider clientId={CLIENT_ID!}>*/}
+                {/*        <GoogleSignInButton />*/}
+                {/*    </GoogleOAuthProvider>*/}
+                {/*</div>*/}
             </section>
         </main>
     )

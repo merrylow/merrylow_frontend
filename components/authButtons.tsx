@@ -99,7 +99,7 @@ const EmailSignUpForm = () => {
                 toast('Check your email to verify')
                 setTimeout(() => {
                     router.push('/auth/sign-in')
-                }, 10000)
+                }, 6000)
             } else {
                 toast('Something happened. Please try again')
             }
@@ -114,7 +114,7 @@ const EmailSignUpForm = () => {
     return (
         <form className='flex flex-col space-y-5 mt-1'>
             <div>
-                <Label htmlFor='email' className='font-medium'>
+                <Label htmlFor='username' className='font-medium'>
                         Username
                     </Label>
                     <Input
@@ -152,7 +152,7 @@ const EmailSignUpForm = () => {
                 </Label>
                 <Input
                     id='password'
-                    type='password'
+                    type={showPassword ? 'text' : 'password'}
                     name='password'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -192,8 +192,7 @@ const EmailSignUpForm = () => {
                         </>
                     )}
                 </button>
-                {/*when user signs in with this for the first time, their details are automatically recorded
-                         in db*/}
+
                 <p className='text-sm text-gray-500'>
                     Already have an account? <Link href='/auth/sign-in' className='text-primary-main font-medium'>Sign in</Link>
                 </p>
@@ -302,11 +301,17 @@ const EmailSignInForm = () => {
                         </>
                     )}
                 </button>
-                {/*when user signs in with this for the first time, their details are automatically recorded
-                         in db*/}
-                <p className='text-sm text-gray-500'>
-                    Don't have an account? <Link href='/auth/sign-up' className='text-primary-main font-medium'>Sign up</Link>
-                </p>
+
+                <div className='flex justify-between'>
+                    <span className='text-sm text-gray-500'>
+                        Don't have an account? <Link href='/auth/sign-up' className='text-primary-main font-medium'>Sign up</Link>
+                    </span>
+
+                    <span className='text-sm text-gray-500'>
+                        <Link href='/auth/forgot-password' className='text-primary-main font-medium'>Forgot password?</Link>
+                    </span>
+
+                </div>
             </div>
         </form>
     )
