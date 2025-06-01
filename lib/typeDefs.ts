@@ -44,6 +44,14 @@ interface Product {
      addOns: Addon;
 }
 
+interface Order {
+     id: string;
+     name: string;
+     createdAt: string;
+     imageUrl: string;
+     // status: string;
+}
+
 
 type PackageAddOns = Record<string, number>;
 type OptionalAddOns = Record<string, number>;
@@ -141,4 +149,12 @@ type ProductStore = {
 }
 
 
-export type { CardDetails, Restaurant, Product, CartItem, PaymentMethod, CartStore, ProductStore, SelectedAddons, User, UserState, Addon, SavedProductSelections }
+type OrderStore = {
+     loading: boolean;
+     error: boolean;
+     orders: Order[] | [];
+     fetchOrders: () => Promise<void>;
+}
+
+
+export type { CardDetails, Restaurant, Product, CartItem, PaymentMethod, CartStore, ProductStore, SelectedAddons, User, UserState, Addon, Order, SavedProductSelections, OrderStore }

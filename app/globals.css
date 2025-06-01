@@ -135,7 +135,7 @@ img, svg {
 }
 
 
-p {
+p, h1, h2, h3 {
      overflow: hidden;
      /*white-space: nowrap;*/
      text-overflow: ellipsis;
@@ -221,6 +221,31 @@ p {
      padding: 12px 16px !important;
      margin: 0 !important;
 }
+
+
+.custom-toast [data-sonner-toast] .toast-description {
+     color: hsl(0, 0%, 100%) !important; /* Light gray */
+     font-size: 0.875rem !important;
+     line-height: 1.25rem !important;
+     margin-top: 0.25rem !important;
+}
+
+/* for different colors for different toast types */
+/*.custom-toast [data-sonner-toast][data-type="success"] .toast-description {*/
+/*     color: hsl(142, 76%, 85%) !important; !* Success green *!*/
+/*}*/
+
+/*.custom-toast [data-sonner-toast][data-type="error"] .toast-description {*/
+/*     color: hsl(0, 91%, 85%) !important; !* Error red *!*/
+/*}*/
+
+/*.custom-toast [data-sonner-toast][data-type="warning"] .toast-description {*/
+/*     color: hsl(38, 92%, 85%) !important; !* Warning orange *!*/
+/*}*/
+
+/*.custom-toast [data-sonner-toast][data-type="info"] .toast-description {*/
+/*     color: hsl(221, 91%, 85%) !important; !* Info blue *!*/
+/*}*/
 
 
 @keyframes slideDown {

@@ -95,11 +95,16 @@ const Home = async () => {
                     <div className='shrink-0 w-[0.5px] ml-[-9px] snap-start' />
 
                     {topRestaurants.map((restaurant: Restaurant , i) => (
-                      <Card
-                        key={i}
-                        cardClass={'w-[190px] h-45 shrink-0'}
-                        cardDetails={{ imgSrc: restaurant.imageUrl, name: restaurant.name }}
-                      />
+                        <Link
+                            href={`/restaurants/${restaurant.id}`}
+                            // className='w-full block'
+                            key={i}
+                        >
+                          <Card
+                            cardClass={'w-[190px] h-45 shrink-0'}
+                            cardDetails={{ imgSrc: restaurant.imageUrl, name: restaurant.name }}
+                          />
+                        </Link>
                     ))}
                 </Link>
             </section>

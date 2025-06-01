@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { Product, Restaurant } from '@/lib/typeDefs'
+import { Product, Restaurant, Order } from '@/lib/typeDefs'
+import { getAccessToken } from '@/lib/auth'
 
 
 // const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : process.env.NEXT_PUBLIC_API_URL
@@ -85,4 +86,37 @@ const fetchTopProducts = async () => {
     }
 }
 
-export { fetchRestaurantsAndProducts, fetchTopRestaurants, fetchTopProducts }
+
+const fetchOrders = async (): Promise<Order[]> => {
+    try {
+        const accessToken = getAccessToken()
+
+        const response = await axios.get<{
+            success: boolean;
+            data: Order[] | { orderItems: Order[] };
+        }>(`${API_URL}/api/orders`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
+
+        if (!response.data.success) {
+            throw new Error(`Failed to fetch orders: ${response.status}`)
+        }
+
+        // handle both response formats (array or object with orderItems)
+        let orders: Order[] = []
+        if (Array.isArray(response.data.data)) {
+            orders = response.data.data
+        } else if (response.data.data?.orderItems) {
+            orders = response.data.data.orderItems;
+        }
+
+        return orders
+    } catch (error: any) {
+        console.error('Error fetching customer orders:', error.message)
+        return []
+    }
+}
+
+export { fetchRestaurantsAndProducts, fetchTopRestaurants, fetchTopProducts, fetchOrders }

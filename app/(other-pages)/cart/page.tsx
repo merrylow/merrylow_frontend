@@ -169,16 +169,16 @@ const CartPage = () => {
                                         <div
                                             className='flex gap-3'>
                                             <div
-                                                className='relative flex-shrink-0 w-21 h-20 rounded-xl overflow-hidden'>
+                                                className='relative flex-shrink-0 w-20 h-19 rounded-xl overflow-hidden'>
                                                 <Image
                                                     src={cartItem?.menu?.imageUrl!}
                                                     alt=''
                                                     width={85}
                                                     height={80}
-                                                    className='object-cover'
+                                                    className='object-cover w-full h-full'
                                                 />
                                             </div>
-                                            <div>
+                                            <div className='mt-0.5'>
                                                 <h3 className='leading-none text-base font-semibold text-black-soft'>{cartItem?.menu?.name}</h3>
                                                 <div className='grid grid-cols-2 gap-x-2 mt-1'>
                                                     {/*{Object.entries(addons).map(([addonName, addonPrice]) => (*/}
