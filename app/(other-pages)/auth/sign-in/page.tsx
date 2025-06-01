@@ -1,17 +1,19 @@
+'use client'
+
 import { EmailSignInForm, GoogleSignInButton } from '@/components/authButtons'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import BackButton from '@/components/backButton'
-// import { useEffect } from 'react'
+import { useEffect } from 'react'
 
-const SignInPage = async () => {
+const SignInPage = () => {
     const CLIENT_ID: string = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!
 
-    // useEffect(() => {
-    //     // Don't store the current route if it's the sign-in page itself
-    //     if (window.location.pathname !== '/auth/sign-in') {
-    //         sessionStorage.setItem('previousRoute', window.location.pathname)
-    //     }
-    // }, [])
+    useEffect(() => {
+        // Don't store the current route if it's the sign-in page itself
+        if (window.location.pathname !== '/auth/sign-in') {
+            sessionStorage.setItem('previousRoute', window.location.pathname)
+        }
+    }, [])
 
 
     return (

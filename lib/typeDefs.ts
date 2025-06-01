@@ -153,7 +153,8 @@ type OrderStore = {
      loading: boolean;
      error: boolean;
      orders: Order[] | [];
-     fetchOrders: () => Promise<void>;
+     // fetchOrders: () => Promise<void>;
+     fetchOrders: () => void;
 }
 
 

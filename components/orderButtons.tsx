@@ -20,9 +20,6 @@ const AddToOrderButton = ({ product, quantity, selectedAddons, orderNote, onAuth
     const router = useRouter()
     const [loading, setLoading] = useState<boolean>(false)
     const addToCart = useCartStore(state => state.addToCart)
-    const fetchCart = useCartStore(state => state.fetchCart)
-    const cart = useCartStore(state => state.cart)
-    const cartTotal = useCartStore(state => state.cartTotal)
     const calculateItemTotal = useCartStore(state => state.calculateItemTotal)
     const currentItemTotal = product
         ? calculateItemTotal(product, quantity, selectedAddons)

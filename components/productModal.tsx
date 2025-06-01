@@ -84,8 +84,8 @@ const ProductModal = ({ product }: { product: Product }) => {
 
           if (!isAuthenticated) {
                setShowAuthAlert(true)
-               sessionStorage.setItem('signInRedirect', window.location.pathname); // Store current URL
-               router.push('/auth/sign-in');
+               sessionStorage.setItem('signInRedirect', window.location.pathname) // Store current URL
+               // router.push('/auth/sign-in')
                return false // prevents any further action
           }
 

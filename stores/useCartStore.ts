@@ -44,7 +44,7 @@ const useCartStore = create<CartStore>((set, get) => ({
                          Authorization: `Bearer ${accessToken}`
                     }
                })
-               console.log(response.data.data.items)
+               // console.log(response.data.data.items)
 
                if (response.status === 200) {
                     const fetchedCart = response.data.data.items || []

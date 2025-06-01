@@ -3,37 +3,97 @@ import { useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 import LoadingSpinner from '@/components/loadingSpinner'
-import { ClearCartButton } from '@/components/cart/cartButtons'
 import BackButton from '@/components/backButton'
 import BottomNav from '@/components/bottomNav'
 import Image from 'next/image'
 import { formatCurrency } from '@/lib/utilFunctions'
 import useOrderStore from '@/stores/useOrderStore'
+import useCartStore from '@/stores/useCartStore'
+import axiosInstance from '@/lib/interceptors/axios'
 
 const MyOrdersContent = () => {
     const searchParams = useSearchParams()
     const orders = useOrderStore(state => state.orders)
     const fetchOrders = useOrderStore(state => state.fetchOrders)
+    const clearCart = useCartStore(state => state.clearCart)
 
     useEffect(() => {
-        fetchOrders().then(r => console.log('Order fetched: file:my-orders/page', r))
+        fetchOrders()
     }, [])
 
     useEffect(() => {
-        // const paymentSuccess = searchParams.get('payment_success')
-        const transactionRef = searchParams.get('trxref')
-        const reference = searchParams.get('reference')
+        const loadOrders = async () => {
+            await fetchOrders()
+        }
+        loadOrders()
+    }, [fetchOrders])
 
-        // if (paymentSuccess === 'true') {
-        if (transactionRef && reference) {
-            toast.success('Payment successful! Your order has been placed.', {
-                description: 'You will receive a confirmation email shortly.',
-                duration: 5000
-            })
-            console.log('toast!!')
-            // cleans the url to prevent toast from showing again on refresh
-            // const cleanUrl = window.location.pathname
-            // window.history.replaceState(null, '', cleanUrl)
+    // useEffect(() => {
+    //     // const paymentSuccess = searchParams.get('payment_success')
+    //     const transactionRef = searchParams.get('trxref')
+    //     const reference = searchParams.get('reference')
+    //
+    //     // if (paymentSuccess === 'true') {
+    //     if (transactionRef && reference) {
+    //         toast.success('Payment successful! Your order has been placed.', {
+    //             description: 'You will receive a confirmation email shortly.',
+    //             duration: 5000
+    //         })
+    //         console.log('toast!!')
+    //         // cleans the url to prevent toast from showing again on refresh
+    //         // const cleanUrl = window.location.pathname
+    //         // window.history.replaceState(null, '', cleanUrl)
+    //     }
+    // }, [searchParams])
+
+    useEffect(() => {
+        const verifyPayment = async (reference: string) => {
+            try {
+                const response = await axiosInstance.get(
+                    `https://api.paystack.co/transaction/verify/${reference}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY}`
+                        }
+                    }
+                )
+
+                const { data } = response.data
+
+                if (data.status === 'success') {
+                    toast.success('Payment successful! Your order has been placed.', {
+                        description: 'You will receive a confirmation email shortly.',
+                        duration: 5000
+                    })
+
+                    // Clear the cart after successful payment
+                    // You might want to call a clearCart action if you have one
+
+                    // Clean the URL to prevent toast from showing again on refresh
+                    window.history.replaceState(null, '', window.location.pathname)
+                } else {
+                    toast.error('Payment verification failed', {
+                        description: 'Please check your order status or contact support.',
+                        duration: 5000
+                    })
+                }
+            } catch (error) {
+                console.error('Error verifying payment:', error)
+                toast.error('Payment verification error', {
+                    description: 'Unable to verify payment status. Please check your orders later.',
+                    duration: 5000
+                })
+            }
+        }
+
+        const reference = searchParams.get('reference')
+        const trxref = searchParams.get('trxref')
+
+        if (reference) {
+            verifyPayment(reference).then((r) => console.log(r))
+        } else if (trxref) {
+            // Some Paystack implementations use trxref instead of reference
+            verifyPayment(trxref).then((r) => console.log(r))
         }
     }, [searchParams])
 
@@ -101,7 +161,12 @@ const MyOrdersContent = () => {
 
 const MyOrdersPage = () => {
     return (
-        <Suspense fallback={<LoadingSpinner />}>
+        <Suspense fallback={
+            <main className=''>
+                <LoadingSpinner />
+            </main>
+        }
+        >
             <MyOrdersContent />
         </Suspense>
     )
