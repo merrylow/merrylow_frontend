@@ -15,6 +15,7 @@ import { Product, SelectedAddons, SavedProductSelections } from '@/lib/typeDefs'
 import useProductStore from '@/stores/useProductStore'
 import useUserStore from '@/stores/useUserStore'
 import AuthAlert from '@/components/authAlert'
+import { useRouter } from 'next/navigation'
 
 
 const saveSelectionsToLocalStorage = (productId: string, selections: SavedProductSelections) => {
@@ -57,6 +58,7 @@ const clearSelectionsFromLocalStorage = (productId: string) => {
 
 const ProductModal = ({ product }: { product: Product }) => {
      const [loading, setLoading] = useState(false)
+     const router = useRouter()
 
      const productId = product.id
 
@@ -75,8 +77,15 @@ const ProductModal = ({ product }: { product: Product }) => {
      const { isAuthenticated } = useUserStore()
 
      const handleAddToCart = () => {
+          // if (!isAuthenticated) {
+          //      setShowAuthAlert(true)
+          //      return false // prevents any further action
+          // }
+
           if (!isAuthenticated) {
                setShowAuthAlert(true)
+               sessionStorage.setItem('signInRedirect', window.location.pathname); // Store current URL
+               router.push('/auth/sign-in');
                return false // prevents any further action
           }
 

@@ -159,8 +159,8 @@ const ForgotPasswordPage = () => {
                                 <div className='flex items-center justify-center text-white'>
                                     <span className='loading loading-spinner loading-sm' />
                                     <span className='text-sm text-secondary-soft font-medium ml-2'>
-                    Processing...
-                  </span>
+                                        Processing...
+                                    </span>
                                 </div>
                             ) : (
                                 'Reset Password'
@@ -168,15 +168,15 @@ const ForgotPasswordPage = () => {
                         </button>
 
                         <div className='text-center pt-2'>
-              <span className='text-sm text-gray-500'>
-                Remember your password?{' '}
-                  <Link
-                      href='/auth/sign-in'
-                      className='text-primary-main font-medium'
-                  >
-                  Sign in
-                </Link>
-              </span>
+                          <span className='text-sm text-gray-500'>
+                            Remember your password?{' '}
+                              <Link
+                                  href='/auth/sign-in'
+                                  className='text-primary-main font-medium'
+                              >
+                              Sign in
+                            </Link>
+                          </span>
                         </div>
                     </div>
                 </form>
