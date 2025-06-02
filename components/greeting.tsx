@@ -17,7 +17,7 @@ const Greeting = dynamic(() => {
         const isAuthenticated = useUserStore(state => state.isAuthenticated)
 
         return (
-            <h1 className='text-lg font-bold text-secondary-light -mb-7'>
+            <h1 className='text-lg font-bold text-secondary-light -mb-8'>
                 Hello { isAuthenticated ? (user?.name)?.split(' ')[0] : 'there' }👋🏽
             </h1>
         )

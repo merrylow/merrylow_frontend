@@ -84,12 +84,12 @@ const ProductModal = ({ product }: { product: Product }) => {
 
           if (!isAuthenticated) {
                setShowAuthAlert(true)
-               sessionStorage.setItem('signInRedirect', window.location.pathname) // Store current URL
+               // sessionStorage.setItem('signInRedirect', window.location.pathname) // Store current URL
                // router.push('/auth/sign-in')
                return false // prevents any further action
           }
 
-          clearSelectionsFromLocalStorage(productId)
+          // clearSelectionsFromLocalStorage(productId)
           return true // proceeds with add to cart
      }
 
