@@ -98,9 +98,9 @@ const MyOrdersContent = () => {
         }
 
 
-        setTimeout(() => {
-            router.push('/')
-        }, 7000)
+        // setTimeout(() => {
+        //     router.push('/')
+        // }, 7000)
     }, [searchParams])
 
     return (
