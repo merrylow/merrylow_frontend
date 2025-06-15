@@ -34,7 +34,7 @@ const Card = ({ cardClass, cardDetails }: {
                     <div className='flex items-center space-x-2.5'>
                         <span className='flex items-center space-x-1'>
                             <MdDeliveryDining className='size-6 fill-primary-main/70' />
-                            <s className='text-gray-400 font-semibold text-sm'>₵0.00</s>
+                            <p className='text-secondary-soft font-semibold text-sm'>₵5.00</p>
                         </span>
                         <span className='flex items-center text-xs text-secondary-soft space-x-0.5'>
                             <BiSolidStopwatch className='size-5 fill-primary-main/70' />

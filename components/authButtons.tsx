@@ -1,10 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { FcGoogle } from 'react-icons/fc'
+import { useState } from 'react'
 import { Eye, EyeOff } from 'lucide-react'
 import { toast } from 'sonner'
-// import axios from 'axios'
+import axios from 'axios'
 import { FaSignOutAlt } from 'react-icons/fa'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { GoogleOAuthProvider, GoogleLogin, useGoogleLogin, googleLogout } from '@react-oauth/google'
@@ -17,6 +16,7 @@ import axiosInstance from '@/lib/interceptors/axios'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { setCookie } from 'cookies-next'
 
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
@@ -248,10 +248,31 @@ const EmailSignInForm = () => {
             const accessToken: string = response.data.accessToken
             storeTokens(accessToken, response.data.refreshToken)
 
-            if (accessToken) {
+            const showBetaToast = 'true'
+
+            if (response.status >= 200 && accessToken) {
                 setAuthenticated(true)
                 toast.success('Login successful')
+                localStorage.setItem('showBetaToast', showBetaToast)
                 router.push('/')
+
+                // setTimeout(() => {
+                //     toast.info(
+                //         <div className='flex flex-col space-y-1'>
+                //             <span className='font-medium'>🚀 Welcome to MerryLow Beta</span>
+                //             <span className="text-sm">
+                //               You're using an early version of our new platform.
+                //               <Link href='/profile/contact-us' className='text-primary-main ml-1'>
+                //                 Report any bugs or issues
+                //               </Link>
+                //             </span>
+                //         </div>,
+                //         {
+                //             duration: 10000,
+                //             position: 'top-center'
+                //         }
+                //     )
+                // }, 3000)
 
                 // // Get the previous route from session storage or default to '/'
                 // const previousRoute = sessionStorage.getItem('previousRoute') || '/'
@@ -283,10 +304,10 @@ const EmailSignInForm = () => {
         } catch (err: any) {
             if (err.response?.data?.message === 'Invalid User Credentials!') {
                 setError('Invalid email or password')
-                toast.error('Invalid email or password')
+                // toast.error('Invalid email or password')
             } else {
                 setError('An error occurred. Please try again')
-                toast.error('An error occurred. Please try again')
+                // toast.error('An error occurred. Please try again')
             }
         } finally {
             setLoading(false)
@@ -296,7 +317,7 @@ const EmailSignInForm = () => {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col space-y-5 mt-1'>
             {error && (
-                <div className='mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded'>
+                <div className='text-base mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded'>
                     {error}
                 </div>
             )}
@@ -399,22 +420,24 @@ const SignOutButton = () => {
         setLoading(true)
 
         try {
-            await axiosInstance.post(`${API_URL}/api/auth/logout`,
+            const response = await axiosInstance.post(`${API_URL}/api/auth/logout`,
                 {},
                 { withCredentials: true }
             )
-            //
-            // localStorage.removeItem('accessToken')
-            // if (typeof window !== 'undefined') {
-            //     document.cookie = 'refreshToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
-            // }
-            clearTokens()
+            console.log(response)
 
+            localStorage.removeItem('cart')
+            clearTokens()
+            googleLogout()
+
+            setTimeout(() => {
+                router.push('/auth/sign-in')
+            }, 100)
+        } catch (error) {
+            clearTokens()
             googleLogout()
             router.push('/auth/sign-in')
-            router.refresh()
-        } catch (error) {
-            toast.error('Failed to log you out. Please try again')
+            // toast.error('Failed to log you out. Please try again')
         } finally {
              setLoading(false)
         }

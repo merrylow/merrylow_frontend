@@ -7,8 +7,7 @@ import { fetchTopRestaurants, fetchTopProducts } from '@/lib/api'
 import { Product, Restaurant } from '@/lib/typeDefs'
 import { Drawer, DrawerClose, DrawerContent, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer'
 import { IoClose } from 'react-icons/io5'
-import ProductModal
-    from '@/components/productModal'
+import ProductModal from '@/components/productModal'
 import LoadingSpinner from '@/components/loadingSpinner'
 
 export const revalidate = 43200
@@ -18,14 +17,14 @@ const Home = async () => {
     const topProducts: Product[] = await fetchTopProducts()
 
     return (
-        <main className='w-full mx-auto min-h-screen space-y-10
+        <main className='w-full mx-auto min-h-screen space-y-9
         '>
             <section className='w-[90%] mx-auto'>
                 <Greeting />
             </section>
 
             {/* ad carousel */}
-            <section className="w-[90%] h-[15rem] min-h-[15rem] mx-auto mb-12 rounded-[18px]">
+            <section className="w-[90%] h-[15rem] min-h-[15rem] mx-auto mb-15 rounded-[18px]">
                 <AdCarousel />
             </section>
 
@@ -45,7 +44,7 @@ const Home = async () => {
 
                     <Suspense fallback={<LoadingSpinner />}>
                         {topProducts.map((product: Product, i) => (
-                            <div key={i}>
+                            <div key={i} className='h-full'>
                                 <Drawer>
                                     <DrawerTrigger
                                         asChild>
@@ -54,7 +53,7 @@ const Home = async () => {
                                         >
                                             <Card
                                                 key={i}
-                                                cardClass={'w-[271px] h-45 shrink-0'}
+                                                cardClass={'w-[271px] h-47 shrink-0'}
                                                 cardDetails={{ imgSrc: product.imageUrl, name: product.name }}
                                             />
                                         </button>

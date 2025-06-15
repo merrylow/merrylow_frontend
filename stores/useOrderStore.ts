@@ -13,45 +13,15 @@ const useOrderStore = create<OrderStore>((set, get) => ({
     error: false,
     orders: [],
 
-    // fetchOrders: async () => {
-    //     set({ loading: true, error: false })
-    //
-    //     try {
-    //         const fetchedOrders = await fetchOrders()
-    //         console.log('Fetched orders:', fetchedOrders)
-    //
-    //         set({
-    //             orders: fetchedOrders,
-    //             loading: false
-    //         })
-    //
-    //         // return orders
-    //     } catch (error) {
-    //         console.error('Failed to fetch orders:', error)
-    //         set({
-    //             error: true,
-    //             loading: false,
-    //             orders: []
-    //         })
-    //         toast.error('Failed to load your orders')
-    //         // return []
-    //     } finally {
-    //         set({ loading: false })
-    //     }
-    // },
-
 
     fetchOrders: async () => {
         set({ loading: true, error: false })
         try {
             const accessToken = getAccessToken()
-            const response = await axios.get(`${API_URL}/api/order`, {
-                headers: { Authorization: `Bearer ${accessToken}` }
-            })
+            const response = await axiosInstance.get(`${API_URL}/api/order`)
 
             console.log('Orders response', response)
 
-            // Adjusted to match backend response structure
             const ordersData = response.data?.data || []
             set({
                 orders: Array.isArray(ordersData) ? ordersData : [],
@@ -69,6 +39,19 @@ const useOrderStore = create<OrderStore>((set, get) => ({
             throw error
         }
     },
+
+
+    formatOrderDate: (dateString: string) => {
+        const date = new Date(dateString)
+        return date.toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        }).replace(',', '')
+    }
 
     // function to get a single order by id
     // getOrderById: (orderId: string) => {

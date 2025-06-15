@@ -10,6 +10,8 @@ import { formatCurrency } from '@/lib/utilFunctions'
 import useOrderStore from '@/stores/useOrderStore'
 import useCartStore from '@/stores/useCartStore'
 import axiosInstance from '@/lib/interceptors/axios'
+import EmptyOrders from '@/components/emptyOrders'
+import { Order } from '@/lib/typeDefs'
 
 const MyOrdersContent = () => {
     const router = useRouter()
@@ -69,8 +71,9 @@ const MyOrdersContent = () => {
 
                     // Clear the cart after successful payment
                     // You might want to call a clearCart action if you have one
+                    await clearCart()
 
-                    // Clean the URL to prevent toast from showing again on refresh
+                    // cleans the URL to prevent toast from showing again on refresh
                     window.history.replaceState(null, '', window.location.pathname)
                 } else {
                     toast.error('Payment verification failed', {
@@ -103,8 +106,18 @@ const MyOrdersContent = () => {
         // }, 7000)
     }, [searchParams])
 
+
+    if (!orders || orders.length === 0) {
+        return (
+            <main className='w-[90%] h-screen flex items-center justify-center mx-auto'>
+                <EmptyOrders />
+            </main>
+        )
+    }
+
+
     return (
-        <main className='w-full h-full flex flex-col items-center justify-center overflow-x-hidden pb-10'> {/* -items-center justify-center */}
+        <main className='w-full h-full flex flex-col items-center justify-between overflow-x-hidden pb-10'> {/* -items-center justify-center */}
             <section className='flex justify-center items-center w-[90%] mx-auto mt-4'>
                 <h1 className='text-lg text-secondary-light font-bold'>My Orders</h1>
             </section>
@@ -114,48 +127,49 @@ const MyOrdersContent = () => {
             </section>
 
             <section className='w-[90%] flex flex-col items-start justify-between gap-2 mt-5 mx-auto z-0'>
-                {/*{*/}
-                {/*    Array(6).fill(null).map((item, i) => (*/}
-                {/*        <div key={i} className='w-full flex justify-between items-start space-y-2 bg-white mb-3'> /!* border-b border-gray-100 *!/*/}
-                {/*            <div*/}
-                {/*                className='flex gap-3'>*/}
-                {/*                <div*/}
-                {/*                    className='relative flex-shrink-0 w-20 h-19 rounded-xl overflow-hidden'>*/}
-                {/*                    <Image*/}
-                {/*                        src='/jollof-rice-marg-tee-1094739000-612x612.jpg'*/}
-                {/*                        alt=''*/}
-                {/*                        width={85}*/}
-                {/*                        height={80}*/}
-                {/*                        className='object-cover w-full h-full -z-50'*/}
-                {/*                    />*/}
-                {/*                </div>*/}
-                {/*                <div className='-space-y-0.5 mt-0.5 pr-2.5'>*/}
-                {/*                    <h2 className='leading-none text-base font-semibold text-black-soft'>*/}
-                {/*                        /!*{cartItem?.menu?.name}*!/*/}
+                {
+                    orders.map((order: Order, i) => (
+                        <div key={i} className='w-full flex justify-between items-start space-y-2 bg-white mb-3'> {/* border-b border-gray-100 */}
+                            <div
+                                className='flex gap-3'>
+                                <div
+                                    className='relative flex-shrink-0 w-20 h-19 rounded-xl overflow-hidden'>
+                                    <Image
+                                        src={order.orderItems[0]?.menu?.imageUrl!}
+                                        alt=''
+                                        width={85}
+                                        height={80}
+                                        className='object-cover w-full h-full -z-50'
+                                    />
+                                </div>
+                                <div className='-space-y-0.5 mt-0.5 pr-2.5'>
+                                    <h2 className='leading-none text-base font-semibold text-black-soft'>
+                                        {order?.orderItems[0]?.menu?.name}
+                                    </h2>
 
-                {/*                    </h2>*/}
-                {/*                    <div className='grid grid-cols-2 gap-x-2 mt-1'>*/}
+                                    <span
+                                        className='text-primary-main font-bold text-[1rem] block mt-1'>
+                                        ₵{formatCurrency(String(order.totalPrice))}
+                                    </span>
 
-                {/*                    </div>*/}
+                                    <h2 className='leading-none text-xs font-semibold text-gray-500 pt-2.5'>
+                                        {useOrderStore.getState().formatOrderDate(order.createdAt)}
+                                    </h2>
+                                </div>
+                            </div>
 
-                {/*                    <span*/}
-                {/*                        className='text-primary-main font-bold text-[1rem] block mt-1'>*/}
-                {/*                                      /!*₵{formatCurrency(String(calculateItemTotal(cartItem)))}*!/*/}
-                {/*                        ₵60.00*/}
-                {/*                    </span>*/}
-                {/*                </div>*/}
-                {/*            </div>*/}
+                            <div className='mt-1 h-full flex-shrink-0'>
+                                <p className='bg-gray-pale text-secondary-light text-xs pt-1 pb-0.5 px-2 rounded-2xl'>{
+                                    order.status === 'PLACED' ? 'Delivered' : 'Processing'
+                                }</p>
+                            </div>
+                        </div>
+                    ))
+                }
 
-                {/*            <div className='mt-1 h-full flex-shrink-0'>*/}
-                {/*                <p className='bg-gray-pale text-secondary-light text-xs pt-1 pb-0.5 px-2 rounded-2xl'>Processing</p>*/}
-                {/*            </div>*/}
-                {/*        </div>*/}
-                {/*    ))*/}
-                {/*}*/}
-
-                <section className='w-[90%] flex items-center justify-center mx-auto'>
-                    <p className='font-medium text-base text-left'>Your order has been placed successfully! Please check your mail for confirmation. Check your spam if you're not seeing anything</p>
-                </section>
+                {/*<section className='w-[90%] flex items-center justify-center mx-auto'>*/}
+                {/*    <p className='font-medium text-base text-left'>Your order has been placed successfully! Please check your mail for confirmation. Check your spam if you're not seeing anything</p>*/}
+                {/*</section>*/}
             </section>
 
             <section className='mt-14' />

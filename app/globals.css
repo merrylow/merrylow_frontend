@@ -63,7 +63,7 @@
      }
 
      .card-section {
-          @apply h-[17.5em] flex flex-col justify-between overflow-hidden;
+          @apply h-[16.9em] flex flex-col justify-between overflow-hidden;
      }
 
      .section-heading {
@@ -79,7 +79,7 @@
      }
 
      .slider-container {
-          @apply h-[80%] flex items-center bg-transparent overflow-x-auto space-x-4 pb-5 px-2 scroll-smooth snap-x snap-mandatory shadow-2xl;
+          @apply h-[75%] flex items-center bg-transparent overflow-x-auto space-x-4 pb-5 px-2 scroll-smooth snap-x snap-mandatory shadow-2xl;
      }
 
      .icon{

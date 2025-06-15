@@ -10,7 +10,7 @@ import PushNotificationManager from '@/components/pwa-manager/pushNotificationMa
 import InstallPrompt from '@/components/pwa-manager/installPrompt'
 import LoadingOverlay from '@/components/loadingOverlay'
 import ClientLayoutShell from '@/components/clientLayoutShell'
-// import { Toaster } from 'react-hot-toast'
+import BetaToastTrigger from '@/components/betaToastTrigger'
 
 // const rubik = Rubik({
 //   subsets: ['latin'],
@@ -52,15 +52,16 @@ export default function RootLayout({
     <html lang='en' className={nunitoSans.className}>
       <body>
 
+        <Toaster />
         <Header />
         {/*<PushNotificationManager />*/}
         {/*<InstallPrompt />*/}
           {children}
+        <BetaToastTrigger />
         <BottomNav />
 
         <LoadingOverlay />
         <ClientLayoutShell children={undefined} />
-        <Toaster />
       </body>
     </html>
       </GoogleOAuthProvider>

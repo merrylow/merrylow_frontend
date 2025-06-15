@@ -16,7 +16,9 @@ const useCartStore = create<CartStore>((set, get) => ({
      // cart data
      cart: [],
      cartCount: 0,
+     cartSubTotal: 0,
      cartTotal: 0,
+     deliveryFee: 5,
 
      initializeCart: () => {
           const savedCart = typeof window !== 'undefined' ? localStorage.getItem('cart') : null;
@@ -153,26 +155,6 @@ const useCartStore = create<CartStore>((set, get) => ({
      },
 
 
-     // calculateCartTotals: () => {
-     //      const total = get().cart.reduce((acc, cartItem) => {
-     //           // unit price is pre-calculated by backend
-     //           if (cartItem.unitPrice) {
-     //                return acc + (Number(cartItem.unitPrice) * cartItem.quantity)
-     //           }
-     //
-     //           const basePrice = Number(cartItem.menu?.price) || 0
-     //
-     //           const addons = cartItem.description ? JSON.parse(cartItem.description) : {}
-     //
-     //           const addonsTotal = Object.values(addons).reduce((sum: number, price) => {
-     //                return sum + (Number(price) || 0)
-     //           }, 0)
-     //
-     //           return acc + (basePrice + addonsTotal) * cartItem.quantity
-     //      }, 0)
-     //
-     //      set({ cartTotal: total })
-     // },
      calculateCartTotals: () => {
           const parseAddons = (description: string) => {
                try {
@@ -204,7 +186,7 @@ const useCartStore = create<CartStore>((set, get) => ({
                }
           }
 
-          const total = get().cart.reduce((acc, cartItem) => {
+          const subTotal = get().cart.reduce((acc, cartItem) => {
                // If unitPrice is available from backend, use that
                if (cartItem.unitPrice) {
                     return acc + (Number(cartItem.unitPrice) * cartItem.quantity)
@@ -225,7 +207,14 @@ const useCartStore = create<CartStore>((set, get) => ({
                return acc + (basePrice + addonsTotal) * cartItem.quantity
           }, 0)
 
-          set({ cartTotal: total })
+          // const deliveryFee = 5
+          const total = subTotal + get().deliveryFee
+
+
+          set({
+               cartSubTotal: subTotal,
+               cartTotal: total,
+          })
      },
 
 

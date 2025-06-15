@@ -181,13 +181,6 @@ const CartPage = () => {
                                             <div className='mt-0.5'>
                                                 <h3 className='leading-none text-base font-semibold text-black-soft'>{cartItem?.menu?.name}</h3>
                                                 <div className='grid grid-cols-2 gap-x-2 mt-1'>
-                                                    {/*{Object.entries(addons).map(([addonName, addonPrice]) => (*/}
-                                                    {/*    addonPrice !== 0 && (*/}
-                                                    {/*        <p key={addonName} className="text-xs text-secondary-soft">*/}
-                                                    {/*            + {addonName} (₵{formatCurrency(String(addonPrice))})*/}
-                                                    {/*        </p>*/}
-                                                    {/*    )*/}
-                                                    {/*))}*/}
                                                     {renderAddons(addons)}
                                                 </div>
 
@@ -207,8 +200,11 @@ const CartPage = () => {
 
 
                              {/* Total */}
-                             <div className='flex justify-between items-center mt-4 sm:mb-24'>
-                                  <span className='text-md text-black-soft font-bold'>Total</span>
+                             <div className='flex flex-row justify-between items-center mt-4 sm:mb-24'>
+                                  <div className='text-md text-black-soft font-bold'>
+                                      Total
+                                      <span className='text-gray-500 text-base pl-1'>+ delivery fee(₵5.00)</span>
+                                  </div>
                                   <span className='text-primary-main text-md font-extrabold'>₵{formatCurrency(String(cartTotal))}</span>
                              </div>
                         </section>

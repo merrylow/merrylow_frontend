@@ -157,7 +157,7 @@ const Carousel = React.forwardRef<
         <div
           ref={ref}
           onKeyDownCapture={handleKeyDown}
-          className={`cn("relative", className) rounded-[18px] overflow-hidden h-full`}
+          className={`cn("relative", className) rounded-[18px] overflow-hidden h-[92%]`}
           role="region"
           aria-roledescription="carousel"
           {...props}
@@ -165,7 +165,7 @@ const Carousel = React.forwardRef<
           {children}
 
            {/* Indicator container */}
-          <div className="absolute top-[21.5rem] left-1/2 flex -translate-x-1/2  space-x-2.5">
+          <div className="absolute top-[20.9rem] left-1/2 flex -translate-x-1/2  space-x-2.5">
             {images.map((_, index) => (
               <button
                 key={index}

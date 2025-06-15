@@ -6,17 +6,8 @@ import { Toaster } from '@/components/ui/sonner'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import LoadingOverlay from '@/components/loadingOverlay'
 import ClientLayoutShell from '@/components/clientLayoutShell'
+import BetaToastTrigger from '@/components/betaToastTrigger'
 
-
-// const rubik = Rubik({
-//      subsets: ['latin'],
-//      display: 'swap'
-// });
-//
-// const inter = Inter({
-//      subsets: ['latin'],
-//      display: 'swap',
-// })
 
 const nunitoSans = Nunito_Sans({
      subsets: ['latin'],
@@ -53,6 +44,7 @@ const OtherLayout = ({
 
                     <LoadingOverlay />
                     <ClientLayoutShell children={undefined} />
+                    <BetaToastTrigger />
                     <Toaster />
                </body>
           </html>

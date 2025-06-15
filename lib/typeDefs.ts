@@ -44,12 +44,26 @@ interface Product {
      addOns: Addon;
 }
 
+
+interface MenuItem {
+     name: string;
+     imageUrl?: string;
+}
+
+interface OrderItem {
+     menu?: MenuItem;
+}
+
 interface Order {
      id: string;
-     name: string;
+     address: string;
+     customerName: string;
+     customerPhone: string;
      createdAt: string;
-     imageUrl: string;
-     // status: string;
+     paymentMethod: string;
+     orderItems: OrderItem[];
+     status: string;
+     totalPrice: string;
 }
 
 
@@ -114,7 +128,9 @@ type CartStore = {
      cart: CartItem[] | [];
      initializeCart: () => void;
      cartCount: number;
+     cartSubTotal: number;
      cartTotal: number;
+     deliveryFee: number;
      fetchCart: () => void;
      addToCart: (product: Product, quantity: number, selectedAddons: SelectedAddons | null, orderNote: string | null) => Promise<boolean>
      removeFromCart: (productId: string) => Promise<void>
@@ -153,9 +169,9 @@ type OrderStore = {
      loading: boolean;
      error: boolean;
      orders: Order[] | [];
-     // fetchOrders: () => Promise<void>;
      fetchOrders: () => void;
+     formatOrderDate: (dateString: string) => string
 }
 
 
-export type { CardDetails, Restaurant, Product, CartItem, PaymentMethod, CartStore, ProductStore, SelectedAddons, User, UserState, Addon, Order, SavedProductSelections, OrderStore }
+export type { CardDetails, Restaurant, Product, CartItem, PaymentMethod, CartStore, ProductStore, SelectedAddons, User, UserState, Addon, Order, SavedProductSelections, OrderStore, OrderItem, MenuItem }
