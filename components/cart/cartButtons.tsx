@@ -24,7 +24,7 @@ const RemoveFromCartButton = ({  productId }: { productId: string }) => {
 
 const ClearCartButton = () => {
     const clearCart = useCartStore(state => state.clearCart)
-    const { updateCartCount, calculateCartTotals } = useCartStore()
+    const { loading, updateCartCount, calculateCartTotals } = useCartStore()
 
     const handleClearCart = async () => {
         await clearCart()
@@ -32,13 +32,18 @@ const ClearCartButton = () => {
         calculateCartTotals()
     }
 
-    return (
+    return loading ? (
+        <div className='flex items-center justify-center text-primary-light'>
+            <span className='loading loading-spinner loading-sm' />
+        </div>
+    ) : (
         <div>
             <button onClick={handleClearCart} className='text-primary-light text-base cursor-pointer' type='button' aria-label='close button'>
                 Clear All
             </button>
         </div>
     )
+
 }
 
 export { RemoveFromCartButton, ClearCartButton }

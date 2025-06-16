@@ -58,9 +58,9 @@ const ProfilePage = () => {
      return (
          <main
              className='min-h-screen w-full flex flex-col justify-around items-center overflow-y-scroll'>
-              <div className='w-[88%] flex flex-col gap-14 mt-1'> {/*gap-11*/}
+              <div className='w-[88%] flex flex-col gap-14'> {/*gap-11*/}
                    <section className='flex flex-col gap-y-4'>
-                        <div className='w-full bg-primary-main/60 rounded-lg p-4 space-y-1.5 mx-auto'>
+                        <div className='w-full bg-primary-main/80 rounded-lg p-4 space-y-1.5 mx-auto'>
                              <h2 className='font-semibold text-white'>You're using an early version of our platform.</h2>
                              <p className='text-sm text-white'>
                                   <Link href='/profile/contact-us' className='text-blue-500'>

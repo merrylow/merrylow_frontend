@@ -11,8 +11,8 @@ import {
 const AdCarousel = () => {
      const sliderImages = [
           { src: '/merrylow.png', alt: '' },
-          { src: '/slider-images/Free-Delivery.png', alt: '' },
-          { src: '/slider-images/How-to-order.png', alt: '' }
+          // { src: '/slider-images/Free-Delivery.png', alt: '' },
+          // { src: '/slider-images/How-to-order.png', alt: '' }
      ]
 
      return (
