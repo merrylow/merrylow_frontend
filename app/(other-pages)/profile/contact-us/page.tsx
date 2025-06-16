@@ -25,7 +25,7 @@ const ContactUsPage = () => {
             icon: '📍',
             title: 'Location',
             details: 'Accra, Ghana',
-            action: 'https://maps.app.goo.gl/...' // Add your Google Maps link
+            action: 'https://maps.app.goo.gl/...' // add google maps link
         }
     ]
 
@@ -42,7 +42,7 @@ const ContactUsPage = () => {
             </section>
 
             {/* Contact Card */}
-            <section className='w-[90%] bg-primary-main/60 rounded-lg p-4 mb-6 mx-auto'>
+            <section className='w-[90%] bg-primary-main/80 rounded-lg p-4 mb-6 mx-auto'>
                 <h2 className='font-semibold text-white mb-2'>We're here to help</h2>
                 <p className='text-sm text-white mb-3'>
                     Reach out for order issues, feedback, or partnership inquiries

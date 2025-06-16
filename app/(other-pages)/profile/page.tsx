@@ -31,7 +31,6 @@ import LoadingSpinner
 export const dynamic = 'force-dynamic'
 
 const ProfilePage = () => {
-     const router = useRouter()
      const user = useUserStore(state => state.user)
      const fetchUser = useUserStore(state => state.fetchUser)
      const isAuthenticated = useUserStore(state => state.isAuthenticated)
@@ -110,14 +109,14 @@ const ProfilePage = () => {
                         {/*         className='font-medium text-base'>Favourites</span>*/}
                         {/*</Link>*/}
 
-                        {/*<Link*/}
-                        {/*    href='/profile/my-orders'*/}
-                        {/*    className='flex items-center space-x-4 text-black'>*/}
-                        {/*     <FaShoppingBag*/}
-                        {/*         className='text-primary-main size-6'/>*/}
-                        {/*     <span*/}
-                        {/*         className='font-medium text-base'>My orders</span>*/}
-                        {/*</Link>*/}
+                        <Link
+                            href='/profile/my-orders'
+                            className='flex items-center space-x-4 text-black'>
+                             <FaShoppingBag
+                                 className='text-primary-main size-6'/>
+                             <span
+                                 className='font-medium text-base'>My orders</span>
+                        </Link>
 
                         <Link
                             href='#'
@@ -200,6 +199,8 @@ const ProfilePage = () => {
                              )
                         }
                    </section>
+
+                   <section className='mb-14' />
 
               </div>
 

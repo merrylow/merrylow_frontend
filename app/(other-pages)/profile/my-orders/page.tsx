@@ -12,6 +12,7 @@ import useCartStore from '@/stores/useCartStore'
 import axiosInstance from '@/lib/interceptors/axios'
 import EmptyOrders from '@/components/emptyOrders'
 import { Order } from '@/lib/typeDefs'
+import clsx from 'clsx'
 
 const MyOrdersContent = () => {
     const router = useRouter()
@@ -63,14 +64,13 @@ const MyOrdersContent = () => {
 
                 const { data } = response.data
 
-                if (data.status === 'success') {
+                // data.status === 'success'
+                if (response.status >= 200 && response.status < 300) {
                     toast.success('Payment successful! Your order has been placed.', {
                         description: 'You will receive a confirmation email shortly.',
                         duration: 5000
                     })
 
-                    // Clear the cart after successful payment
-                    // You might want to call a clearCart action if you have one
                     await clearCart()
 
                     // cleans the URL to prevent toast from showing again on refresh
@@ -99,11 +99,6 @@ const MyOrdersContent = () => {
             // Some Paystack implementations use trxref instead of reference
             verifyPayment(trxref).then((r) => console.log(r))
         }
-
-
-        // setTimeout(() => {
-        //     router.push('/')
-        // }, 7000)
     }, [searchParams])
 
 
@@ -159,17 +154,13 @@ const MyOrdersContent = () => {
                             </div>
 
                             <div className='mt-1 h-full flex-shrink-0'>
-                                <p className='bg-gray-pale text-secondary-light text-xs pt-1 pb-0.5 px-2 rounded-2xl'>{
-                                    order.status === 'PLACED' ? 'Delivered' : 'Processing'
-                                }</p>
+                                <p className={clsx('text-xs pt-1 pb-0.5 px-3 rounded-2xl', { 'bg-green text-white': order.status == 'PENDING', 'bg-gray-pale text-secondary-light': order.status == 'PLACED' })}>
+                                    {order.status === 'PLACED' ? 'Delivered' : 'Processing'}
+                                </p>
                             </div>
                         </div>
                     ))
                 }
-
-                {/*<section className='w-[90%] flex items-center justify-center mx-auto'>*/}
-                {/*    <p className='font-medium text-base text-left'>Your order has been placed successfully! Please check your mail for confirmation. Check your spam if you're not seeing anything</p>*/}
-                {/*</section>*/}
             </section>
 
             <section className='mt-14' />

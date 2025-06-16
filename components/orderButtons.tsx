@@ -194,11 +194,13 @@ const PlaceOrderButton = ({ name, phone, notes, address, paymentMethod }: { name
                 window.location.href = paymentUrl
 
             // } else if (response.data.success && !paymentUrl) {
-            } else {
+            } else if(response.status >= 200 && response.status < 300) {
                 toast.success('Order placed successfully! Please check your mail for confirmation. Check your spam if you\'re not seeing anything')
-                // router.push('/profile/my-orders')
-                router.push('/')
-                console.log('Order placed', response.data)
+
+                setTimeout(() => {
+                    router.push('/profile/my-orders')
+                }, 3000)
+                console.log('Order placed!', response.data)
             }
 
             // if (response.status === 201 || response.status === 200) {
